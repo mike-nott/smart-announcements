@@ -1,0 +1,46 @@
+announce:
+  name: Announce
+  description: Send a voice announcement to the right room based on who's home and where they are.
+  fields:
+    message:
+      name: Message
+      description: The announcement text to speak.
+      required: true
+      example: "Dinner is ready"
+      selector:
+        text:
+          multiline: true
+    target_person:
+      name: Target Person
+      description: Announce to this person's current location. If not specified, announces to all occupied rooms.
+      required: false
+      example: "Mike"
+      selector:
+        text:
+    target_area:
+      name: Target Area
+      description: Announce to rooms in this area. If not specified, uses room tracking.
+      required: false
+      example: "Downstairs"
+      selector:
+        area:
+    enhance_with_ai:
+      name: Enhance with AI
+      description: Use the person's conversation entity to enhance the message.
+      required: false
+      default: false
+      selector:
+        boolean:
+    pre_announce_sound:
+      name: Pre-Announce Sound
+      description: Play a chime before the announcement. Overrides global setting if specified.
+      required: false
+      selector:
+        boolean:
+    sleep_override:
+      name: Sleep Override
+      description: Bypass room mute switches (for urgent announcements).
+      required: false
+      default: false
+      selector:
+        boolean:

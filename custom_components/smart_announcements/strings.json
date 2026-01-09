@@ -1,0 +1,79 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Smart Announcements Setup",
+        "description": "Configure global settings for smart announcements.",
+        "data": {
+          "room_tracking": "Enable Room Tracking",
+          "presence_verification": "Verify with Presence Sensors",
+          "default_tts_platform": "Default TTS Platform",
+          "default_conversation_entity": "Default Conversation Entity (for AI)",
+          "pre_announce_enabled": "Enable Pre-Announce Sound",
+          "pre_announce_url": "Pre-Announce Sound URL",
+          "pre_announce_delay": "Delay After Pre-Announce (seconds)"
+        }
+      },
+      "people": {
+        "title": "People Configuration",
+        "description": "Configure announcement settings for each person.",
+        "data": {
+          "people": "People"
+        }
+      },
+      "person_config": {
+        "title": "Configure {name}",
+        "description": "Set voice and language preferences for {name}.",
+        "data": {
+          "tts_platform": "TTS Platform",
+          "tts_voice": "TTS Voice",
+          "conversation_entity": "Conversation Entity (for AI)",
+          "language": "Language"
+        }
+      },
+      "rooms": {
+        "title": "Room Configuration",
+        "description": "Assign media players and presence sensors to each room.",
+        "data": {
+          "rooms": "Rooms"
+        }
+      },
+      "room_config": {
+        "title": "Configure {name}",
+        "description": "Set the media player and presence sensors for {name}.",
+        "data": {
+          "media_player": "Media Player",
+          "presence_sensors": "Presence Sensors"
+        }
+      }
+    },
+    "error": {
+      "no_tts": "No TTS platforms found. Please configure a TTS integration first.",
+      "no_persons": "No persons found in Home Assistant.",
+      "no_areas": "No areas found in Home Assistant.",
+      "no_media_players": "No media players found.",
+      "invalid_url": "Invalid URL format for pre-announce sound.",
+      "unknown": "An unknown error occurred."
+    },
+    "abort": {
+      "already_configured": "Smart Announcements is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Smart Announcements Settings",
+        "description": "Modify your smart announcements configuration.",
+        "data": {
+          "room_tracking": "Enable Room Tracking",
+          "presence_verification": "Verify with Presence Sensors",
+          "default_tts_platform": "Default TTS Platform",
+          "default_conversation_entity": "Default Conversation Entity (for AI)",
+          "pre_announce_enabled": "Enable Pre-Announce Sound",
+          "pre_announce_url": "Pre-Announce Sound URL",
+          "pre_announce_delay": "Delay After Pre-Announce (seconds)"
+        }
+      }
+    }
+  }
+}
