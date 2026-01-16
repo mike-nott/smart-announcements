@@ -1,7 +1,6 @@
 announce:
   name: Announce
   description: Send a voice announcement to the right room based on who's home and where they are.
-  icon: mdi:bullhorn
   fields:
     message:
       name: Message

@@ -21,6 +21,9 @@ from .announcer import Announcer
 
 _LOGGER = logging.getLogger(__name__)
 
+# Config schema - this integration is config entry only (no YAML config)
+CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
+
 PLATFORMS = ["switch"]
 
 SERVICE_ANNOUNCE = "announce"
