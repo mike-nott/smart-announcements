@@ -3,39 +3,63 @@
     "step": {
       "user": {
         "title": "Smart Announcements Setup",
-        "description": "Configure global settings for smart announcements.",
-        "data": {
-          "room_tracking": "Enable Room Tracking",
-          "presence_verification": "Verify with Presence Sensors",
-          "default_tts_platform": "Default TTS Platform",
-          "default_conversation_entity": "Default Conversation Entity (for AI)",
-          "pre_announce_enabled": "Enable Pre-Announce Sound",
-          "pre_announce_url": "Pre-Announce Sound URL",
-          "pre_announce_delay": "Delay After Pre-Announce (seconds)"
-        }
+        "description": "Setting up Smart Announcements..."
       },
-      "people": {
-        "title": "People Configuration",
-        "description": "Configure announcement settings for each person.",
+      "people_select": {
+        "title": "Select People",
+        "description": "Select which people should receive announcements.",
         "data": {
-          "people": "People"
+          "selected_people": "People to Configure"
         }
       },
       "person_config": {
-        "title": "Configure {name}",
-        "description": "Set voice and language preferences for {name}.",
+        "title": "Configure {name} - Language & TTS",
+        "description": "Configure room tracking and announcement settings for {name}.",
         "data": {
+          "room_tracking_entity": "Room Tracking Entity",
+          "language": "Language",
           "tts_platform": "TTS Platform",
-          "tts_voice": "TTS Voice",
-          "conversation_entity": "Conversation Entity (for AI)",
-          "language": "Language"
+          "enhance_with_ai": "Enhance with AI"
         }
       },
-      "rooms": {
-        "title": "Room Configuration",
-        "description": "Assign media players and presence sensors to each room.",
+      "person_voice": {
+        "title": "Configure {name} - Voice & AI",
+        "description": "Select conversation entity and voice for {name}.",
         "data": {
-          "rooms": "Rooms"
+          "conversation_entity": "Conversation Entity (for AI)",
+          "tts_voice": "TTS Voice"
+        }
+      },
+      "group_config": {
+        "title": "Group Announcement Settings - Language & TTS",
+        "description": "Configure settings for announcements to multiple people in the same room.",
+        "data": {
+          "group_language": "Language",
+          "group_tts_platform": "TTS Platform",
+          "group_enhance_with_ai": "Enhance with AI"
+        }
+      },
+      "group_voice": {
+        "title": "Group Announcement Settings - Voice & AI",
+        "description": "Select conversation entity and voice for group announcements.",
+        "data": {
+          "group_conversation_entity": "Conversation Entity (for AI)",
+          "group_tts_voice": "TTS Voice"
+        }
+      },
+      "room_tracking": {
+        "title": "Room Tracking Settings",
+        "description": "Configure how announcements find people in your home.",
+        "data": {
+          "room_tracking": "Enable Room Tracking",
+          "presence_verification": "Verify with Presence Sensors"
+        }
+      },
+      "rooms_select": {
+        "title": "Select Rooms",
+        "description": "Select which rooms should receive announcements.",
+        "data": {
+          "selected_rooms": "Rooms to Configure"
         }
       },
       "room_config": {
@@ -45,6 +69,15 @@
           "media_player": "Media Player",
           "presence_sensors": "Presence Sensors"
         }
+      },
+      "pre_announce": {
+        "title": "Pre-Announce Sound Settings",
+        "description": "Configure the chime that plays before announcements.",
+        "data": {
+          "pre_announce_enabled": "Enable Pre-Announce Sound",
+          "pre_announce_url": "Pre-Announce Sound URL",
+          "pre_announce_delay": "Delay After Pre-Announce (seconds)"
+        }
       }
     },
     "error": {
@@ -52,6 +85,8 @@
       "no_persons": "No persons found in Home Assistant.",
       "no_areas": "No areas found in Home Assistant.",
       "no_media_players": "No media players found.",
+      "no_people_selected": "Please select at least one person.",
+      "no_rooms_selected": "Please select at least one room.",
       "invalid_url": "Invalid URL format for pre-announce sound.",
       "unknown": "An unknown error occurred."
     },
@@ -63,17 +98,116 @@
     "step": {
       "init": {
         "title": "Smart Announcements Settings",
-        "description": "Modify your smart announcements configuration.",
+        "description": "What would you like to configure?",
+        "menu_options": {
+          "global_settings": "Global Settings",
+          "edit_people": "Edit People",
+          "edit_rooms": "Edit Rooms",
+          "group_settings": "Group Settings"
+        }
+      },
+      "global_settings": {
+        "title": "Global Settings",
+        "description": "Configure room tracking, pre-announce, and debug settings.",
         "data": {
           "room_tracking": "Enable Room Tracking",
           "presence_verification": "Verify with Presence Sensors",
-          "default_tts_platform": "Default TTS Platform",
-          "default_conversation_entity": "Default Conversation Entity (for AI)",
           "pre_announce_enabled": "Enable Pre-Announce Sound",
           "pre_announce_url": "Pre-Announce Sound URL",
-          "pre_announce_delay": "Delay After Pre-Announce (seconds)"
+          "pre_announce_delay": "Delay After Pre-Announce (seconds)",
+          "debug_mode": "Debug Mode (verbose logging)"
+        }
+      },
+      "edit_people": {
+        "title": "Edit People",
+        "description": "Select a person to edit or add a new person.",
+        "data": {
+          "selected_person": "Person"
+        }
+      },
+      "edit_person": {
+        "title": "Edit {name}",
+        "description": "Modify settings for {name}.",
+        "data": {
+          "room_tracking_entity": "Room Tracking Entity",
+          "language": "Language",
+          "tts_platform": "TTS Platform",
+          "tts_voice": "TTS Voice",
+          "enhance_with_ai": "Enhance with AI",
+          "conversation_entity": "Conversation Entity (for AI)"
+        }
+      },
+      "add_person_select": {
+        "title": "Add Person",
+        "description": "Select a person to add.",
+        "data": {
+          "person_entity": "Person"
+        }
+      },
+      "add_person_config": {
+        "title": "Configure {name} - Language & TTS",
+        "description": "Configure room tracking and announcement settings for {name}.",
+        "data": {
+          "room_tracking_entity": "Room Tracking Entity",
+          "language": "Language",
+          "tts_platform": "TTS Platform",
+          "enhance_with_ai": "Enhance with AI"
+        }
+      },
+      "add_person_voice": {
+        "title": "Configure {name} - Voice & AI",
+        "description": "Select conversation entity and voice for {name}.",
+        "data": {
+          "conversation_entity": "Conversation Entity (for AI)",
+          "tts_voice": "TTS Voice"
+        }
+      },
+      "edit_rooms": {
+        "title": "Edit Rooms",
+        "description": "Select a room to edit its settings.",
+        "data": {
+          "selected_room": "Room"
+        }
+      },
+      "edit_room": {
+        "title": "Edit {name}",
+        "description": "Modify settings for {name}.",
+        "data": {
+          "media_player": "Media Player",
+          "presence_sensors": "Presence Sensors"
+        }
+      },
+      "add_room_select": {
+        "title": "Add Rooms",
+        "description": "Select which rooms to add.",
+        "data": {
+          "selected_areas": "Rooms to Add"
+        }
+      },
+      "add_room_config": {
+        "title": "Configure {name}",
+        "description": "Set the media player and presence sensors for {name}.",
+        "data": {
+          "media_player": "Media Player",
+          "presence_sensors": "Presence Sensors"
+        }
+      },
+      "group_settings": {
+        "title": "Group Settings",
+        "description": "Configure settings for group announcements (when multiple people are in a room).",
+        "data": {
+          "group_language": "Language",
+          "group_tts_platform": "TTS Platform",
+          "group_tts_voice": "TTS Voice",
+          "group_enhance_with_ai": "Enhance with AI",
+          "group_conversation_entity": "Conversation Entity (for AI)"
         }
       }
+    },
+    "abort": {
+      "no_people": "No people configured to edit.",
+      "no_rooms": "No rooms configured to edit.",
+      "no_available_people": "All people in Home Assistant are already configured."
     }
   }
 }

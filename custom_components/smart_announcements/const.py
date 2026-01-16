@@ -5,6 +5,7 @@ DOMAIN = "smart_announcements"
 # Configuration keys - Global settings
 CONF_ROOM_TRACKING = "room_tracking"
 CONF_PRESENCE_VERIFICATION = "presence_verification"
+CONF_DEBUG_MODE = "debug_mode"
 CONF_DEFAULT_TTS_PLATFORM = "default_tts_platform"
 CONF_DEFAULT_CONVERSATION_ENTITY = "default_conversation_entity"
 CONF_PRE_ANNOUNCE_ENABLED = "pre_announce_enabled"
@@ -31,11 +32,11 @@ ATTR_TARGET_PERSON = "target_person"
 ATTR_TARGET_AREA = "target_area"
 ATTR_ENHANCE_WITH_AI = "enhance_with_ai"
 ATTR_PRE_ANNOUNCE_SOUND = "pre_announce_sound"
-ATTR_SLEEP_OVERRIDE = "sleep_override"
 
 # Default values
 DEFAULT_ROOM_TRACKING = True
-DEFAULT_PRESENCE_VERIFICATION = True
+DEFAULT_PRESENCE_VERIFICATION = False
+DEFAULT_DEBUG_MODE = False
 DEFAULT_TTS_PLATFORM = "tts.google_translate_say"
 DEFAULT_PRE_ANNOUNCE_ENABLED = True
 DEFAULT_PRE_ANNOUNCE_URL = "/local/sounds/chime.mp3"

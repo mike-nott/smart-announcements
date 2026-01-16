@@ -15,7 +15,6 @@ from .const import (
     ATTR_TARGET_AREA,
     ATTR_ENHANCE_WITH_AI,
     ATTR_PRE_ANNOUNCE_SOUND,
-    ATTR_SLEEP_OVERRIDE,
 )
 from .announcer import Announcer
 
@@ -29,9 +28,8 @@ SERVICE_ANNOUNCE_SCHEMA = vol.Schema(
         vol.Required(ATTR_MESSAGE): cv.string,
         vol.Optional(ATTR_TARGET_PERSON): cv.string,
         vol.Optional(ATTR_TARGET_AREA): cv.string,
-        vol.Optional(ATTR_ENHANCE_WITH_AI, default=False): cv.boolean,
+        vol.Optional(ATTR_ENHANCE_WITH_AI): cv.boolean,
         vol.Optional(ATTR_PRE_ANNOUNCE_SOUND): cv.boolean,
-        vol.Optional(ATTR_SLEEP_OVERRIDE, default=False): cv.boolean,
     }
 )
 
@@ -56,7 +54,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         hass.data[DOMAIN][entry.entry_id] = {
             "config": dict(entry.data),
             "announcer": announcer,
-            "mutes": {
+            "enabled": {
                 "people": {},
                 "rooms": {},
             },
@@ -118,9 +116,8 @@ async def _async_handle_announce(
     message = call.data.get(ATTR_MESSAGE)
     target_person = call.data.get(ATTR_TARGET_PERSON)
     target_area = call.data.get(ATTR_TARGET_AREA)
-    enhance_with_ai = call.data.get(ATTR_ENHANCE_WITH_AI, False)
+    enhance_with_ai = call.data.get(ATTR_ENHANCE_WITH_AI)
     pre_announce_sound = call.data.get(ATTR_PRE_ANNOUNCE_SOUND)
-    sleep_override = call.data.get(ATTR_SLEEP_OVERRIDE, False)
 
     _LOGGER.debug(
         "Announce service called: message=%s, target_person=%s, target_area=%s",
@@ -144,5 +141,4 @@ async def _async_handle_announce(
         target_area=target_area,
         enhance_with_ai=enhance_with_ai,
         pre_announce_sound=pre_announce_sound,
-        sleep_override=sleep_override,
     )

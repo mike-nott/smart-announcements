@@ -26,21 +26,13 @@ announce:
         area:
     enhance_with_ai:
       name: Enhance with AI
-      description: Use the person's conversation entity to enhance the message.
+      description: Use the conversation entity to enhance the message. Defaults to person/group config setting.
       required: false
-      default: false
       selector:
         boolean:
     pre_announce_sound:
       name: Pre-Announce Sound
-      description: Play a chime before the announcement. Overrides global setting if specified.
+      description: Play a chime before the announcement. Defaults to global config setting.
       required: false
-      selector:
-        boolean:
-    sleep_override:
-      name: Sleep Override
-      description: Bypass room mute switches (for urgent announcements).
-      required: false
-      default: false
       selector:
         boolean:
