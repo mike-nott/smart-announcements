@@ -47,9 +47,19 @@ from .const import (
     DEFAULT_PRE_ANNOUNCE_ENABLED,
     DEFAULT_PRE_ANNOUNCE_URL,
     DEFAULT_PRE_ANNOUNCE_DELAY,
+    LANGUAGE_OPTIONS,
+    LANGUAGE_CODE_MAP,
 )
 
 _LOGGER = logging.getLogger(__name__)
+
+
+def get_language_options() -> list[dict]:
+    """Get language options formatted for selector."""
+    return [
+        {"value": lang, "label": lang.capitalize()}
+        for lang in LANGUAGE_OPTIONS
+    ]
 
 
 def get_tts_entities(hass: HomeAssistant) -> list[str]:
@@ -222,12 +232,7 @@ class SmartAnnouncementsConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 ),
                 vol.Optional("language", default="english"): SelectSelector(
                     SelectSelectorConfig(
-                        options=[
-                            {"value": "english", "label": "English"},
-                            {"value": "japanese", "label": "Japanese"},
-                            {"value": "tagalog", "label": "Tagalog"},
-                            {"value": "scottish", "label": "Scottish"},
-                        ],
+                        options=get_language_options(),
                         mode=SelectSelectorMode.DROPDOWN,
                     )
                 ),
@@ -282,13 +287,7 @@ class SmartAnnouncementsConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         language = self._current_person_data.get("language", "english")
 
         # Map our language names to language codes
-        language_map = {
-            "english": "en",
-            "japanese": "ja",
-            "tagalog": "tl",
-            "scottish": "en",  # Scottish uses English voices typically
-        }
-        lang_code = language_map.get(language, "en")
+        lang_code = LANGUAGE_CODE_MAP.get(language, "en")
 
         # Build voice options
         voice_options = []
@@ -355,12 +354,7 @@ class SmartAnnouncementsConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             {
                 vol.Optional("group_language", default="english"): SelectSelector(
                     SelectSelectorConfig(
-                        options=[
-                            {"value": "english", "label": "English"},
-                            {"value": "japanese", "label": "Japanese"},
-                            {"value": "tagalog", "label": "Tagalog"},
-                            {"value": "scottish", "label": "Scottish"},
-                        ],
+                        options=get_language_options(),
                         mode=SelectSelectorMode.DROPDOWN,
                     )
                 ),
@@ -397,13 +391,7 @@ class SmartAnnouncementsConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         language = self._current_group_data.get("group_language", "english")
 
         # Map our language names to language codes
-        language_map = {
-            "english": "en",
-            "japanese": "ja",
-            "tagalog": "tl",
-            "scottish": "en",
-        }
-        lang_code = language_map.get(language, "en")
+        lang_code = LANGUAGE_CODE_MAP.get(language, "en")
 
         # Build voice options
         voice_options = []
@@ -807,8 +795,7 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
         # Get TTS voices if platform is set
         tts_platform = person.get("tts_platform")
         language = person.get("language", "english")
-        language_map = {"english": "en", "japanese": "ja", "tagalog": "tl", "scottish": "en"}
-        lang_code = language_map.get(language, "en")
+        lang_code = LANGUAGE_CODE_MAP.get(language, "en")
 
         voice_options = []
         if tts_platform:
@@ -847,12 +834,7 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
 
         schema_dict[vol.Optional("language", default=person.get("language", "english"))] = SelectSelector(
             SelectSelectorConfig(
-                options=[
-                    {"value": "english", "label": "English"},
-                    {"value": "japanese", "label": "Japanese"},
-                    {"value": "tagalog", "label": "Tagalog"},
-                    {"value": "scottish", "label": "Scottish"},
-                ],
+                options=get_language_options(),
                 mode=SelectSelectorMode.DROPDOWN,
             )
         )
@@ -933,12 +915,7 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
                 ),
                 vol.Optional("language", default="english"): SelectSelector(
                     SelectSelectorConfig(
-                        options=[
-                            {"value": "english", "label": "English"},
-                            {"value": "japanese", "label": "Japanese"},
-                            {"value": "tagalog", "label": "Tagalog"},
-                            {"value": "scottish", "label": "Scottish"},
-                        ],
+                        options=get_language_options(),
                         mode=SelectSelectorMode.DROPDOWN,
                     )
                 ),
@@ -985,8 +962,7 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
         # Get TTS voices based on language and platform from previous step
         tts_platform = self._new_person_data.get("tts_platform")
         language = self._new_person_data.get("language", "english")
-        language_map = {"english": "en", "japanese": "ja", "tagalog": "tl", "scottish": "en"}
-        lang_code = language_map.get(language, "en")
+        lang_code = LANGUAGE_CODE_MAP.get(language, "en")
 
         voice_options = []
         if tts_platform:
@@ -1270,8 +1246,7 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
         # Get values with fallback to first person's settings
         tts_platform = group.get("group_tts_platform") or first_person.get("tts_platform")
         language = group.get("group_language") or first_person.get("language", "english")
-        language_map = {"english": "en", "japanese": "ja", "tagalog": "tl", "scottish": "en"}
-        lang_code = language_map.get(language, "en")
+        lang_code = LANGUAGE_CODE_MAP.get(language, "en")
 
         voice_options = []
         if tts_platform:
@@ -1298,12 +1273,7 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
         schema_dict: dict[Any, Any] = {
             vol.Optional("group_language", default=group.get("group_language", "english")): SelectSelector(
                 SelectSelectorConfig(
-                    options=[
-                        {"value": "english", "label": "English"},
-                        {"value": "japanese", "label": "Japanese"},
-                        {"value": "tagalog", "label": "Tagalog"},
-                        {"value": "scottish", "label": "Scottish"},
-                    ],
+                    options=get_language_options(),
                     mode=SelectSelectorMode.DROPDOWN,
                 )
             ),

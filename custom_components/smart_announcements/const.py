@@ -45,11 +45,61 @@ DEFAULT_LANGUAGE = "english"
 
 # Language options
 LANGUAGE_OPTIONS = [
+    "arabic",
+    "chinese",
+    "czech",
+    "danish",
+    "dutch",
     "english",
+    "filipino",
+    "finnish",
+    "french",
+    "german",
+    "greek",
+    "hindi",
+    "italian",
     "japanese",
-    "tagalog",
-    "scottish",
+    "korean",
+    "norwegian",
+    "polish",
+    "portuguese",
+    "russian",
+    "spanish",
+    "swedish",
+    "thai",
+    "turkish",
+    "ukrainian",
+    "vietnamese",
 ]
+
+# Language to language code mapping for TTS
+LANGUAGE_CODE_MAP = {
+    "arabic": "ar",
+    "chinese": "zh",
+    "czech": "cs",
+    "danish": "da",
+    "dutch": "nl",
+    "english": "en",
+    "filipino": "tl",
+    "finnish": "fi",
+    "french": "fr",
+    "german": "de",
+    "greek": "el",
+    "hindi": "hi",
+    "italian": "it",
+    "japanese": "ja",
+    "korean": "ko",
+    "norwegian": "no",
+    "polish": "pl",
+    "portuguese": "pt",
+    "russian": "ru",
+    "spanish": "es",
+    "swedish": "sv",
+    "thai": "th",
+    "turkish": "tr",
+    "ukrainian": "uk",
+    "vietnamese": "vi",
+}
 
 # Events
 EVENT_ANNOUNCEMENT_SENT = f"{DOMAIN}_announcement_sent"
