@@ -26,14 +26,14 @@ announce:
       selector:
         area:
     enhance_with_ai:
-      name: Enhance with AI
-      description: Use the conversation entity to enhance the message. Defaults to person/group config setting.
+      name: Override AI Enhancement
+      description: Override the AI enhancement setting (uses person/group configuration if not specified).
       required: false
       selector:
         boolean:
     pre_announce_sound:
-      name: Pre-Announce Sound
-      description: Play a chime before the announcement. Defaults to global config setting.
+      name: Override Pre-Announce Sound
+      description: Override the pre-announce sound setting (uses global configuration if not specified).
       required: false
       selector:
         boolean:
