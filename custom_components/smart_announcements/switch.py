@@ -116,9 +116,10 @@ class PersonSwitch(SwitchEntity):
             "tts_platform": self._person_config.get("tts_platform"),
             "tts_voice": self._person_config.get("tts_voice"),
             "enhance_with_ai": self._person_config.get("enhance_with_ai"),
+            "translate_announcement": self._person_config.get("translate_announcement"),
         }
-        # Only include conversation_entity if AI enhancement is enabled
-        if self._person_config.get("enhance_with_ai", True):
+        # Only include conversation_entity if AI enhancement or translation is enabled
+        if self._person_config.get("enhance_with_ai", True) or self._person_config.get("translate_announcement", False):
             attrs["conversation_entity"] = self._person_config.get("conversation_entity")
         return attrs
 

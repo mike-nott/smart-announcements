@@ -110,7 +110,6 @@
       },
       "global_settings": {
         "title": "Global Settings",
-        "description": "Configure room tracking, pre-announce, and debug settings.",
         "data": {
           "room_tracking": "Enable Room Tracking",
           "presence_verification": "Verify with Presence Sensors",
@@ -129,7 +128,6 @@
       },
       "edit_person": {
         "title": "Edit {name}",
-        "description": "Modify settings for {name}.",
         "data": {
           "room_tracking_entity": "Room Tracking Entity",
           "language": "Language",
@@ -142,7 +140,6 @@
       },
       "delete_person_select": {
         "title": "Delete Person",
-        "description": "Select which person to delete.",
         "data": {
           "selected_person": "Person to Delete"
         }
@@ -156,7 +153,6 @@
       },
       "add_person_select": {
         "title": "Add Person",
-        "description": "Select a person to add.",
         "data": {
           "person_entity": "Person"
         }
@@ -189,7 +185,6 @@
       },
       "edit_room": {
         "title": "Edit {name}",
-        "description": "Modify settings for {name}.",
         "data": {
           "media_player": "Media Player",
           "presence_sensors": "Presence Sensors"
@@ -197,7 +192,6 @@
       },
       "delete_room_select": {
         "title": "Delete Room",
-        "description": "Select which room to delete.",
         "data": {
           "selected_room": "Room to Delete"
         }
@@ -211,7 +205,6 @@
       },
       "add_room_select": {
         "title": "Add Rooms",
-        "description": "Select which rooms to add.",
         "data": {
           "selected_areas": "Rooms to Add"
         }
