@@ -5,7 +5,7 @@ A Home Assistant custom integration for intelligent, context-aware voice announc
 ## Key Features
 
 - ✅ **Intelligent Room Routing**: Automatically finds people and announces to their current room
-- ✅ **AI Enhancement**: Optional AI-powered message rephrasing via conversation agents
+- ✅ **AI Enhancement & Translation**: Optional AI-powered message rephrasing and translation via conversation agents
 - ✅ **Multi-Language Support**: Per-person language configuration for TTS
 - ✅ **Room Tracking**: Supports Bermuda, ESPresense, or any device tracker/sensor
 - ✅ **Presence Verification**: Optional occupancy sensor verification for accuracy
@@ -83,9 +83,10 @@ The setup wizard guides you through configuration:
 - **Language**: Choose from available language options
 - **TTS Platform**: Which TTS service to use for this person
 - **Enhance with AI**: Toggle AI enhancement for natural rephrasing
+- **Translate Announcement**: Toggle message translation to selected language
 
 *Part 2 - Voice & AI:*
-- **Conversation Entity**: AI agent for enhancement (only if AI enabled)
+- **Conversation Entity**: AI agent for enhancement/translation (only if either AI or translation enabled)
 - **TTS Voice**: Voice selection (dynamically loaded based on TTS platform and language)
 
 **Step 3 - Group Settings (only if multiple people):**
@@ -96,9 +97,10 @@ When multiple people are in the same room, use these settings instead of individ
 - **Language**: Language for group announcements
 - **TTS Platform**: TTS service for groups
 - **Enhance with AI**: Toggle AI enhancement
+- **Translate Announcement**: Toggle message translation
 
 *Part 2 - Voice & AI:*
-- **Conversation Entity**: AI agent for groups
+- **Conversation Entity**: AI agent for groups (only if either AI or translation enabled)
 - **TTS Voice**: Voice for group announcements
 
 **Step 4 - Room Tracking Settings:**
@@ -250,17 +252,28 @@ If enabled, the integration can verify room occupancy using presence sensors bef
 
 This prevents announcements to rooms where tracking may be stale.
 
-## AI Enhancement
+## AI Enhancement & Translation
 
-When enabled, announcements are sent to your configured conversation agent for natural rephrasing:
+Smart Announcements supports two independent features via conversation agents:
 
-**Original**: "The washing machine has finished"
-**AI Enhanced**: "Hey! The washing machine just finished its cycle. Your laundry is ready to be moved to the dryer."
+**AI Enhancement** - Rephrases messages to be more engaging using your conversation agent's personality
+**Translation** - Translates messages to the person's configured language
 
-**Original**: "Motion detected in the garage"
-**AI Enhanced**: "Heads up - I just detected some movement in the garage. Thought you'd want to know!"
+You can enable one, both, or neither. When both are enabled, the message is enhanced first, then translated.
 
-The AI uses the conversation agent's personality and style for consistent, engaging announcements.
+### Examples
+
+**Enhancement Only:**
+- Original: "The washing machine has finished"
+- Enhanced: "Hey! The washing machine just finished its cycle. Your laundry is ready to be moved to the dryer."
+
+**Translation Only:**
+- Original: "Dinner is ready"
+- Translated: "夕食の準備ができました" (Japanese)
+
+**Both Enhancement + Translation:**
+- Original: "Motion detected in the garage"
+- Result: AI makes it more engaging, then translates to the person's language
 
 ## Debug Mode
 
@@ -377,17 +390,18 @@ automation:
 - Enable "Verify with Presence Sensors" in Global Settings
 - This ensures tracking entity matches actual occupancy
 
-### AI Enhancement Not Working
+### AI Enhancement or Translation Not Working
 
 **Verify conversation entity:**
 - Check that the conversation entity is configured for the person
 - Test the conversation entity directly in Developer Tools
 - Ensure the conversation agent is running and responding
 
-**Check enhance_with_ai setting:**
-- Person config: Is "Enhance with AI" enabled?
-- Group config: Is "Enhance with AI" enabled (if multiple people in room)?
+**Check settings:**
+- Person config: Is "Enhance with AI" or "Translate Announcement" enabled?
+- Group config: Is "Enhance with AI" or "Translate Announcement" enabled (if multiple people in room)?
 - Service call: Are you overriding with `enhance_with_ai: false`?
+- Note: Translation requires a conversation entity even if AI enhancement is disabled
 
 ### Pre-Announce Sound Not Playing
 
