@@ -1,0 +1,428 @@
+# Smart Announcements for Home Assistant
+
+A Home Assistant custom integration for intelligent, context-aware voice announcements that automatically route messages to the right room based on who's home and where they are. Supports AI enhancement, multiple languages, and per-person customization.
+
+## Key Features
+
+- ✅ **Intelligent Room Routing**: Automatically finds people and announces to their current room
+- ✅ **AI Enhancement**: Optional AI-powered message rephrasing via conversation agents
+- ✅ **Multi-Language Support**: Per-person language configuration for TTS
+- ✅ **Room Tracking**: Supports Bermuda, ESPresense, or any device tracker/sensor
+- ✅ **Presence Verification**: Optional occupancy sensor verification for accuracy
+- ✅ **Per-Person Configuration**: Individual TTS platform, voice, language, and AI settings
+- ✅ **Group Announcements**: Special settings when multiple people are in the same room
+- ✅ **Enable/Disable Switches**: Per-person and per-room announcement control
+- ✅ **Pre-Announce Sound**: Optional chime before announcements
+- ✅ **Debug Mode**: Comprehensive emoji-enhanced logging for troubleshooting
+
+## The Problem Smart Announcements Solves
+
+Traditional Home Assistant announcements require you to manually specify which media player to use. This means:
+- Writing complex automations for every announcement
+- Hard-coding room names and media players
+- No automatic person tracking
+- Can't handle people moving between rooms
+- Announcements to empty rooms or wrong rooms
+- No personalization per person
+
+## How Smart Announcements Works
+
+Instead of manual routing, Smart Announcements:
+
+1. **Tracks people** using device trackers or room presence sensors
+2. **Finds their current room** based on configured tracking entities
+3. **Routes announcements** to the media player in that room
+4. **Personalizes the message** using per-person TTS voices and languages
+5. **Enhances with AI** (optional) for natural, conversational announcements
+6. **Verifies presence** (optional) using occupancy sensors
+7. **Respects enable/disable switches** for both people and rooms
+
+## Requirements
+
+- Home Assistant 2024.1+
+- At least one TTS platform configured (Google Translate, ElevenLabs, Piper, etc.)
+- Media players in your rooms (Google Home, Sonos, Echo, etc.)
+- Optional: Room tracking (Bermuda, ESPresense, or device trackers)
+- Optional: Conversation agent for AI enhancement (MCP Assist, Extended OpenAI Conversation, etc.)
+- Optional: Presence sensors for verification
+
+## Installation
+
+### Add to HACS
+
+[![Open your Home Assistant instance and add this repository to HACS.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=mike-nott&repository=smart-announcements&category=integration)
+
+### Option A: HACS (Recommended)
+1. Click the badge above to add this repository to HACS, or manually add it as a custom repository
+2. Install "Smart Announcements" from HACS
+3. Restart Home Assistant
+
+### Option B: Manual Installation
+1. Copy the `custom_components/smart_announcements` folder to your Home Assistant `custom_components` directory
+2. Restart Home Assistant
+
+## Configuration
+
+### 1. Add the Integration
+
+1. Go to **Settings** → **Devices & Services** → **Add Integration**
+2. Search for "Smart Announcements" and select it
+
+### 2. Setup Flow
+
+The setup wizard guides you through configuration:
+
+**Step 1 - Select People:**
+- Choose which people in your home should receive announcements
+- You can select multiple people using checkboxes
+
+**Step 2 - Configure Each Person (2-step per person):**
+
+*Part 1 - Language & TTS:*
+- **Room Tracking Entity**: Device tracker or sensor that reports this person's current room
+- **Language**: Choose from available language options
+- **TTS Platform**: Which TTS service to use for this person
+- **Enhance with AI**: Toggle AI enhancement for natural rephrasing
+
+*Part 2 - Voice & AI:*
+- **Conversation Entity**: AI agent for enhancement (only if AI enabled)
+- **TTS Voice**: Voice selection (dynamically loaded based on TTS platform and language)
+
+**Step 3 - Group Settings (only if multiple people):**
+
+When multiple people are in the same room, use these settings instead of individual preferences.
+
+*Part 1 - Language & TTS:*
+- **Language**: Language for group announcements
+- **TTS Platform**: TTS service for groups
+- **Enhance with AI**: Toggle AI enhancement
+
+*Part 2 - Voice & AI:*
+- **Conversation Entity**: AI agent for groups
+- **TTS Voice**: Voice for group announcements
+
+**Step 4 - Room Tracking Settings:**
+- **Enable Room Tracking**: Use device trackers to find people
+- **Verify with Presence Sensors**: Confirm occupancy with sensors
+
+**Step 5 - Select Rooms:**
+- Choose which rooms should receive announcements
+- Select multiple rooms using checkboxes
+
+**Step 6 - Configure Each Room:**
+- **Media Player**: Which speaker/display to use
+- **Presence Sensors**: Occupancy sensors for verification (only if enabled in Step 4)
+
+**Step 7 - Pre-Announce Sound:**
+- **Enable Pre-Announce Sound**: Play a chime before announcements
+- **Pre-Announce Sound URL**: Path to audio file (e.g., `/local/chime.mp3`)
+- **Delay After Pre-Announce**: Seconds to wait after chime (0-10)
+
+### 3. Managing Configuration
+
+After setup, you can edit settings via **Configure** button:
+
+**Global Settings:**
+- Room tracking toggle
+- Presence verification toggle
+- Pre-announce sound settings
+- Debug mode toggle
+
+**Edit People:**
+- Select a person to edit their settings
+- Or choose "+ Add Person" to add new people
+
+**Edit Rooms:**
+- Select a room to edit its settings
+- Or choose "+ Add Rooms" to add multiple rooms at once
+
+**Group Settings:**
+- Edit group announcement preferences (only if multiple people configured)
+
+## Usage
+
+### Service: `smart_announcements.announce`
+
+Send announcements to people based on their location.
+
+#### Basic Announcement (to all occupied rooms)
+```yaml
+service: smart_announcements.announce
+data:
+  message: "Dinner is ready"
+```
+
+#### Target a Specific Person
+```yaml
+service: smart_announcements.announce
+data:
+  message: "Your package has arrived"
+  target_person: person.john
+```
+
+#### Target a Specific Area
+```yaml
+service: smart_announcements.announce
+data:
+  message: "Motion detected in the garage"
+  target_area: living_room
+```
+
+#### With AI Enhancement
+```yaml
+service: smart_announcements.announce
+data:
+  message: "The washing machine has finished"
+  enhance_with_ai: true
+```
+
+#### Without Pre-Announce Sound
+```yaml
+service: smart_announcements.announce
+data:
+  message: "Quiet announcement"
+  pre_announce_sound: false
+```
+
+### Service Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `message` | string | Yes | The announcement message |
+| `target_person` | string | No | Person entity ID (e.g., `person.john`) |
+| `target_area` | string | No | Area ID (e.g., `living_room`) |
+| `enhance_with_ai` | boolean | No | Override AI enhancement setting |
+| `pre_announce_sound` | boolean | No | Override pre-announce sound setting |
+
+### Enable/Disable Switches
+
+The integration creates switches to control announcements:
+
+**Per-Person Switches:**
+- `switch.smart_announcements_john` - Enable/disable announcements for John
+- `switch.smart_announcements_alice` - Enable/disable announcements for Alice
+
+**Per-Room Switches:**
+- `switch.smart_announcements_living_room` - Enable/disable Living Room announcements
+- `switch.smart_announcements_bedroom` - Enable/disable Bedroom announcements
+
+All switches are **ON by default** (enabled). Turn a switch OFF to disable announcements.
+
+Each switch exposes its configuration as read-only attributes (TTS platform, voice, language, etc.).
+
+## Room Tracking
+
+Smart Announcements supports various room tracking methods:
+
+### Bermuda / ESPresense Pattern
+If your tracking entity reports the area name in its state:
+```
+sensor.person_room_presence
+  state: "living_room"
+```
+
+### Area Attribute Pattern
+If your tracking entity has an `area` attribute:
+```
+device_tracker.person_phone
+  state: "home"
+  attributes:
+    area: "bedroom"
+```
+
+### Room Attribute Pattern
+If your tracking entity has a `room` attribute:
+```
+sensor.person_location
+  state: "home"
+  attributes:
+    room: "kitchen"
+```
+
+### Presence Verification
+
+If enabled, the integration can verify room occupancy using presence sensors before announcing:
+
+1. Person's tracking entity says they're in the living room
+2. Integration checks living room's configured presence sensors
+3. If ANY sensor is "on", announcement proceeds
+4. If ALL sensors are "off", announcement is skipped
+
+This prevents announcements to rooms where tracking may be stale.
+
+## AI Enhancement
+
+When enabled, announcements are sent to your configured conversation agent for natural rephrasing:
+
+**Original**: "The washing machine has finished"
+**AI Enhanced**: "Hey! The washing machine just finished its cycle. Your laundry is ready to be moved to the dryer."
+
+**Original**: "Motion detected in the garage"
+**AI Enhanced**: "Heads up - I just detected some movement in the garage. Thought you'd want to know!"
+
+The AI uses the conversation agent's personality and style for consistent, engaging announcements.
+
+## Debug Mode
+
+Enable debug mode for comprehensive logging with emoji markers:
+
+- 🔔 Announcement start/end
+- 📝 Message content
+- 👤 Target person
+- 📍 Target area
+- ⚙️ Configuration settings
+- 🔍 Decision logic
+- ✅/❌ Success/failure
+- 🏠 Room processing
+- 🤖 AI enhancement
+- 🔔 Pre-announce sound
+- 🎙️ TTS service calls
+
+Debug logs show every decision point, making it easy to troubleshoot routing issues.
+
+## Automation Examples
+
+### Morning Announcements
+```yaml
+automation:
+  - alias: "Morning Weather Announcement"
+    trigger:
+      - platform: time
+        at: "07:00:00"
+    condition:
+      - condition: state
+        entity_id: person.john
+        state: "home"
+    action:
+      - service: smart_announcements.announce
+        data:
+          message: "Good morning! It's {{ states('sensor.outdoor_temperature') }}°F outside with {{ states('weather.home') }}. Have a great day!"
+          target_person: person.john
+          enhance_with_ai: true
+```
+
+### Package Delivery Notification
+```yaml
+automation:
+  - alias: "Package Delivery Alert"
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.front_door_camera_person
+        to: "on"
+    action:
+      - service: smart_announcements.announce
+        data:
+          message: "Someone is at the front door. It might be a package delivery."
+          enhance_with_ai: true
+```
+
+### Reminder When Arriving Home
+```yaml
+automation:
+  - alias: "Arrival Reminder"
+    trigger:
+      - platform: state
+        entity_id: person.alice
+        to: "home"
+    action:
+      - service: smart_announcements.announce
+        data:
+          message: "Welcome home! Don't forget to take out the trash tonight."
+          target_person: person.alice
+```
+
+### Multi-Language Household
+```yaml
+automation:
+  - alias: "Dinner Ready (Multi-Language)"
+    trigger:
+      - platform: time
+        at: "18:00:00"
+    action:
+      # Will automatically use each person's configured language
+      - service: smart_announcements.announce
+        data:
+          message: "Dinner is ready"
+          enhance_with_ai: true
+```
+
+## Troubleshooting
+
+### Announcements Not Playing
+
+**Check enable switches:**
+- Verify person switch is ON: `switch.smart_announcements_john`
+- Verify room switch is ON: `switch.smart_announcements_living_room`
+
+**Check room tracking:**
+- Enable debug mode in Global Settings
+- Trigger an announcement and check logs
+- Look for "📍 Area ID" to see which room was detected
+- Verify the room tracking entity is reporting correctly
+
+**Check media player:**
+- Ensure the media player is powered on and connected
+- Test TTS directly: `service: tts.speak` with the same media player
+- Verify the media player supports TTS announcements
+
+### Wrong Room Receiving Announcements
+
+**Check room tracking entity:**
+- Verify the person's room tracking entity is configured correctly
+- Check that entity's current state matches the person's actual location
+- Try a different device tracker or sensor
+
+**Enable presence verification:**
+- Add presence sensors to rooms in Room Settings
+- Enable "Verify with Presence Sensors" in Global Settings
+- This ensures tracking entity matches actual occupancy
+
+### AI Enhancement Not Working
+
+**Verify conversation entity:**
+- Check that the conversation entity is configured for the person
+- Test the conversation entity directly in Developer Tools
+- Ensure the conversation agent is running and responding
+
+**Check enhance_with_ai setting:**
+- Person config: Is "Enhance with AI" enabled?
+- Group config: Is "Enhance with AI" enabled (if multiple people in room)?
+- Service call: Are you overriding with `enhance_with_ai: false`?
+
+### Pre-Announce Sound Not Playing
+
+**Check file path:**
+- File must be in `/config/www/` directory
+- Use `/local/` prefix in config (e.g., `/local/chime.mp3`)
+- Verify file exists and is a valid audio format
+
+**Check pre-announce setting:**
+- Global Settings: Is "Enable Pre-Announce Sound" ON?
+- Service call: Are you overriding with `pre_announce_sound: false`?
+
+### Debug Mode Issues
+
+**Enable debug mode:**
+1. Go to Smart Announcements → Configure
+2. Select "Global Settings"
+3. Enable "Debug Mode (verbose logging)"
+4. Save
+
+**View debug logs:**
+1. Go to Settings → System → Logs
+2. Look for entries with `[DEBUG]` prefix
+3. Logs show every decision point with emoji markers
+
+## Entity Exposure
+
+When using AI enhancement, ensure your conversation agent has access to necessary entities. Some conversation agents (like MCP Assist) handle entity discovery automatically, while others may require manual entity exposure.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Support
+
+- **Issues**: [GitHub Issues](https://github.com/mike-nott/smart-announcements/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/mike-nott/smart-announcements/discussions)
+- **Home Assistant Community**: [Community Forum](https://community.home-assistant.io/)
