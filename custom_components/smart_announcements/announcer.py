@@ -98,6 +98,7 @@ class Announcer:
         target_person: str | None = None,
         target_area: str | None = None,
         enhance_with_ai: bool | None = None,
+        translate_announcement: bool | None = None,
         pre_announce_sound: bool | None = None,
     ) -> None:
         """Send an announcement to the appropriate room(s)."""
@@ -110,6 +111,7 @@ class Announcer:
         self._debug("👤 Target person: %s", target_person or "None (broadcast)")
         self._debug("📍 Target area: %s", target_area or "None (auto-detect)")
         self._debug("🤖 Enhance with AI (param): %s", enhance_with_ai if enhance_with_ai is not None else "Not specified (use config)")
+        self._debug("🌐 Translate announcement (param): %s", translate_announcement if translate_announcement is not None else "Not specified (use config)")
         self._debug("🔊 Pre-announce sound (param): %s", pre_announce_sound if pre_announce_sound is not None else "Not specified (use config)")
 
         # Resolve target rooms
@@ -141,6 +143,7 @@ class Announcer:
                 message=message,
                 target_person=target_person,
                 enhance_with_ai=enhance_with_ai,
+                translate_announcement=translate_announcement,
                 pre_announce_sound=pre_announce_sound,
             )
 
@@ -254,6 +257,7 @@ class Announcer:
         message: str,
         target_person: str | None,
         enhance_with_ai: bool | None,
+        translate_announcement: bool | None,
         pre_announce_sound: bool | None,
     ) -> None:
         """Announce to a specific room."""
@@ -318,17 +322,40 @@ class Announcer:
         else:
             self._debug("📊 Using service parameter AI setting: %s", should_enhance)
 
-        # Enhance message with AI if enabled
+        # Determine translate_announcement setting from config if not specified
+        self._debug("🔍 Determining translation setting...")
+        should_translate = translate_announcement
+        if should_translate is None:
+            # Check person config first, then group config
+            if target_person:
+                person_config = self._get_person_config(target_person)
+                if person_config:
+                    should_translate = person_config.get("translate_announcement", False)
+                    self._debug("📊 Using person's translation setting: %s", should_translate)
+            if should_translate is None:
+                # Fall back to group config
+                group_config = self.config.get("group", {})
+                should_translate = group_config.get("group_translate_announcement", False)
+                self._debug("📊 Using group translation setting: %s", should_translate)
+        else:
+            self._debug("📊 Using service parameter translation setting: %s", should_translate)
+
+        # Enhance and/or translate message if enabled
         final_message = message
-        if should_enhance:
-            self._debug("🤖 Enhancing message with AI...")
+        if should_enhance or should_translate:
+            if should_enhance and should_translate:
+                self._debug("🤖 Enhancing and translating message...")
+            elif should_enhance:
+                self._debug("🤖 Enhancing message with AI...")
+            else:
+                self._debug("🌐 Translating message...")
             final_message = await self._enhance_message(message, target_person)
             if final_message != message:
-                self._debug("✨ Message enhanced: '%s' -> '%s'", message, final_message)
+                self._debug("✨ Message processed: '%s' -> '%s'", message, final_message)
             else:
-                self._debug("⚠️ Message unchanged (AI enhancement returned same text)")
+                self._debug("⚠️ Message unchanged (AI processing returned same text)")
         else:
-            self._debug("⏭️ Skipping AI enhancement (disabled)")
+            self._debug("⏭️ Skipping AI enhancement and translation (both disabled)")
 
         # Personalize message
         self._debug("🔍 Personalizing message...")
@@ -456,7 +483,7 @@ class Announcer:
             _LOGGER.debug("Using enhance-only prompt")
         else:
             # Both enhance and translate
-            prompt = f"Make this announcement more engaging, then translate to {language}: {message}"
+            prompt = f"Create an engaging {language} language translated version of this announcement: {message}"
             _LOGGER.debug("Using enhance+translate prompt for language: %s", language)
 
         try:

@@ -33,6 +33,7 @@ ATTR_MESSAGE = "message"
 ATTR_TARGET_PERSON = "target_person"
 ATTR_TARGET_AREA = "target_area"
 ATTR_ENHANCE_WITH_AI = "enhance_with_ai"
+ATTR_TRANSLATE_ANNOUNCEMENT = "translate_announcement"
 ATTR_PRE_ANNOUNCE_SOUND = "pre_announce_sound"
 
 # Default values

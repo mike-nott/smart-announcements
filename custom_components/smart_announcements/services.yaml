@@ -31,6 +31,12 @@ announce:
       required: false
       selector:
         boolean:
+    translate_announcement:
+      name: Override Translation
+      description: Override the translation setting (uses person/group configuration if not specified).
+      required: false
+      selector:
+        boolean:
     pre_announce_sound:
       name: Override Pre-Announce Sound
       description: Override the pre-announce sound setting (uses global configuration if not specified).
