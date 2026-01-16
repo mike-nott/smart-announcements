@@ -15,10 +15,12 @@ CONF_PRE_ANNOUNCE_DELAY = "pre_announce_delay"
 # Configuration keys - People
 CONF_PEOPLE = "people"
 CONF_PERSON_ENTITY = "person_entity"
+CONF_PERSON_FRIENDLY_NAME = "person_friendly_name"
 CONF_TTS_PLATFORM = "tts_platform"
 CONF_TTS_VOICE = "tts_voice"
 CONF_CONVERSATION_ENTITY = "conversation_entity"
 CONF_LANGUAGE = "language"
+CONF_TRANSLATE_ANNOUNCEMENT = "translate_announcement"
 
 # Configuration keys - Rooms
 CONF_ROOMS = "rooms"

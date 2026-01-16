@@ -14,6 +14,7 @@ from .const import (
     DOMAIN,
     CONF_PEOPLE,
     CONF_ROOMS,
+    CONF_PERSON_FRIENDLY_NAME,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -37,12 +38,14 @@ async def async_setup_entry(
     for person_config in people:
         person_entity = person_config.get("person_entity", "")
         if person_entity:
-            # Extract name from entity_id (person.mike -> mike)
-            person_name = person_entity.replace("person.", "")
+            # Extract name from entity_id for entity naming (person.mike -> mike)
+            entity_name = person_entity.replace("person.", "")
+            # Get friendly name for display
+            friendly_name = person_config.get(CONF_PERSON_FRIENDLY_NAME, entity_name.replace("_", " ").title())
             entities.append(
-                PersonSwitch(hass, entry, person_name, person_config)
+                PersonSwitch(hass, entry, entity_name, friendly_name, person_config)
             )
-            _LOGGER.debug("Created switch for person: %s", person_name)
+            _LOGGER.debug("Created switch for person: %s", friendly_name)
 
     # Create room switches (enabled by default)
     rooms = config.get(CONF_ROOMS, [])
@@ -69,20 +72,22 @@ class PersonSwitch(SwitchEntity):
         self,
         hass: HomeAssistant,
         entry: ConfigEntry,
-        person_name: str,
+        entity_name: str,
+        friendly_name: str,
         person_config: dict[str, Any],
     ) -> None:
         """Initialize the person switch."""
         self.hass = hass
         self._entry = entry
-        self._person_name = person_name
+        self._entity_name = entity_name
+        self._friendly_name = friendly_name
         self._person_config = person_config
         self._attr_is_on = True  # Enabled by default
 
-        # Entity attributes
-        safe_name = person_name.lower().replace(" ", "_")
+        # Entity attributes - use entity_name for ID, friendly_name for display
+        safe_name = entity_name.lower().replace(" ", "_")
         self._attr_unique_id = f"{DOMAIN}_{safe_name}"
-        self._attr_name = f"Smart Announcements {person_name.title()}"
+        self._attr_name = f"Smart Announcements {friendly_name}"
         self._attr_icon = "mdi:account-voice"
 
     async def async_added_to_hass(self) -> None:

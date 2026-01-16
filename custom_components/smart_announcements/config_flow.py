@@ -40,6 +40,8 @@ from .const import (
     CONF_PRE_ANNOUNCE_DELAY,
     CONF_PEOPLE,
     CONF_ROOMS,
+    CONF_PERSON_FRIENDLY_NAME,
+    CONF_TRANSLATE_ANNOUNCEMENT,
     DEFAULT_ROOM_TRACKING,
     DEFAULT_PRESENCE_VERIFICATION,
     DEFAULT_DEBUG_MODE,
@@ -89,6 +91,15 @@ def get_person_entities(hass: HomeAssistant) -> list[str]:
         for state in hass.states.async_all()
         if state.entity_id.startswith("person.")
     ]
+
+
+def get_person_friendly_name(hass: HomeAssistant, person_entity: str) -> str:
+    """Get the friendly name for a person entity."""
+    state = hass.states.get(person_entity)
+    if state and state.attributes.get("friendly_name"):
+        return state.attributes["friendly_name"]
+    # Fallback to parsing entity ID if no friendly name
+    return person_entity.replace("person.", "").replace("_", " ").title()
 
 
 def get_areas(hass: HomeAssistant) -> list[dict]:
@@ -185,7 +196,7 @@ class SmartAnnouncementsConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         # Build options for multi-select
         people_options = []
         for person_entity in self._persons_list:
-            person_name = person_entity.replace("person.", "").replace("_", " ").title()
+            person_name = get_person_friendly_name(self.hass, person_entity)
             people_options.append({
                 "value": person_entity,
                 "label": person_name,
@@ -222,7 +233,7 @@ class SmartAnnouncementsConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         # Get current person
         person_entity = self._persons_list[self._current_person_index]
-        person_name = person_entity.replace("person.", "").replace("_", " ").title()
+        person_name = get_person_friendly_name(self.hass, person_entity)
 
         # Build schema for step 1: Language, TTS Platform, Room Tracking, and AI Enhancement toggle
         data_schema = vol.Schema(
@@ -240,6 +251,7 @@ class SmartAnnouncementsConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     EntitySelectorConfig(domain="tts")
                 ),
                 vol.Required("enhance_with_ai", default=True): BooleanSelector(),
+                vol.Required("translate_announcement", default=False): BooleanSelector(),
             }
         )
 
@@ -263,6 +275,7 @@ class SmartAnnouncementsConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 **self._current_person_data,
                 **user_input,
                 "person_entity": person_entity,
+                CONF_PERSON_FRIENDLY_NAME: get_person_friendly_name(self.hass, person_entity),
             }
             self.people_data.append(combined_data)
             self._current_person_data = {}  # Clear temp data
@@ -280,7 +293,7 @@ class SmartAnnouncementsConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         # Get current person
         person_entity = self._persons_list[self._current_person_index]
-        person_name = person_entity.replace("person.", "").replace("_", " ").title()
+        person_name = get_person_friendly_name(self.hass, person_entity)
 
         # Get TTS voices based on language and platform from step 1
         tts_platform = self._current_person_data.get("tts_platform")
@@ -319,11 +332,13 @@ class SmartAnnouncementsConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 TextSelectorConfig(type=TextSelectorType.TEXT)
             )
 
-        # Build schema for step 2: Conversation Entity (if AI enabled) and TTS Voice
+        # Build schema for step 2: Conversation Entity (if AI enabled OR translation enabled) and TTS Voice
         enhance_with_ai = self._current_person_data.get("enhance_with_ai", True)
+        translate_announcement = self._current_person_data.get("translate_announcement", False)
 
         schema_dict: dict[Any, Any] = {}
-        if enhance_with_ai:
+        # Show conversation entity if either AI enhancement or translation is enabled
+        if enhance_with_ai or translate_announcement:
             schema_dict[vol.Optional("conversation_entity")] = EntitySelector(
                 EntitySelectorConfig(domain="conversation")
             )
@@ -349,7 +364,7 @@ class SmartAnnouncementsConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             self._current_group_data = user_input
             return await self.async_step_group_voice()
 
-        # Build schema for step 1: Language, TTS Platform, and AI Enhancement toggle
+        # Build schema for step 1: Language, TTS Platform, AI Enhancement, and Translation toggles
         data_schema = vol.Schema(
             {
                 vol.Optional("group_language", default="english"): SelectSelector(
@@ -362,6 +377,7 @@ class SmartAnnouncementsConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     EntitySelectorConfig(domain="tts")
                 ),
                 vol.Required("group_enhance_with_ai", default=True): BooleanSelector(),
+                vol.Required("group_translate_announcement", default=False): BooleanSelector(),
             }
         )
 
@@ -422,11 +438,13 @@ class SmartAnnouncementsConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 TextSelectorConfig(type=TextSelectorType.TEXT)
             )
 
-        # Build schema for step 2: Conversation Entity (if AI enabled) and TTS Voice
+        # Build schema for step 2: Conversation Entity (if AI enabled OR translation enabled) and TTS Voice
         enhance_with_ai = self._current_group_data.get("group_enhance_with_ai", True)
+        translate_announcement = self._current_group_data.get("group_translate_announcement", False)
 
         schema_dict: dict[Any, Any] = {}
-        if enhance_with_ai:
+        # Show conversation entity if either AI enhancement or translation is enabled
+        if enhance_with_ai or translate_announcement:
             schema_dict[vol.Optional("group_conversation_entity")] = EntitySelector(
                 EntitySelectorConfig(domain="conversation")
             )
@@ -745,6 +763,8 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
             selected = user_input.get("selected_person")
             if selected == "add_new":
                 return await self.async_step_add_person_select()
+            elif selected == "delete_person":
+                return await self.async_step_delete_person_select()
             elif selected is not None:
                 self._selected_person_index = int(selected)
                 return await self.async_step_edit_person()
@@ -753,8 +773,12 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
         person_options = [{"value": "add_new", "label": "+ Add Person"}]
         for idx, person in enumerate(people):
             person_entity = person.get("person_entity", "")
-            person_name = person_entity.replace("person.", "").replace("_", " ").title()
+            # Use stored friendly name if available, otherwise get from entity
+            person_name = person.get(CONF_PERSON_FRIENDLY_NAME) or get_person_friendly_name(self.hass, person_entity)
             person_options.append({"value": str(idx), "label": person_name})
+
+        # Add "Delete Person" option at bottom
+        person_options.append({"value": "delete_person", "label": "- Delete Person"})
 
         data_schema = vol.Schema(
             {
@@ -780,13 +804,15 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
         people = list(data.get(CONF_PEOPLE, []))
         person = people[self._selected_person_index]
         person_entity = person.get("person_entity", "")
-        person_name = person_entity.replace("person.", "").replace("_", " ").title()
+        # Use stored friendly name if available, otherwise get from entity
+        person_name = person.get(CONF_PERSON_FRIENDLY_NAME) or get_person_friendly_name(self.hass, person_entity)
 
         if user_input is not None:
             # Update the person's config
             people[self._selected_person_index] = {
                 **person,
                 **user_input,
+                CONF_PERSON_FRIENDLY_NAME: get_person_friendly_name(self.hass, person_entity),
             }
             new_data = {**data, CONF_PEOPLE: people}
             self.hass.config_entries.async_update_entry(self.entry, data=new_data)
@@ -843,8 +869,10 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
         )
         schema_dict[vol.Optional("tts_voice", default=person.get("tts_voice"))] = voice_selector
         schema_dict[vol.Required("enhance_with_ai", default=person.get("enhance_with_ai", True))] = BooleanSelector()
+        schema_dict[vol.Required("translate_announcement", default=person.get("translate_announcement", False))] = BooleanSelector()
 
-        if person.get("enhance_with_ai", True):
+        # Show conversation entity if either AI enhancement or translation is enabled
+        if person.get("enhance_with_ai", True) or person.get("translate_announcement", False):
             schema_dict[vol.Optional("conversation_entity", default=person.get("conversation_entity"))] = EntitySelector(
                 EntitySelectorConfig(domain="conversation")
             )
@@ -853,6 +881,71 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
             step_id="edit_person",
             data_schema=vol.Schema(schema_dict),
             errors=errors,
+            description_placeholders={"name": person_name},
+        )
+
+    async def async_step_delete_person_select(self, user_input=None):
+        """Select which person to delete."""
+        errors: dict[str, str] = {}
+        data = self.entry.data
+        people = data.get(CONF_PEOPLE, [])
+
+        if not people:
+            return self.async_abort(reason="no_people")
+
+        if user_input is not None:
+            selected_idx = user_input.get("selected_person")
+            if selected_idx is not None:
+                self._selected_person_index = int(selected_idx)
+                return await self.async_step_confirm_delete_person()
+
+        # Build list of people to delete
+        person_options = []
+        for idx, person in enumerate(people):
+            person_entity = person.get("person_entity", "")
+            # Use stored friendly name if available, otherwise get from entity
+            person_name = person.get(CONF_PERSON_FRIENDLY_NAME) or get_person_friendly_name(self.hass, person_entity)
+            person_options.append({"value": str(idx), "label": person_name})
+
+        data_schema = vol.Schema(
+            {
+                vol.Required("selected_person"): SelectSelector(
+                    SelectSelectorConfig(
+                        options=person_options,
+                        mode=SelectSelectorMode.LIST,
+                    )
+                ),
+            }
+        )
+
+        return self.async_show_form(
+            step_id="delete_person_select",
+            data_schema=data_schema,
+            errors=errors,
+        )
+
+    async def async_step_confirm_delete_person(self, user_input=None):
+        """Confirm deletion of person."""
+        data = self.entry.data
+        people = list(data.get(CONF_PEOPLE, []))
+        person = people[self._selected_person_index]
+        person_entity = person.get("person_entity", "")
+        # Use stored friendly name if available, otherwise get from entity
+        person_name = person.get(CONF_PERSON_FRIENDLY_NAME) or get_person_friendly_name(self.hass, person_entity)
+
+        if user_input is not None:
+            if user_input.get("confirm"):
+                # Delete the person
+                people.pop(self._selected_person_index)
+                new_data = {**data, CONF_PEOPLE: people}
+                self.hass.config_entries.async_update_entry(self.entry, data=new_data)
+            return self.async_create_entry(title="", data={})
+
+        return self.async_show_form(
+            step_id="confirm_delete_person",
+            data_schema=vol.Schema({
+                vol.Required("confirm", default=False): BooleanSelector(),
+            }),
             description_placeholders={"name": person_name},
         )
 
@@ -879,7 +972,7 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
         # Build options
         person_options = []
         for person_entity in available_persons:
-            person_name = person_entity.replace("person.", "").replace("_", " ").title()
+            person_name = get_person_friendly_name(self.hass, person_entity)
             person_options.append({"value": person_entity, "label": person_name})
 
         data_schema = vol.Schema(
@@ -902,7 +995,7 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
     async def async_step_add_person_config(self, user_input=None):
         """Configure new person - Language and TTS Platform."""
         errors: dict[str, str] = {}
-        person_name = self._new_person_entity.replace("person.", "").replace("_", " ").title()
+        person_name = get_person_friendly_name(self.hass, self._new_person_entity)
 
         if user_input is not None:
             self._new_person_data = user_input
@@ -923,6 +1016,7 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
                     EntitySelectorConfig(domain="tts")
                 ),
                 vol.Required("enhance_with_ai", default=True): BooleanSelector(),
+                vol.Required("translate_announcement", default=False): BooleanSelector(),
             }
         )
 
@@ -936,7 +1030,7 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
     async def async_step_add_person_voice(self, user_input=None):
         """Configure new person - Voice and AI settings."""
         errors: dict[str, str] = {}
-        person_name = self._new_person_entity.replace("person.", "").replace("_", " ").title()
+        person_name = get_person_friendly_name(self.hass, self._new_person_entity)
 
         if user_input is not None:
             # Combine all data and save the new person
@@ -945,6 +1039,7 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
 
             new_person = {
                 "person_entity": self._new_person_entity,
+                CONF_PERSON_FRIENDLY_NAME: get_person_friendly_name(self.hass, self._new_person_entity),
                 **self._new_person_data,
                 **user_input,
             }
@@ -986,10 +1081,12 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
         else:
             voice_selector = TextSelector(TextSelectorConfig(type=TextSelectorType.TEXT))
 
-        # Build schema - only show conversation_entity if AI enhancement is enabled
+        # Build schema - show conversation_entity if AI enhancement OR translation is enabled
         enhance_with_ai = self._new_person_data.get("enhance_with_ai", True)
+        translate_announcement = self._new_person_data.get("translate_announcement", False)
         schema_dict: dict[Any, Any] = {}
-        if enhance_with_ai:
+        # Show conversation entity if either AI enhancement or translation is enabled
+        if enhance_with_ai or translate_announcement:
             schema_dict[vol.Optional("conversation_entity")] = EntitySelector(
                 EntitySelectorConfig(domain="conversation")
             )
@@ -1012,6 +1109,8 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
             selected = user_input.get("selected_room")
             if selected == "add_new":
                 return await self.async_step_add_room_select()
+            elif selected == "delete_room":
+                return await self.async_step_delete_room_select()
             elif selected is not None:
                 self._selected_room_index = int(selected)
                 return await self.async_step_edit_room()
@@ -1021,6 +1120,9 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
         for idx, room in enumerate(rooms):
             room_name = room.get("room_name", "Unknown")
             room_options.append({"value": str(idx), "label": room_name})
+
+        # Add "Delete Room" option at bottom
+        room_options.append({"value": "delete_room", "label": "- Delete Room"})
 
         data_schema = vol.Schema(
             {
@@ -1079,6 +1181,67 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
             step_id="edit_room",
             data_schema=vol.Schema(schema_dict),
             errors=errors,
+            description_placeholders={"name": room_name},
+        )
+
+    async def async_step_delete_room_select(self, user_input=None):
+        """Select which room to delete."""
+        errors: dict[str, str] = {}
+        data = self.entry.data
+        rooms = data.get(CONF_ROOMS, [])
+
+        if not rooms:
+            return self.async_abort(reason="no_rooms")
+
+        if user_input is not None:
+            selected_idx = user_input.get("selected_room")
+            if selected_idx is not None:
+                self._selected_room_index = int(selected_idx)
+                return await self.async_step_confirm_delete_room()
+
+        # Build list of rooms to delete
+        room_options = []
+        for idx, room in enumerate(rooms):
+            room_name = room.get("room_name", "Unknown")
+            room_options.append({"value": str(idx), "label": room_name})
+
+        data_schema = vol.Schema(
+            {
+                vol.Required("selected_room"): SelectSelector(
+                    SelectSelectorConfig(
+                        options=room_options,
+                        mode=SelectSelectorMode.LIST,
+                    )
+                ),
+            }
+        )
+
+        return self.async_show_form(
+            step_id="delete_room_select",
+            data_schema=data_schema,
+            errors=errors,
+        )
+
+    async def async_step_confirm_delete_room(self, user_input=None):
+        """Confirm deletion of room."""
+        data = self.entry.data
+        rooms = list(data.get(CONF_ROOMS, []))
+        room = rooms[self._selected_room_index]
+        room_name = room.get("room_name", "Unknown")
+
+        if user_input is not None:
+            if user_input.get("confirm"):
+                # Delete the room
+                rooms.pop(self._selected_room_index)
+                new_data = {**data, CONF_ROOMS: rooms}
+                self.hass.config_entries.async_update_entry(self.entry, data=new_data)
+            return self.async_create_entry(title="", data={})
+
+        return self.async_show_form(
+            step_id="confirm_delete_room",
+            data_schema=vol.Schema({
+                vol.Required("confirm", default=False): BooleanSelector(),
+            }),
             description_placeholders={"name": room_name},
         )
 
@@ -1282,9 +1445,11 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
             ),
             vol.Optional("group_tts_voice", default=group.get("group_tts_voice")): voice_selector,
             vol.Required("group_enhance_with_ai", default=group.get("group_enhance_with_ai", True)): BooleanSelector(),
+            vol.Required("group_translate_announcement", default=group.get("group_translate_announcement", False)): BooleanSelector(),
         }
 
-        if group.get("group_enhance_with_ai", True):
+        # Show conversation entity if either AI enhancement or translation is enabled
+        if group.get("group_enhance_with_ai", True) or group.get("group_translate_announcement", False):
             schema_dict[vol.Optional("group_conversation_entity", default=group.get("group_conversation_entity"))] = EntitySelector(
                 EntitySelectorConfig(domain="conversation")
             )

@@ -19,7 +19,8 @@
           "room_tracking_entity": "Room Tracking Entity",
           "language": "Language",
           "tts_platform": "TTS Platform",
-          "enhance_with_ai": "Enhance with AI"
+          "enhance_with_ai": "Enhance with AI",
+          "translate_announcement": "Translate Announcement"
         }
       },
       "person_voice": {
@@ -36,7 +37,8 @@
         "data": {
           "group_language": "Language",
           "group_tts_platform": "TTS Platform",
-          "group_enhance_with_ai": "Enhance with AI"
+          "group_enhance_with_ai": "Enhance with AI",
+          "group_translate_announcement": "Translate Announcement"
         }
       },
       "group_voice": {
@@ -134,7 +136,22 @@
           "tts_platform": "TTS Platform",
           "tts_voice": "TTS Voice",
           "enhance_with_ai": "Enhance with AI",
+          "translate_announcement": "Translate Announcement",
           "conversation_entity": "Conversation Entity (for AI)"
+        }
+      },
+      "delete_person_select": {
+        "title": "Delete Person",
+        "description": "Select which person to delete.",
+        "data": {
+          "selected_person": "Person to Delete"
+        }
+      },
+      "confirm_delete_person": {
+        "title": "Delete {name}?",
+        "description": "Are you sure you want to delete {name}? This cannot be undone.",
+        "data": {
+          "confirm": "Confirm deletion"
         }
       },
       "add_person_select": {
@@ -151,7 +168,8 @@
           "room_tracking_entity": "Room Tracking Entity",
           "language": "Language",
           "tts_platform": "TTS Platform",
-          "enhance_with_ai": "Enhance with AI"
+          "enhance_with_ai": "Enhance with AI",
+          "translate_announcement": "Translate Announcement"
         }
       },
       "add_person_voice": {
@@ -177,6 +195,20 @@
           "presence_sensors": "Presence Sensors"
         }
       },
+      "delete_room_select": {
+        "title": "Delete Room",
+        "description": "Select which room to delete.",
+        "data": {
+          "selected_room": "Room to Delete"
+        }
+      },
+      "confirm_delete_room": {
+        "title": "Delete {name}?",
+        "description": "Are you sure you want to delete {name}? This cannot be undone.",
+        "data": {
+          "confirm": "Confirm deletion"
+        }
+      },
       "add_room_select": {
         "title": "Add Rooms",
         "description": "Select which rooms to add.",
@@ -200,6 +232,7 @@
           "group_tts_platform": "TTS Platform",
           "group_tts_voice": "TTS Voice",
           "group_enhance_with_ai": "Enhance with AI",
+          "group_translate_announcement": "Translate Announcement",
           "group_conversation_entity": "Conversation Entity (for AI)"
         }
       }

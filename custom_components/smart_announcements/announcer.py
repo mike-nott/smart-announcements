@@ -20,6 +20,9 @@ from .const import (
     CONF_PRE_ANNOUNCE_ENABLED,
     CONF_PRE_ANNOUNCE_URL,
     CONF_PRE_ANNOUNCE_DELAY,
+    CONF_LANGUAGE,
+    CONF_PERSON_FRIENDLY_NAME,
+    CONF_TRANSLATE_ANNOUNCEMENT,
     EVENT_ANNOUNCEMENT_SENT,
     EVENT_ANNOUNCEMENT_BLOCKED,
 )
@@ -49,10 +52,17 @@ class Announcer:
         people = self.config.get(CONF_PEOPLE, [])
         for person in people:
             entity_id = person.get("person_entity", "")
+            friendly_name = person.get(CONF_PERSON_FRIENDLY_NAME, "")
+
+            # Match by friendly name first (preferred)
+            if friendly_name and friendly_name.lower() == person_name.lower():
+                return person
+
             # Match by entity name (person.mike -> mike) or display name
             name_from_entity = entity_id.replace("person.", "").lower()
             if name_from_entity == person_name.lower():
                 return person
+
             # Also check if person_name matches with underscores replaced
             if name_from_entity.replace("_", " ") == person_name.lower():
                 return person
@@ -387,31 +397,67 @@ class Announcer:
     def _personalize_message(self, message: str, target_person: str | None) -> str:
         """Personalize message with name."""
         if "{{ name }}" in message or "{{name}}" in message:
-            name = target_person or "Everyone"
+            # Use friendly name from person config if available
+            name = "Everyone"
+            if target_person:
+                person_config = self._get_person_config(target_person)
+                if person_config:
+                    name = person_config.get(CONF_PERSON_FRIENDLY_NAME) or target_person
+                else:
+                    name = target_person
             message = message.replace("{{ name }}", name).replace("{{name}}", name)
         return message
 
     async def _enhance_message(self, message: str, target_person: str | None) -> str:
-        """Enhance message using conversation entity."""
-        # Start with group settings as default
+        """Enhance and/or translate message using conversation entity."""
+        # Get settings - start with group settings as default
         group_config = self.config.get("group", {})
         conversation_entity = group_config.get("group_conversation_entity")
+        enhance_with_ai = group_config.get("group_enhance_with_ai", True)
+        translate_announcement = group_config.get("group_translate_announcement", False)
+        language = group_config.get("group_language", "english")
 
         # If no group settings, use first person's settings
-        if not conversation_entity:
-            people = self.config.get(CONF_PEOPLE, [])
-            if people:
-                conversation_entity = people[0].get("conversation_entity")
+        people = self.config.get(CONF_PEOPLE, [])
+        if not conversation_entity and people:
+            first_person = people[0]
+            conversation_entity = first_person.get("conversation_entity")
+            enhance_with_ai = first_person.get("enhance_with_ai", True)
+            translate_announcement = first_person.get("translate_announcement", False)
+            language = first_person.get("language", "english")
 
         # Override with target person's settings if specified
         if target_person:
             person_config = self._get_person_config(target_person)
             if person_config:
                 conversation_entity = person_config.get("conversation_entity") or conversation_entity
+                enhance_with_ai = person_config.get("enhance_with_ai", enhance_with_ai)
+                translate_announcement = person_config.get("translate_announcement", translate_announcement)
+                language = person_config.get("language", language)
 
-        if not conversation_entity:
-            _LOGGER.debug("No conversation entity configured, skipping AI enhancement")
+        # If neither enhance nor translate is enabled, return original message
+        if not enhance_with_ai and not translate_announcement:
+            _LOGGER.debug("Neither AI enhancement nor translation enabled, using original message")
             return message
+
+        # If no conversation entity configured, return original message
+        if not conversation_entity:
+            _LOGGER.debug("No conversation entity configured, skipping AI processing")
+            return message
+
+        # Build the appropriate prompt based on settings
+        if not enhance_with_ai and translate_announcement:
+            # Translate only
+            prompt = f"Translate to {language}: {message}"
+            _LOGGER.debug("Using translate-only prompt for language: %s", language)
+        elif enhance_with_ai and not translate_announcement:
+            # Enhance only
+            prompt = f"Make this announcement more engaging: {message}"
+            _LOGGER.debug("Using enhance-only prompt")
+        else:
+            # Both enhance and translate
+            prompt = f"Make this announcement more engaging, then translate to {language}: {message}"
+            _LOGGER.debug("Using enhance+translate prompt for language: %s", language)
 
         try:
             # Call conversation.process service
@@ -420,7 +466,7 @@ class Announcer:
                 "process",
                 {
                     "agent_id": conversation_entity,
-                    "text": f"Rephrase this announcement in your style: {message}",
+                    "text": prompt,
                 },
                 blocking=True,
                 return_response=True,
@@ -430,11 +476,11 @@ class Announcer:
                 speech = response["response"].get("speech", {})
                 plain = speech.get("plain", {})
                 enhanced = plain.get("speech", message)
-                _LOGGER.debug("Enhanced message: %s -> %s", message, enhanced)
+                _LOGGER.debug("AI processed message: %s -> %s", message, enhanced)
                 return enhanced
 
         except Exception as err:
-            _LOGGER.warning("AI enhancement failed, using original message: %s", err)
+            _LOGGER.warning("AI processing failed, using original message: %s", err)
 
         return message
 
