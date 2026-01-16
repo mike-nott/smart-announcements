@@ -340,8 +340,14 @@ class Announcer:
         else:
             self._debug("📊 Using service parameter translation setting: %s", should_translate)
 
+        # Personalize message first (add name before AI processing)
+        self._debug("🔍 Personalizing message...")
+        personalized_message = self._personalize_message(message, target_person)
+        if personalized_message != message:
+            self._debug("✏️ Message personalized: '%s' -> '%s'", message, personalized_message)
+
         # Enhance and/or translate message if enabled
-        final_message = message
+        final_message = personalized_message
         if should_enhance or should_translate:
             if should_enhance and should_translate:
                 self._debug("🤖 Enhancing and translating message...")
@@ -349,20 +355,13 @@ class Announcer:
                 self._debug("🤖 Enhancing message with AI...")
             else:
                 self._debug("🌐 Translating message...")
-            final_message = await self._enhance_message(message, target_person)
-            if final_message != message:
-                self._debug("✨ Message processed: '%s' -> '%s'", message, final_message)
+            final_message = await self._enhance_message(personalized_message, target_person)
+            if final_message != personalized_message:
+                self._debug("✨ Message processed: '%s' -> '%s'", personalized_message, final_message)
             else:
                 self._debug("⚠️ Message unchanged (AI processing returned same text)")
         else:
             self._debug("⏭️ Skipping AI enhancement and translation (both disabled)")
-
-        # Personalize message
-        self._debug("🔍 Personalizing message...")
-        personalized = self._personalize_message(final_message, target_person)
-        if personalized != final_message:
-            self._debug("✏️ Message personalized: '%s' -> '%s'", final_message, personalized)
-        final_message = personalized
 
         # Determine pre-announce setting from config if not specified
         self._debug("🔍 Determining pre-announce setting...")
@@ -423,16 +422,26 @@ class Announcer:
 
     def _personalize_message(self, message: str, target_person: str | None) -> str:
         """Personalize message with name."""
+        # Determine the name to use
+        name = None
+        if target_person:
+            person_config = self._get_person_config(target_person)
+            if person_config:
+                name = person_config.get(CONF_PERSON_FRIENDLY_NAME) or target_person
+            else:
+                name = target_person
+
+        # If message contains {{ name }} placeholder, replace it
         if "{{ name }}" in message or "{{name}}" in message:
-            # Use friendly name from person config if available
-            name = "Everyone"
-            if target_person:
-                person_config = self._get_person_config(target_person)
-                if person_config:
-                    name = person_config.get(CONF_PERSON_FRIENDLY_NAME) or target_person
-                else:
-                    name = target_person
-            message = message.replace("{{ name }}", name).replace("{{name}}", name)
+            if name:
+                message = message.replace("{{ name }}", name).replace("{{name}}", name)
+            else:
+                # No target person, use "Everyone" for now (group logic will be added later)
+                message = message.replace("{{ name }}", "Everyone").replace("{{name}}", "Everyone")
+        # If no placeholder and we have a name, prepend it
+        elif name:
+            message = f"{name}, {message}"
+
         return message
 
     async def _enhance_message(self, message: str, target_person: str | None) -> str:
@@ -475,15 +484,15 @@ class Announcer:
         # Build the appropriate prompt based on settings
         if not enhance_with_ai and translate_announcement:
             # Translate only
-            prompt = f"Translate to {language}: {message}"
+            prompt = f'Translate the following announcement to {language}. Message: "{message}"'
             _LOGGER.debug("Using translate-only prompt for language: %s", language)
         elif enhance_with_ai and not translate_announcement:
             # Enhance only
-            prompt = f"Make this announcement more engaging: {message}"
+            prompt = f'Rephrase the following announcement to make it more engaging. DO NOT change who the message is addressed to. Message: "{message}"'
             _LOGGER.debug("Using enhance-only prompt")
         else:
             # Both enhance and translate
-            prompt = f"Create an engaging {language} language translated version of this announcement: {message}"
+            prompt = f'Create an engaging {language} language translated version of this announcement. DO NOT change who the message is addressed to. Message: "{message}"'
             _LOGGER.debug("Using enhance+translate prompt for language: %s", language)
 
         try:
