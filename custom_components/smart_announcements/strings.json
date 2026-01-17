@@ -232,7 +232,7 @@
       },
       "advanced_settings": {
         "title": "Advanced Settings",
-        "description": "Customize AI prompts for your LLM. Different models interpret prompts differently. The default prompts work well for most cases.",
+        "description": "Customize AI prompts for your LLM. Different models interpret prompts differently.",
         "data": {
           "prompt_translate": "Translate-Only Prompt Template",
           "prompt_enhance": "Enhance-Only Prompt Template",
