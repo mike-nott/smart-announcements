@@ -45,6 +45,7 @@ from .const import (
     CONF_PROMPT_TRANSLATE,
     CONF_PROMPT_ENHANCE,
     CONF_PROMPT_BOTH,
+    CONF_GROUP_ADDRESSEE,
     DEFAULT_ROOM_TRACKING,
     DEFAULT_PRESENCE_VERIFICATION,
     DEFAULT_DEBUG_MODE,
@@ -55,6 +56,7 @@ from .const import (
     DEFAULT_PROMPT_TRANSLATE,
     DEFAULT_PROMPT_ENHANCE,
     DEFAULT_PROMPT_BOTH,
+    DEFAULT_GROUP_ADDRESSEE,
     LANGUAGE_OPTIONS,
     LANGUAGE_CODE_MAP,
 )
@@ -1441,6 +1443,9 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
             voice_selector = TextSelector(TextSelectorConfig(type=TextSelectorType.TEXT))
 
         schema_dict: dict[Any, Any] = {
+            vol.Required(CONF_GROUP_ADDRESSEE, default=group.get(CONF_GROUP_ADDRESSEE, DEFAULT_GROUP_ADDRESSEE)): TextSelector(
+                TextSelectorConfig(type=TextSelectorType.TEXT)
+            ),
             vol.Optional("group_language", default=group.get("group_language", "english")): SelectSelector(
                 SelectSelectorConfig(
                     options=get_language_options(),

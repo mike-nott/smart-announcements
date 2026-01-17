@@ -222,6 +222,7 @@
         "title": "Group Settings",
         "description": "Configure settings for group announcements (when multiple people are in a room).",
         "data": {
+          "group_addressee": "Group Name/Addressee",
           "group_language": "Language",
           "group_tts_platform": "TTS Platform",
           "group_tts_voice": "TTS Voice",

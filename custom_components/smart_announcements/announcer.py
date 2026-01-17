@@ -436,8 +436,11 @@ class Announcer:
             if name:
                 message = message.replace("{{ name }}", name).replace("{{name}}", name)
             else:
-                # No target person, use "Everyone" for now (group logic will be added later)
-                message = message.replace("{{ name }}", "Everyone").replace("{{name}}", "Everyone")
+                # No target person, use configured group addressee
+                from .const import CONF_GROUP_ADDRESSEE, DEFAULT_GROUP_ADDRESSEE
+                group_config = self.config.get("group", {})
+                group_addressee = group_config.get(CONF_GROUP_ADDRESSEE, DEFAULT_GROUP_ADDRESSEE)
+                message = message.replace("{{ name }}", group_addressee).replace("{{name}}", group_addressee)
         # If no placeholder and we have a name, prepend it
         elif name:
             message = f"{name}, {message}"

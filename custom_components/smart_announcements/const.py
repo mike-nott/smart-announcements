@@ -33,6 +33,9 @@ CONF_PROMPT_TRANSLATE = "prompt_translate"
 CONF_PROMPT_ENHANCE = "prompt_enhance"
 CONF_PROMPT_BOTH = "prompt_both"
 
+# Configuration keys - Group Settings
+CONF_GROUP_ADDRESSEE = "group_addressee"
+
 # Service parameters
 ATTR_MESSAGE = "message"
 ATTR_TARGET_PERSON = "target_person"
@@ -50,6 +53,7 @@ DEFAULT_PRE_ANNOUNCE_ENABLED = True
 DEFAULT_PRE_ANNOUNCE_URL = "/local/sounds/chime.mp3"
 DEFAULT_PRE_ANNOUNCE_DELAY = 2
 DEFAULT_LANGUAGE = "english"
+DEFAULT_GROUP_ADDRESSEE = "Everyone"
 
 # Default AI prompt templates
 DEFAULT_PROMPT_TRANSLATE = 'Translate the following announcement to {language}. Message: "{message}"'
