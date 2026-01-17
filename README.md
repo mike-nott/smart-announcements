@@ -13,6 +13,7 @@ A Home Assistant custom integration for intelligent, context-aware voice announc
 - ✅ **Group Announcements**: Special settings when multiple people are in the same room
 - ✅ **Enable/Disable Switches**: Per-person and per-room announcement control
 - ✅ **Pre-Announce Sound**: Optional chime before announcements
+- ✅ **Audio Ducking**: Automatically lowers background music during announcements and restores playback
 - ✅ **Debug Mode**: Comprehensive emoji-enhanced logging for troubleshooting
 
 ## The Problem Smart Announcements Solves
@@ -36,7 +37,8 @@ Instead of manual routing, Smart Announcements:
 5. **Personalizes the message** using per-person TTS voices and languages (or group addressee for groups)
 6. **Enhances with AI** (optional) for natural, conversational announcements
 7. **Verifies presence** (optional) using occupancy sensors
-8. **Respects enable/disable switches** for both people and rooms
+8. **Delivers with audio ducking** - automatically lowers background music, announces, then restores playback
+9. **Respects enable/disable switches** for both people and rooms
 
 ### Group vs Individual Announcements
 
