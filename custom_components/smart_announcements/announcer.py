@@ -309,55 +309,61 @@ class Announcer:
                     self._fire_blocked_event(room_name, "person_disabled", target_person)
                     return
 
-        # Get TTS settings
-        self._debug("🔍 Determining TTS settings...")
-        tts_platform, tts_voice = self._get_tts_settings(target_person)
-        self._debug("🎤 TTS platform: %s", tts_platform or "Not configured")
-        self._debug("🗣️ TTS voice: %s", tts_voice or "Default")
+        # STEP 1: Detect people in room and determine if group
+        self._debug("============ GROUP DETECTION ============")
+        people_in_room = await self.room_tracker.async_get_people_in_room(area_id)
+        is_group_room = len(people_in_room) > 1
 
-        # Determine enhance_with_ai setting from config if not specified
-        self._debug("🔍 Determining AI enhancement setting...")
-        should_enhance = enhance_with_ai
-        if should_enhance is None:
-            # Check person config first, then group config
-            if target_person:
-                person_config = self._get_person_config(target_person)
-                if person_config:
-                    should_enhance = person_config.get("enhance_with_ai", True)
-                    self._debug("📊 Using person's AI setting: %s", should_enhance)
-            if should_enhance is None:
-                # Fall back to group config
-                group_config = self.config.get("group", {})
-                should_enhance = group_config.get("group_enhance_with_ai", True)
-                self._debug("📊 Using group AI setting: %s", should_enhance)
+        self._debug("👥 People in room %s: %s", area_id, people_in_room)
+        self._debug("🔢 People count: %d", len(people_in_room))
+        self._debug("👫 Is group room: %s", is_group_room)
+        self._debug("🎯 Target person override: %s", target_person or "None")
+        self._debug("=======================================")
+
+        # STEP 2: Get appropriate settings based on group status
+        settings = self._get_announcement_settings(target_person, people_in_room, is_group_room)
+
+        # Log which settings are being used
+        self._debug("⚙️  Using settings from: %s", settings.get("source"))
+        if is_group_room and not target_person:
+            self._debug("👥 GROUP ANNOUNCEMENT")
+            from .const import CONF_GROUP_ADDRESSEE, DEFAULT_GROUP_ADDRESSEE
+            group_config = self.config.get("group", {})
+            self._debug("  📢 Addressee: %s", group_config.get(CONF_GROUP_ADDRESSEE, DEFAULT_GROUP_ADDRESSEE))
         else:
-            self._debug("📊 Using service parameter AI setting: %s", should_enhance)
-
-        # Determine translate_announcement setting from config if not specified
-        self._debug("🔍 Determining translation setting...")
-        should_translate = translate_announcement
-        if should_translate is None:
-            # Check person config first, then group config
+            self._debug("👤 INDIVIDUAL ANNOUNCEMENT")
             if target_person:
-                person_config = self._get_person_config(target_person)
-                if person_config:
-                    should_translate = person_config.get("translate_announcement", False)
-                    self._debug("📊 Using person's translation setting: %s", should_translate)
-            if should_translate is None:
-                # Fall back to group config
-                group_config = self.config.get("group", {})
-                should_translate = group_config.get("group_translate_announcement", False)
-                self._debug("📊 Using group translation setting: %s", should_translate)
-        else:
-            self._debug("📊 Using service parameter translation setting: %s", should_translate)
+                self._debug("  👤 Target person: %s", target_person)
+            elif len(people_in_room) == 1:
+                self._debug("  👤 Person in room: %s", people_in_room[0])
 
-        # Personalize message first (add name before AI processing)
+        self._debug("  🌐 Language: %s", settings.get("language"))
+        self._debug("  🎤 TTS Platform: %s", settings.get("tts_platform"))
+        self._debug("  🎙️  TTS Voice: %s", settings.get("tts_voice"))
+
+        # Override settings with service parameters if provided
+        should_enhance = enhance_with_ai if enhance_with_ai is not None else settings.get("enhance_with_ai", True)
+        should_translate = translate_announcement if translate_announcement is not None else settings.get("translate_announcement", False)
+
+        if enhance_with_ai is not None:
+            self._debug("  🤖 AI Enhancement (service override): %s", should_enhance)
+        else:
+            self._debug("  🤖 AI Enhancement (config): %s", should_enhance)
+
+        if translate_announcement is not None:
+            self._debug("  🌐 Translation (service override): %s", should_translate)
+        else:
+            self._debug("  🌐 Translation (config): %s", should_translate)
+
+        # STEP 3: Personalize message with appropriate name
         self._debug("🔍 Personalizing message...")
-        personalized_message = self._personalize_message(message, target_person)
+        personalized_message = self._personalize_message(
+            message, target_person, people_in_room, is_group_room
+        )
         if personalized_message != message:
             self._debug("✏️ Message personalized: '%s' -> '%s'", message, personalized_message)
 
-        # Enhance and/or translate message if enabled
+        # STEP 4: Enhance/translate using selected settings
         final_message = personalized_message
         if should_enhance or should_translate:
             if should_enhance and should_translate:
@@ -366,7 +372,13 @@ class Announcer:
                 self._debug("🤖 Enhancing message with AI...")
             else:
                 self._debug("🌐 Translating message...")
-            final_message = await self._enhance_message(personalized_message, target_person)
+            final_message = await self._enhance_message(
+                personalized_message,
+                settings.get("conversation_entity"),
+                settings.get("language"),
+                should_enhance,
+                should_translate,
+            )
             if final_message != personalized_message:
                 self._debug("✨ Message processed: '%s' -> '%s'", personalized_message, final_message)
             else:
@@ -391,14 +403,14 @@ class Announcer:
         else:
             self._debug("⏭️ Skipping pre-announce sound (disabled)")
 
-        # Call TTS service
+        # STEP 5: Call TTS with selected platform and voice
         self._debug("🎙️ Calling TTS service...")
         self._debug("📝 Final message: '%s'", final_message)
         await self._call_tts(
             media_player=media_player,
             message=final_message,
-            tts_platform=tts_platform,
-            tts_voice=tts_voice,
+            tts_platform=settings.get("tts_platform"),
+            tts_voice=settings.get("tts_voice"),
         )
         self._debug("✅ TTS announcement sent successfully")
 
@@ -406,6 +418,83 @@ class Announcer:
         self._fire_sent_event(room_name, final_message, target_person)
 
         _LOGGER.info("Announced to %s: %s", room_name, final_message)
+
+    def _get_announcement_settings(
+        self,
+        target_person: str | None,
+        people_in_room: list[str],
+        is_group_room: bool,
+    ) -> dict[str, Any]:
+        """Get appropriate settings for this announcement.
+
+        Priority order:
+        1. If target_person specified → use that person's settings
+        2. If is_group_room (2+ people) → use group settings
+        3. If 1 person in room → use that person's settings
+        4. Fallback → use group settings
+
+        Returns dict with:
+            - conversation_entity
+            - language
+            - tts_platform
+            - tts_voice
+            - enhance_with_ai
+            - translate_announcement
+            - source (for debugging)
+        """
+        # Priority 1: If target_person specified, use their settings
+        if target_person:
+            person_config = self._get_person_config(target_person)
+            if person_config:
+                return {
+                    "conversation_entity": person_config.get("conversation_entity"),
+                    "language": person_config.get("language", "english"),
+                    "tts_platform": person_config.get("tts_platform"),
+                    "tts_voice": person_config.get("tts_voice"),
+                    "enhance_with_ai": person_config.get("enhance_with_ai", True),
+                    "translate_announcement": person_config.get("translate_announcement", False),
+                    "source": f"person:{target_person}",
+                }
+
+        # Priority 2: Group room (2+ people) → use group settings
+        if is_group_room:
+            group_config = self.config.get("group", {})
+            return {
+                "conversation_entity": group_config.get("group_conversation_entity"),
+                "language": group_config.get("group_language", "english"),
+                "tts_platform": group_config.get("group_tts_platform"),
+                "tts_voice": group_config.get("group_tts_voice"),
+                "enhance_with_ai": group_config.get("group_enhance_with_ai", True),
+                "translate_announcement": group_config.get("group_translate_announcement", False),
+                "source": "group",
+            }
+
+        # Priority 3: Individual room (1 person) → use that person's settings
+        if len(people_in_room) == 1:
+            person_entity = people_in_room[0]
+            person_config = self._get_person_config(person_entity)
+            if person_config:
+                return {
+                    "conversation_entity": person_config.get("conversation_entity"),
+                    "language": person_config.get("language", "english"),
+                    "tts_platform": person_config.get("tts_platform"),
+                    "tts_voice": person_config.get("tts_voice"),
+                    "enhance_with_ai": person_config.get("enhance_with_ai", True),
+                    "translate_announcement": person_config.get("translate_announcement", False),
+                    "source": f"person:{person_entity}",
+                }
+
+        # Fallback: Use group settings
+        group_config = self.config.get("group", {})
+        return {
+            "conversation_entity": group_config.get("group_conversation_entity"),
+            "language": group_config.get("group_language", "english"),
+            "tts_platform": group_config.get("group_tts_platform"),
+            "tts_voice": group_config.get("group_tts_voice"),
+            "enhance_with_ai": group_config.get("group_enhance_with_ai", True),
+            "translate_announcement": group_config.get("group_translate_announcement", False),
+            "source": "group(fallback)",
+        }
 
     def _get_tts_settings(self, target_person: str | None) -> tuple[str | None, str | None]:
         """Get TTS platform and voice for announcement."""
@@ -431,60 +520,62 @@ class Announcer:
 
         return tts_platform, tts_voice
 
-    def _personalize_message(self, message: str, target_person: str | None) -> str:
+    def _personalize_message(
+        self,
+        message: str,
+        target_person: str | None,
+        people_in_room: list[str],
+        is_group_room: bool,
+    ) -> str:
         """Personalize message with name."""
         # Determine the name to use
         name = None
+
+        # Priority 1: If target_person specified, always use their name
         if target_person:
             person_config = self._get_person_config(target_person)
             if person_config:
                 name = person_config.get(CONF_PERSON_FRIENDLY_NAME) or target_person
             else:
                 name = target_person
+        # Priority 2: If group room and no target_person, use group addressee
+        elif is_group_room:
+            from .const import CONF_GROUP_ADDRESSEE, DEFAULT_GROUP_ADDRESSEE
+            group_config = self.config.get("group", {})
+            name = group_config.get(CONF_GROUP_ADDRESSEE, DEFAULT_GROUP_ADDRESSEE)
+        # Priority 3: If 1 person in room, use that person's name
+        elif len(people_in_room) == 1:
+            person_entity = people_in_room[0]
+            person_config = self._get_person_config(person_entity)
+            if person_config:
+                name = person_config.get(CONF_PERSON_FRIENDLY_NAME) or person_entity
+            else:
+                name = person_entity
 
-        # If message contains {{ name }} placeholder, replace it
+        # Handle {{ name }} placeholder or prepend
         if "{{ name }}" in message or "{{name}}" in message:
             if name:
                 message = message.replace("{{ name }}", name).replace("{{name}}", name)
             else:
-                # No target person, use configured group addressee
+                # Fallback to group addressee if no name determined
                 from .const import CONF_GROUP_ADDRESSEE, DEFAULT_GROUP_ADDRESSEE
                 group_config = self.config.get("group", {})
                 group_addressee = group_config.get(CONF_GROUP_ADDRESSEE, DEFAULT_GROUP_ADDRESSEE)
                 message = message.replace("{{ name }}", group_addressee).replace("{{name}}", group_addressee)
-        # If no placeholder and we have a name, prepend it
         elif name:
             message = f"{name}, {message}"
 
         return message
 
-    async def _enhance_message(self, message: str, target_person: str | None) -> str:
+    async def _enhance_message(
+        self,
+        message: str,
+        conversation_entity: str | None,
+        language: str,
+        enhance_with_ai: bool,
+        translate_announcement: bool,
+    ) -> str:
         """Enhance and/or translate message using conversation entity."""
-        # Get settings - start with group settings as default
-        group_config = self.config.get("group", {})
-        conversation_entity = group_config.get("group_conversation_entity")
-        enhance_with_ai = group_config.get("group_enhance_with_ai", True)
-        translate_announcement = group_config.get("group_translate_announcement", False)
-        language = group_config.get("group_language", "english")
-
-        # If no group settings, use first person's settings
-        people = self.config.get(CONF_PEOPLE, [])
-        if not conversation_entity and people:
-            first_person = people[0]
-            conversation_entity = first_person.get("conversation_entity")
-            enhance_with_ai = first_person.get("enhance_with_ai", True)
-            translate_announcement = first_person.get("translate_announcement", False)
-            language = first_person.get("language", "english")
-
-        # Override with target person's settings if specified
-        if target_person:
-            person_config = self._get_person_config(target_person)
-            if person_config:
-                conversation_entity = person_config.get("conversation_entity") or conversation_entity
-                enhance_with_ai = person_config.get("enhance_with_ai", enhance_with_ai)
-                translate_announcement = person_config.get("translate_announcement", translate_announcement)
-                language = person_config.get("language", language)
-
         # If neither enhance nor translate is enabled, return original message
         if not enhance_with_ai and not translate_announcement:
             _LOGGER.debug("Neither AI enhancement nor translation enabled, using original message")
