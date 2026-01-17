@@ -11,7 +11,9 @@ A Home Assistant custom integration for intelligent, context-aware voice announc
 - ✅ **Presence Verification**: Optional occupancy sensor verification for accuracy
 - ✅ **Per-Person Configuration**: Individual TTS platform, voice, language, and AI settings
 - ✅ **Group Announcements**: Special settings when multiple people are in the same room
+- ✅ **Multi-Person Targeting**: Target multiple people with comma-separated names
 - ✅ **Enable/Disable Switches**: Per-person and per-room announcement control
+- ✅ **Home/Away Tracking Toggle**: Optionally ignore person entity home/away state when using room tracking
 - ✅ **Pre-Announce Sound**: Optional chime before announcements
 - ✅ **Audio Ducking**: Automatically lowers background music during announcements and restores playback
 - ✅ **Debug Mode**: Comprehensive emoji-enhanced logging for troubleshooting
@@ -47,7 +49,7 @@ Smart Announcements intelligently detects whether a room has one person or multi
 **Individual Room (1 person):**
 - Uses that person's TTS platform, voice, and language
 - Uses that person's AI enhancement and translation settings
-- Prepends the person's name: "Mike, dinner is ready"
+- Prepends the person's name: "John, dinner is ready"
 
 **Group Room (2+ people):**
 - Uses group TTS platform, voice, and language
@@ -57,9 +59,13 @@ Smart Announcements intelligently detects whether a room has one person or multi
 **Targeted Announcements:**
 - When you specify a `target_person`, always uses that person's settings
 - Even if multiple people are in the room, targets the specific person
-- Overrides group detection: "Mike, your package arrived"
+- Overrides group detection: "John, your package arrived"
+- **Multi-person targeting**: Use comma-separated names (e.g., `"John, Alice"`)
+  - Announces to each person's current room
+  - If both in same room → uses group settings automatically
+  - If in different rooms → each gets announcement with their individual settings
 
-This means you can configure different voices for individuals (e.g., Mike gets English Google voice, Janette gets Japanese ElevenLabs voice), and when they're together in a room, the system automatically uses your configured group settings.
+This means you can configure different voices for individuals (e.g., John gets English Google voice, Alice gets Japanese ElevenLabs voice), and when they're together in a room, the system automatically uses your configured group settings.
 
 ## Requirements
 
@@ -129,6 +135,7 @@ When multiple people are in the same room, use these settings instead of individ
 - **TTS Voice**: Voice for group announcements
 
 **Step 4 - Room Tracking Settings:**
+- **Enable Home/Away Tracking**: Only announce if person entity shows "home" (disable to trust room tracking regardless of home/away state)
 - **Enable Room Tracking**: Use device trackers to find people
 - **Verify with Presence Sensors**: Confirm occupancy with sensors
 
@@ -150,6 +157,7 @@ When multiple people are in the same room, use these settings instead of individ
 After setup, you can edit settings via **Configure** button:
 
 **Global Settings:**
+- Home/away tracking toggle
 - Room tracking toggle
 - Presence verification toggle
 - Pre-announce sound settings
@@ -190,8 +198,17 @@ data:
 service: smart_announcements.announce
 data:
   message: "Your package has arrived"
-  target_person: person.john
+  target_person: "John"
 ```
+
+#### Target Multiple People
+```yaml
+service: smart_announcements.announce
+data:
+  message: "Time for your meeting"
+  target_person: "John, Alice"
+```
+If both are in the same room, uses group settings. If in different rooms, each gets announcement with their individual settings.
 
 #### Target a Specific Area
 ```yaml
@@ -232,7 +249,7 @@ Disabling both room tracking and presence verification announces to **all config
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `message` | string | Yes | The announcement message |
-| `target_person` | string | No | Person entity ID (e.g., `person.john`) |
+| `target_person` | string | No | Person name or comma-separated names (e.g., `"John"` or `"John, Alice"`) |
 | `target_area` | string | No | Area ID (e.g., `living_room`) |
 | `enhance_with_ai` | boolean | No | Override AI enhancement setting |
 | `translate_announcement` | boolean | No | Override translation setting |
