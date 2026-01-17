@@ -340,6 +340,7 @@ class Announcer:
         self._debug("  🌐 Language: %s", settings.get("language"))
         self._debug("  🎤 TTS Platform: %s", settings.get("tts_platform"))
         self._debug("  🎙️  TTS Voice: %s", settings.get("tts_voice"))
+        self._debug("  🤖 Conversation Entity: %s", settings.get("conversation_entity") or "Not configured")
 
         # Override settings with service parameters if provided
         should_enhance = enhance_with_ai if enhance_with_ai is not None else settings.get("enhance_with_ai", True)
@@ -576,14 +577,21 @@ class Announcer:
         translate_announcement: bool,
     ) -> str:
         """Enhance and/or translate message using conversation entity."""
+        self._debug("🔍 _enhance_message called:")
+        self._debug("  📝 Message: '%s'", message)
+        self._debug("  🤖 Conversation entity: %s", conversation_entity or "None")
+        self._debug("  🌐 Language: %s", language)
+        self._debug("  ✨ Enhance with AI: %s", enhance_with_ai)
+        self._debug("  🌍 Translate: %s", translate_announcement)
+
         # If neither enhance nor translate is enabled, return original message
         if not enhance_with_ai and not translate_announcement:
-            _LOGGER.debug("Neither AI enhancement nor translation enabled, using original message")
+            self._debug("⏭️ Skipping: Neither AI enhancement nor translation enabled")
             return message
 
         # If no conversation entity configured, return original message
         if not conversation_entity:
-            _LOGGER.debug("No conversation entity configured, skipping AI processing")
+            self._debug("⏭️ Skipping: No conversation entity configured")
             return message
 
         # Get custom prompts from config or use defaults
