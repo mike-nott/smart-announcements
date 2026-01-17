@@ -31,11 +31,33 @@ Instead of manual routing, Smart Announcements:
 
 1. **Tracks people** using device trackers or room presence sensors
 2. **Finds their current room** based on configured tracking entities
-3. **Routes announcements** to the media player in that room
-4. **Personalizes the message** using per-person TTS voices and languages
-5. **Enhances with AI** (optional) for natural, conversational announcements
-6. **Verifies presence** (optional) using occupancy sensors
-7. **Respects enable/disable switches** for both people and rooms
+3. **Detects group vs individual rooms** - automatically switches between individual and group settings
+4. **Routes announcements** to the media player in that room
+5. **Personalizes the message** using per-person TTS voices and languages (or group addressee for groups)
+6. **Enhances with AI** (optional) for natural, conversational announcements
+7. **Verifies presence** (optional) using occupancy sensors
+8. **Respects enable/disable switches** for both people and rooms
+
+### Group vs Individual Announcements
+
+Smart Announcements intelligently detects whether a room has one person or multiple people, and automatically selects the appropriate settings:
+
+**Individual Room (1 person):**
+- Uses that person's TTS platform, voice, and language
+- Uses that person's AI enhancement and translation settings
+- Prepends the person's name: "Mike, dinner is ready"
+
+**Group Room (2+ people):**
+- Uses group TTS platform, voice, and language
+- Uses group AI enhancement and translation settings
+- Prepends the group addressee: "Everyone, dinner is ready"
+
+**Targeted Announcements:**
+- When you specify a `target_person`, always uses that person's settings
+- Even if multiple people are in the room, targets the specific person
+- Overrides group detection: "Mike, your package arrived"
+
+This means you can configure different voices for individuals (e.g., Mike gets English Google voice, Janette gets Japanese ElevenLabs voice), and when they're together in a room, the system automatically uses your configured group settings.
 
 ## Requirements
 
