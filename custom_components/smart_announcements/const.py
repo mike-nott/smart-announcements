@@ -43,6 +43,8 @@ ATTR_TARGET_AREA = "target_area"
 ATTR_ENHANCE_WITH_AI = "enhance_with_ai"
 ATTR_TRANSLATE_ANNOUNCEMENT = "translate_announcement"
 ATTR_PRE_ANNOUNCE_SOUND = "pre_announce_sound"
+ATTR_ROOM_TRACKING = "room_tracking"
+ATTR_PRESENCE_VERIFICATION = "presence_verification"
 
 # Default values
 DEFAULT_ROOM_TRACKING = True

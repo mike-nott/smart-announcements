@@ -42,3 +42,15 @@ announce:
       required: false
       selector:
         boolean:
+    room_tracking:
+      name: Override Room Tracking
+      description: Override the room tracking setting (uses global configuration if not specified). Set to false for emergency announcements to all rooms.
+      required: false
+      selector:
+        boolean:
+    presence_verification:
+      name: Override Presence Verification
+      description: Override the presence verification setting (uses global configuration if not specified). Set to false for emergency announcements to bypass verification.
+      required: false
+      selector:
+        boolean:

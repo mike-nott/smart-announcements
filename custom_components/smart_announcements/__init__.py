@@ -16,6 +16,8 @@ from .const import (
     ATTR_ENHANCE_WITH_AI,
     ATTR_TRANSLATE_ANNOUNCEMENT,
     ATTR_PRE_ANNOUNCE_SOUND,
+    ATTR_ROOM_TRACKING,
+    ATTR_PRESENCE_VERIFICATION,
 )
 from .announcer import Announcer
 
@@ -35,6 +37,8 @@ SERVICE_ANNOUNCE_SCHEMA = vol.Schema(
         vol.Optional(ATTR_ENHANCE_WITH_AI): cv.boolean,
         vol.Optional(ATTR_TRANSLATE_ANNOUNCEMENT): cv.boolean,
         vol.Optional(ATTR_PRE_ANNOUNCE_SOUND): cv.boolean,
+        vol.Optional(ATTR_ROOM_TRACKING): cv.boolean,
+        vol.Optional(ATTR_PRESENCE_VERIFICATION): cv.boolean,
     }
 )
 
@@ -124,6 +128,8 @@ async def _async_handle_announce(
     enhance_with_ai = call.data.get(ATTR_ENHANCE_WITH_AI)
     translate_announcement = call.data.get(ATTR_TRANSLATE_ANNOUNCEMENT)
     pre_announce_sound = call.data.get(ATTR_PRE_ANNOUNCE_SOUND)
+    room_tracking = call.data.get(ATTR_ROOM_TRACKING)
+    presence_verification = call.data.get(ATTR_PRESENCE_VERIFICATION)
 
     _LOGGER.debug(
         "Announce service called: message=%s, target_person=%s, target_area=%s",
@@ -148,4 +154,6 @@ async def _async_handle_announce(
         enhance_with_ai=enhance_with_ai,
         translate_announcement=translate_announcement,
         pre_announce_sound=pre_announce_sound,
+        room_tracking=room_tracking,
+        presence_verification=presence_verification,
     )

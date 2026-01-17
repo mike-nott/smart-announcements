@@ -100,6 +100,8 @@ class Announcer:
         enhance_with_ai: bool | None = None,
         translate_announcement: bool | None = None,
         pre_announce_sound: bool | None = None,
+        room_tracking: bool | None = None,
+        presence_verification: bool | None = None,
     ) -> None:
         """Send an announcement to the appropriate room(s)."""
         # Reload config from entry to pick up any config changes
@@ -113,10 +115,14 @@ class Announcer:
         self._debug("🤖 Enhance with AI (param): %s", enhance_with_ai if enhance_with_ai is not None else "Not specified (use config)")
         self._debug("🌐 Translate announcement (param): %s", translate_announcement if translate_announcement is not None else "Not specified (use config)")
         self._debug("🔊 Pre-announce sound (param): %s", pre_announce_sound if pre_announce_sound is not None else "Not specified (use config)")
+        self._debug("📍 Room tracking (param): %s", room_tracking if room_tracking is not None else "Not specified (use config)")
+        self._debug("✅ Presence verification (param): %s", presence_verification if presence_verification is not None else "Not specified (use config)")
 
         # Resolve target rooms
         self._debug("🔍 Starting room resolution...")
-        target_rooms = await self._resolve_targets(target_person, target_area)
+        target_rooms = await self._resolve_targets(
+            target_person, target_area, room_tracking, presence_verification
+        )
 
         if not target_rooms:
             self._debug("❌ No target rooms found!")
@@ -153,10 +159,15 @@ class Announcer:
         self,
         target_person: str | None,
         target_area: str | None,
+        room_tracking: bool | None = None,
+        presence_verification: bool | None = None,
     ) -> list[dict[str, Any]]:
         """Resolve target rooms based on parameters."""
-        room_tracking = self.config.get(CONF_ROOM_TRACKING, True)
-        presence_verification = self.config.get(CONF_PRESENCE_VERIFICATION, False)
+        # Use service parameter overrides if provided, otherwise use config
+        if room_tracking is None:
+            room_tracking = self.config.get(CONF_ROOM_TRACKING, True)
+        if presence_verification is None:
+            presence_verification = self.config.get(CONF_PRESENCE_VERIFICATION, False)
         rooms = self.config.get(CONF_ROOMS, [])
 
         self._debug("⚙️ Room tracking enabled: %s", room_tracking)
