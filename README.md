@@ -193,6 +193,16 @@ data:
   pre_announce_sound: false
 ```
 
+#### Emergency Announcement (Whole House)
+```yaml
+service: smart_announcements.announce
+data:
+  message: "Emergency! Everyone evacuate now!"
+  room_tracking: false
+  presence_verification: false
+```
+Disabling both room tracking and presence verification announces to **all configured rooms** regardless of occupancy - perfect for emergencies.
+
 ### Service Parameters
 
 | Parameter | Type | Required | Description |
@@ -203,6 +213,8 @@ data:
 | `enhance_with_ai` | boolean | No | Override AI enhancement setting |
 | `translate_announcement` | boolean | No | Override translation setting |
 | `pre_announce_sound` | boolean | No | Override pre-announce sound setting |
+| `room_tracking` | boolean | No | Override room tracking setting |
+| `presence_verification` | boolean | No | Override presence verification setting |
 
 ### Enable/Disable Switches
 
