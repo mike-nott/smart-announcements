@@ -112,6 +112,7 @@
       "global_settings": {
         "title": "Global Settings",
         "data": {
+          "home_away_tracking": "Enable Home/Away Tracking",
           "room_tracking": "Enable Room Tracking",
           "presence_verification": "Verify with Presence Sensors",
           "pre_announce_enabled": "Enable Pre-Announce Sound",

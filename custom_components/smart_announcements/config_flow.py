@@ -30,6 +30,7 @@ from homeassistant.helpers.selector import (
 
 from .const import (
     DOMAIN,
+    CONF_HOME_AWAY_TRACKING,
     CONF_ROOM_TRACKING,
     CONF_PRESENCE_VERIFICATION,
     CONF_DEBUG_MODE,
@@ -46,6 +47,7 @@ from .const import (
     CONF_PROMPT_ENHANCE,
     CONF_PROMPT_BOTH,
     CONF_GROUP_ADDRESSEE,
+    DEFAULT_HOME_AWAY_TRACKING,
     DEFAULT_ROOM_TRACKING,
     DEFAULT_PRESENCE_VERIFICATION,
     DEFAULT_DEBUG_MODE,
@@ -727,6 +729,10 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
 
         options_schema = vol.Schema(
             {
+                vol.Required(
+                    CONF_HOME_AWAY_TRACKING,
+                    default=data.get(CONF_HOME_AWAY_TRACKING, DEFAULT_HOME_AWAY_TRACKING),
+                ): BooleanSelector(),
                 vol.Required(
                     CONF_ROOM_TRACKING,
                     default=data.get(CONF_ROOM_TRACKING, DEFAULT_ROOM_TRACKING),

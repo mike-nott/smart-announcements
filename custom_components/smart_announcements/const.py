@@ -3,6 +3,7 @@
 DOMAIN = "smart_announcements"
 
 # Configuration keys - Global settings
+CONF_HOME_AWAY_TRACKING = "home_away_tracking"
 CONF_ROOM_TRACKING = "room_tracking"
 CONF_PRESENCE_VERIFICATION = "presence_verification"
 CONF_DEBUG_MODE = "debug_mode"
@@ -47,6 +48,7 @@ ATTR_ROOM_TRACKING = "room_tracking"
 ATTR_PRESENCE_VERIFICATION = "presence_verification"
 
 # Default values
+DEFAULT_HOME_AWAY_TRACKING = True
 DEFAULT_ROOM_TRACKING = True
 DEFAULT_PRESENCE_VERIFICATION = False
 DEFAULT_DEBUG_MODE = False
