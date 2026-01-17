@@ -94,6 +94,7 @@ The setup wizard guides you through configuration:
 When multiple people are in the same room, use these settings instead of individual preferences.
 
 *Part 1 - Language & TTS:*
+- **Group Name/Addressee**: How to address groups (default: "Everyone", can be "Family", "Guys", etc.)
 - **Language**: Language for group announcements
 - **TTS Platform**: TTS service for groups
 - **Enhance with AI**: Toggle AI enhancement
@@ -140,6 +141,12 @@ After setup, you can edit settings via **Configure** button:
 
 **Group Settings:**
 - Edit group announcement preferences (only if multiple people configured)
+- Configure how groups are addressed
+
+**Advanced Settings:**
+- Customize AI prompts for your specific LLM
+- Three customizable templates: translate-only, enhance-only, and both
+- Useful for adapting to different LLMs (Claude, ChatGPT, Gemini, etc.)
 
 ## Usage
 
@@ -194,6 +201,7 @@ data:
 | `target_person` | string | No | Person entity ID (e.g., `person.john`) |
 | `target_area` | string | No | Area ID (e.g., `living_room`) |
 | `enhance_with_ai` | boolean | No | Override AI enhancement setting |
+| `translate_announcement` | boolean | No | Override translation setting |
 | `pre_announce_sound` | boolean | No | Override pre-announce sound setting |
 
 ### Enable/Disable Switches
@@ -274,6 +282,21 @@ You can enable one, both, or neither. When both are enabled, the message is enha
 **Both Enhancement + Translation:**
 - Original: "Motion detected in the garage"
 - Result: AI makes it more engaging, then translates to the person's language
+
+### Customizing AI Prompts
+
+Different LLMs (Claude, ChatGPT, Gemini, etc.) interpret prompts differently. You can customize the AI prompts in **Advanced Settings** to get better results with your specific model.
+
+The integration uses three prompt templates:
+- **Translate-only**: Used when translation is enabled but enhancement is disabled
+- **Enhance-only**: Used when enhancement is enabled but translation is disabled
+- **Both**: Used when both enhancement and translation are enabled
+
+Each template supports variables:
+- `{language}` - The target language
+- `{message}` - The announcement text
+
+The default prompts work well for most cases, but you can adjust them if your LLM adds unwanted meta-commentary or doesn't follow instructions correctly.
 
 ## Debug Mode
 
@@ -400,8 +423,13 @@ automation:
 **Check settings:**
 - Person config: Is "Enhance with AI" or "Translate Announcement" enabled?
 - Group config: Is "Enhance with AI" or "Translate Announcement" enabled (if multiple people in room)?
-- Service call: Are you overriding with `enhance_with_ai: false`?
+- Service call: Are you overriding with `enhance_with_ai: false` or `translate_announcement: false`?
 - Note: Translation requires a conversation entity even if AI enhancement is disabled
+
+**Customize prompts (if AI adds unwanted content):**
+- Go to Smart Announcements → Configure → Advanced Settings
+- Edit the AI prompt templates to work better with your specific LLM
+- Different models (Claude, ChatGPT, Gemini) may need different prompt styles
 
 ### Pre-Announce Sound Not Playing
 
