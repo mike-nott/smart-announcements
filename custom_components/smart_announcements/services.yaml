@@ -11,8 +11,8 @@ announce:
         text:
           multiline: true
     target_person:
-      name: Target Person
-      description: Announce to this person's current location. If not specified, announces to all occupied rooms.
+      name: Target Person(s)
+      description: Announce to specific person(s) by name. Supports multiple comma-separated names (e.g., "Michael, Janette"). When multiple people are in the same room, group settings will be used. If not specified, announces to all occupied rooms.
       required: false
       example: "Mike"
       selector:
