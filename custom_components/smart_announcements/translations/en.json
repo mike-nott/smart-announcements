@@ -231,8 +231,8 @@
         }
       },
       "advanced_settings": {
-        "title": "Advanced AI Prompt Settings",
-        "description": "Customize the AI prompts used for enhancement and translation. Use {language} for the target language and {message} for the announcement text.",
+        "title": "Advanced Settings",
+        "description": "Customize the AI prompts sent to your conversation entity. Different LLMs (Claude, ChatGPT, Gemini, etc.) may interpret prompts differently - adjust these templates to get better results with your specific model. The default prompts work well for most cases. Use {language} for target language and {message} for the announcement text in your templates.",
         "data": {
           "prompt_translate": "Translate-Only Prompt Template",
           "prompt_enhance": "Enhance-Only Prompt Template",
