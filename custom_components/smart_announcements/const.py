@@ -28,6 +28,11 @@ CONF_ROOM_NAME = "room_name"
 CONF_MEDIA_PLAYER = "media_player"
 CONF_PRESENCE_SENSORS = "presence_sensors"
 
+# Configuration keys - Advanced AI Prompts
+CONF_PROMPT_TRANSLATE = "prompt_translate"
+CONF_PROMPT_ENHANCE = "prompt_enhance"
+CONF_PROMPT_BOTH = "prompt_both"
+
 # Service parameters
 ATTR_MESSAGE = "message"
 ATTR_TARGET_PERSON = "target_person"
@@ -45,6 +50,11 @@ DEFAULT_PRE_ANNOUNCE_ENABLED = True
 DEFAULT_PRE_ANNOUNCE_URL = "/local/sounds/chime.mp3"
 DEFAULT_PRE_ANNOUNCE_DELAY = 2
 DEFAULT_LANGUAGE = "english"
+
+# Default AI prompt templates
+DEFAULT_PROMPT_TRANSLATE = 'Translate the following announcement to {language}. Message: "{message}"'
+DEFAULT_PROMPT_ENHANCE = 'Rephrase the following announcement to make it more engaging. DO NOT change who the message is addressed to. Message: "{message}"'
+DEFAULT_PROMPT_BOTH = 'Create an engaging {language} language translated version of this announcement. DO NOT change who the message is addressed to. Message: "{message}"'
 
 # Language options
 LANGUAGE_OPTIONS = [

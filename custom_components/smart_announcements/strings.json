@@ -105,7 +105,8 @@
           "global_settings": "Global Settings",
           "edit_people": "Edit People",
           "edit_rooms": "Edit Rooms",
-          "group_settings": "Group Settings"
+          "group_settings": "Group Settings",
+          "advanced_settings": "Advanced Settings"
         }
       },
       "global_settings": {
@@ -227,6 +228,15 @@
           "group_enhance_with_ai": "Enhance with AI",
           "group_translate_announcement": "Translate Announcement",
           "group_conversation_entity": "Conversation Entity (for AI)"
+        }
+      },
+      "advanced_settings": {
+        "title": "Advanced AI Prompt Settings",
+        "description": "Customize the AI prompts used for enhancement and translation. Use {language} for the target language and {message} for the announcement text.",
+        "data": {
+          "prompt_translate": "Translate-Only Prompt Template",
+          "prompt_enhance": "Enhance-Only Prompt Template",
+          "prompt_both": "Both (Enhance + Translate) Prompt Template"
         }
       }
     },

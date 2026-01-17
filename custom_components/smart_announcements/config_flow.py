@@ -42,6 +42,9 @@ from .const import (
     CONF_ROOMS,
     CONF_PERSON_FRIENDLY_NAME,
     CONF_TRANSLATE_ANNOUNCEMENT,
+    CONF_PROMPT_TRANSLATE,
+    CONF_PROMPT_ENHANCE,
+    CONF_PROMPT_BOTH,
     DEFAULT_ROOM_TRACKING,
     DEFAULT_PRESENCE_VERIFICATION,
     DEFAULT_DEBUG_MODE,
@@ -49,6 +52,9 @@ from .const import (
     DEFAULT_PRE_ANNOUNCE_ENABLED,
     DEFAULT_PRE_ANNOUNCE_URL,
     DEFAULT_PRE_ANNOUNCE_DELAY,
+    DEFAULT_PROMPT_TRANSLATE,
+    DEFAULT_PROMPT_ENHANCE,
+    DEFAULT_PROMPT_BOTH,
     LANGUAGE_OPTIONS,
     LANGUAGE_CODE_MAP,
 )
@@ -699,6 +705,7 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
         menu_options = ["global_settings", "edit_people", "edit_rooms"]
         if len(people) > 1:
             menu_options.append("group_settings")
+        menu_options.append("advanced_settings")
 
         return self.async_show_menu(
             step_id="init",
@@ -1457,5 +1464,39 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
         return self.async_show_form(
             step_id="group_settings",
             data_schema=vol.Schema(schema_dict),
+            errors=errors,
+        )
+
+    async def async_step_advanced_settings(self, user_input=None):
+        """Edit advanced AI prompt settings."""
+        errors: dict[str, str] = {}
+        data = self.entry.data
+
+        if user_input is not None:
+            # Update config entry data
+            new_data = {**data, **user_input}
+            self.hass.config_entries.async_update_entry(self.entry, data=new_data)
+            return self.async_create_entry(title="", data={})
+
+        data_schema = vol.Schema(
+            {
+                vol.Optional(
+                    CONF_PROMPT_TRANSLATE,
+                    default=data.get(CONF_PROMPT_TRANSLATE, DEFAULT_PROMPT_TRANSLATE),
+                ): TextSelector(TextSelectorConfig(multiline=True)),
+                vol.Optional(
+                    CONF_PROMPT_ENHANCE,
+                    default=data.get(CONF_PROMPT_ENHANCE, DEFAULT_PROMPT_ENHANCE),
+                ): TextSelector(TextSelectorConfig(multiline=True)),
+                vol.Optional(
+                    CONF_PROMPT_BOTH,
+                    default=data.get(CONF_PROMPT_BOTH, DEFAULT_PROMPT_BOTH),
+                ): TextSelector(TextSelectorConfig(multiline=True)),
+            }
+        )
+
+        return self.async_show_form(
+            step_id="advanced_settings",
+            data_schema=data_schema,
             errors=errors,
         )

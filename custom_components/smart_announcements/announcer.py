@@ -481,18 +481,32 @@ class Announcer:
             _LOGGER.debug("No conversation entity configured, skipping AI processing")
             return message
 
+        # Get custom prompts from config or use defaults
+        from .const import (
+            CONF_PROMPT_TRANSLATE,
+            CONF_PROMPT_ENHANCE,
+            CONF_PROMPT_BOTH,
+            DEFAULT_PROMPT_TRANSLATE,
+            DEFAULT_PROMPT_ENHANCE,
+            DEFAULT_PROMPT_BOTH,
+        )
+
+        prompt_translate = self.config.get(CONF_PROMPT_TRANSLATE, DEFAULT_PROMPT_TRANSLATE)
+        prompt_enhance = self.config.get(CONF_PROMPT_ENHANCE, DEFAULT_PROMPT_ENHANCE)
+        prompt_both = self.config.get(CONF_PROMPT_BOTH, DEFAULT_PROMPT_BOTH)
+
         # Build the appropriate prompt based on settings
         if not enhance_with_ai and translate_announcement:
             # Translate only
-            prompt = f'Translate the following announcement to {language}. Message: "{message}"'
+            prompt = prompt_translate.format(language=language, message=message)
             _LOGGER.debug("Using translate-only prompt for language: %s", language)
         elif enhance_with_ai and not translate_announcement:
             # Enhance only
-            prompt = f'Rephrase the following announcement to make it more engaging. DO NOT change who the message is addressed to. Message: "{message}"'
+            prompt = prompt_enhance.format(message=message)
             _LOGGER.debug("Using enhance-only prompt")
         else:
             # Both enhance and translate
-            prompt = f'Create an engaging {language} language translated version of this announcement. DO NOT change who the message is addressed to. Message: "{message}"'
+            prompt = prompt_both.format(language=language, message=message)
             _LOGGER.debug("Using enhance+translate prompt for language: %s", language)
 
         try:
