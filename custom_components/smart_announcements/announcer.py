@@ -172,6 +172,10 @@ class Announcer:
             presence_verification = self.config.get(CONF_PRESENCE_VERIFICATION, False)
         rooms = self.config.get(CONF_ROOMS, [])
 
+        from .const import CONF_HOME_AWAY_TRACKING, DEFAULT_HOME_AWAY_TRACKING
+        home_away_tracking = self.config.get(CONF_HOME_AWAY_TRACKING, DEFAULT_HOME_AWAY_TRACKING)
+
+        self._debug("⚙️ Home/away tracking enabled: %s", home_away_tracking)
         self._debug("⚙️ Room tracking enabled: %s", room_tracking)
         self._debug("⚙️ Presence verification enabled: %s", presence_verification)
         self._debug("⚙️ Total configured rooms: %d", len(rooms))

@@ -56,6 +56,7 @@ class RoomTracker:
         # Check if person is home first (if home/away tracking is enabled)
         from .const import CONF_HOME_AWAY_TRACKING, DEFAULT_HOME_AWAY_TRACKING
         if self.config.get(CONF_HOME_AWAY_TRACKING, DEFAULT_HOME_AWAY_TRACKING):
+            _LOGGER.debug("Home/away tracking enabled - checking person state for %s", person_entity)
             person_state = self.hass.states.get(person_entity)
             if not person_state:
                 _LOGGER.debug("Person entity %s not found", person_entity)
@@ -64,6 +65,9 @@ class RoomTracker:
             if person_state.state != "home":
                 _LOGGER.debug("Person %s is not home (state: %s)", person_entity, person_state.state)
                 return None
+            _LOGGER.debug("Person %s is home - proceeding to check room tracking", person_entity)
+        else:
+            _LOGGER.debug("Home/away tracking disabled - skipping person state check for %s", person_entity)
 
         # Get the room from the tracking entity
         area_id = await self._get_area_from_entity(room_tracking_entity)
