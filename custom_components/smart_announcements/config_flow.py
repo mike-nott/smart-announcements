@@ -41,7 +41,6 @@ from .const import (
     CONF_PRE_ANNOUNCE_DELAY,
     CONF_PEOPLE,
     CONF_ROOMS,
-    CONF_PERSON_FRIENDLY_NAME,
     CONF_TRANSLATE_ANNOUNCEMENT,
     CONF_PROMPT_TRANSLATE,
     CONF_PROMPT_ENHANCE,
@@ -285,7 +284,6 @@ class SmartAnnouncementsConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 **self._current_person_data,
                 **user_input,
                 "person_entity": person_entity,
-                CONF_PERSON_FRIENDLY_NAME: get_person_friendly_name(self.hass, person_entity),
             }
             self.people_data.append(combined_data)
             self._current_person_data = {}  # Clear temp data
@@ -788,8 +786,8 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
         person_options = [{"value": "add_new", "label": "+ Add Person"}]
         for idx, person in enumerate(people):
             person_entity = person.get("person_entity", "")
-            # Use stored friendly name if available, otherwise get from entity
-            person_name = person.get(CONF_PERSON_FRIENDLY_NAME) or get_person_friendly_name(self.hass, person_entity)
+            # Get friendly name from HA entity
+            person_name = get_person_friendly_name(self.hass, person_entity)
             person_options.append({"value": str(idx), "label": person_name})
 
         # Add "Delete Person" option at bottom
@@ -819,15 +817,14 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
         people = list(data.get(CONF_PEOPLE, []))
         person = people[self._selected_person_index]
         person_entity = person.get("person_entity", "")
-        # Use stored friendly name if available, otherwise get from entity
-        person_name = person.get(CONF_PERSON_FRIENDLY_NAME) or get_person_friendly_name(self.hass, person_entity)
+        # Get friendly name from HA entity
+        person_name = get_person_friendly_name(self.hass, person_entity)
 
         if user_input is not None:
             # Update the person's config
             people[self._selected_person_index] = {
                 **person,
                 **user_input,
-                CONF_PERSON_FRIENDLY_NAME: get_person_friendly_name(self.hass, person_entity),
             }
             new_data = {**data, CONF_PEOPLE: people}
             self.hass.config_entries.async_update_entry(self.entry, data=new_data)
@@ -918,8 +915,8 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
         person_options = []
         for idx, person in enumerate(people):
             person_entity = person.get("person_entity", "")
-            # Use stored friendly name if available, otherwise get from entity
-            person_name = person.get(CONF_PERSON_FRIENDLY_NAME) or get_person_friendly_name(self.hass, person_entity)
+            # Get friendly name from HA entity
+            person_name = get_person_friendly_name(self.hass, person_entity)
             person_options.append({"value": str(idx), "label": person_name})
 
         data_schema = vol.Schema(
@@ -945,8 +942,8 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
         people = list(data.get(CONF_PEOPLE, []))
         person = people[self._selected_person_index]
         person_entity = person.get("person_entity", "")
-        # Use stored friendly name if available, otherwise get from entity
-        person_name = person.get(CONF_PERSON_FRIENDLY_NAME) or get_person_friendly_name(self.hass, person_entity)
+        # Get friendly name from HA entity
+        person_name = get_person_friendly_name(self.hass, person_entity)
 
         if user_input is not None:
             if user_input.get("confirm"):
@@ -1054,7 +1051,6 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
 
             new_person = {
                 "person_entity": self._new_person_entity,
-                CONF_PERSON_FRIENDLY_NAME: get_person_friendly_name(self.hass, self._new_person_entity),
                 **self._new_person_data,
                 **user_input,
             }

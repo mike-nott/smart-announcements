@@ -21,7 +21,6 @@ from .const import (
     CONF_PRE_ANNOUNCE_URL,
     CONF_PRE_ANNOUNCE_DELAY,
     CONF_LANGUAGE,
-    CONF_PERSON_FRIENDLY_NAME,
     CONF_TRANSLATE_ANNOUNCEMENT,
     EVENT_ANNOUNCEMENT_SENT,
     EVENT_ANNOUNCEMENT_BLOCKED,
@@ -52,11 +51,17 @@ class Announcer:
         people = self.config.get(CONF_PEOPLE, [])
         for person in people:
             entity_id = person.get("person_entity", "")
-            friendly_name = person.get(CONF_PERSON_FRIENDLY_NAME, "")
 
-            # Match by friendly name first (preferred)
-            if friendly_name and friendly_name.lower() == person_name.lower():
+            # Match by entity ID directly (e.g., "person.mike")
+            if entity_id and entity_id == person_name:
                 return person
+
+            # Match by friendly name from HA entity (preferred)
+            if entity_id:
+                from .config_flow import get_person_friendly_name
+                friendly_name = get_person_friendly_name(self.hass, entity_id)
+                if friendly_name and friendly_name.lower() == person_name.lower():
+                    return person
 
             # Match by entity name (person.mike -> mike) or display name
             name_from_entity = entity_id.replace("person.", "").lower()
@@ -578,7 +583,9 @@ class Announcer:
         if target_person:
             person_config = self._get_person_config(target_person)
             if person_config:
-                name = person_config.get(CONF_PERSON_FRIENDLY_NAME) or target_person
+                from .config_flow import get_person_friendly_name
+                entity_id = person_config.get("person_entity")
+                name = get_person_friendly_name(self.hass, entity_id) if entity_id else target_person
             else:
                 name = target_person
         # Priority 2: If group room and no target_person, use group addressee
@@ -591,7 +598,9 @@ class Announcer:
             person_entity = people_in_room[0]
             person_config = self._get_person_config(person_entity)
             if person_config:
-                name = person_config.get(CONF_PERSON_FRIENDLY_NAME) or person_entity
+                from .config_flow import get_person_friendly_name
+                entity_id = person_config.get("person_entity")
+                name = get_person_friendly_name(self.hass, entity_id) if entity_id else person_entity
             else:
                 name = person_entity
 

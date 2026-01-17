@@ -14,7 +14,6 @@ from .const import (
     DOMAIN,
     CONF_PEOPLE,
     CONF_ROOMS,
-    CONF_PERSON_FRIENDLY_NAME,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -40,8 +39,10 @@ async def async_setup_entry(
         if person_entity:
             # Extract name from entity_id for entity naming (person.mike -> mike)
             entity_name = person_entity.replace("person.", "")
-            # Get friendly name for display
-            friendly_name = person_config.get(CONF_PERSON_FRIENDLY_NAME, entity_name.replace("_", " ").title())
+            # Get friendly name for display from HA entity
+            from .config_flow import get_person_friendly_name
+            entity_id = person_config.get("person_entity")
+            friendly_name = get_person_friendly_name(hass, entity_id) if entity_id else entity_name.replace("_", " ").title()
             entities.append(
                 PersonSwitch(hass, entry, entity_name, friendly_name, person_config)
             )
