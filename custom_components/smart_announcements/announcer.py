@@ -128,7 +128,7 @@ class Announcer:
             self._debug("❌ No target rooms found!")
             if target_person:
                 raise HomeAssistantError(
-                    f"Cannot announce to '{target_person}': person is not home or has no configured room"
+                    f"Cannot announce to '{target_person}': person(s) not home or have no configured room"
                 )
             elif target_area:
                 raise HomeAssistantError(
@@ -144,10 +144,12 @@ class Announcer:
         # Announce to each room
         for idx, room_info in enumerate(target_rooms, 1):
             self._debug("📢 Processing room %d/%d: %s", idx, len(target_rooms), room_info.get("room_name"))
+            # Extract target_person from room_info if present, otherwise use original
+            room_target_person = room_info.get("target_person", target_person)
             await self._announce_to_room(
                 room_info=room_info,
                 message=message,
-                target_person=target_person,
+                target_person=room_target_person,
                 enhance_with_ai=enhance_with_ai,
                 translate_announcement=translate_announcement,
                 pre_announce_sound=pre_announce_sound,
@@ -191,49 +193,85 @@ class Announcer:
             self._debug("✅ Found matching room: %s", matching_rooms[0].get("room_name"))
             return matching_rooms
 
-        # If target_person specified, find their room
+        # If target_person specified, parse comma-separated names and find their rooms
         if target_person:
-            self._debug("👤 Target person specified: '%s'", target_person)
-            person_config = self._get_person_config(target_person)
-            if not person_config:
-                self._debug("❌ Person '%s' not found in configuration", target_person)
-                raise HomeAssistantError(
-                    f"Person '{target_person}' is not configured in Smart Announcements"
-                )
+            # Parse comma-separated names
+            target_people = [name.strip() for name in target_person.split(",")]
+            self._debug("👤 Target person(s) specified: %s", target_people)
 
-            person_entity = person_config.get("person_entity")
-            self._debug("✅ Person entity: %s", person_entity)
+            # Track rooms and which people are in each room
+            room_to_people = {}  # {area_id: [person_names]}
 
-            # Check if person is home first
-            person_state = self.hass.states.get(person_entity)
-            if person_state:
-                self._debug("📊 Person state: %s", person_state.state)
-            else:
-                self._debug("❌ Person entity not found in Home Assistant")
+            for person_name in target_people:
+                person_config = self._get_person_config(person_name)
+                if not person_config:
+                    self._debug("❌ Person '%s' not found in configuration", person_name)
+                    raise HomeAssistantError(
+                        f"Person '{person_name}' is not configured in Smart Announcements"
+                    )
 
-            if room_tracking:
-                self._debug("🔍 Room tracking is enabled, finding person's location...")
-                # Get person's current room
-                room_id = await self.room_tracker.async_get_person_room(person_entity)
-                if room_id:
-                    self._debug("✅ Person is in room (area_id): %s", room_id)
-                    room_config = self._get_room_config(room_id)
-                    if room_config:
-                        self._debug("✅ Room configuration found: %s", room_config.get("room_name"))
-                        return [room_config]
-                    else:
-                        self._debug("⚠️ Room '%s' is not configured in Smart Announcements", room_id)
+                person_entity = person_config.get("person_entity")
+                self._debug("✅ Person '%s' entity: %s", person_name, person_entity)
+
+                # Check if person is home first
+                person_state = self.hass.states.get(person_entity)
+                if person_state:
+                    self._debug("📊 Person '%s' state: %s", person_name, person_state.state)
                 else:
-                    self._debug("⚠️ Could not determine person's room from tracking")
+                    self._debug("❌ Person entity not found in Home Assistant")
 
-            # Fallback: announce to all rooms if person is home
-            if person_state and person_state.state == "home":
-                self._debug("🏠 Person is home but room unknown, announcing to all rooms with media players")
-                fallback_rooms = [r for r in rooms if r.get("media_player")]
-                self._debug("📢 Will announce to %d room(s): %s", len(fallback_rooms), [r.get("room_name") for r in fallback_rooms])
-                return fallback_rooms
+                if room_tracking:
+                    self._debug("🔍 Room tracking is enabled, finding %s's location...", person_name)
+                    # Get person's current room
+                    room_id = await self.room_tracker.async_get_person_room(person_entity)
+                    if room_id:
+                        self._debug("✅ Person '%s' is in room (area_id): %s", person_name, room_id)
+                        room_config = self._get_room_config(room_id)
+                        if room_config:
+                            self._debug("✅ Room configuration found: %s", room_config.get("room_name"))
+                            # Add person to this room's target list
+                            if room_id not in room_to_people:
+                                room_to_people[room_id] = []
+                            room_to_people[room_id].append(person_name)
+                        else:
+                            self._debug("⚠️ Room '%s' is not configured in Smart Announcements", room_id)
+                    else:
+                        self._debug("⚠️ Could not determine %s's room from tracking", person_name)
+                        # Will handle this in final fallback
 
-            self._debug("❌ Person %s is not home", target_person)
+            # Build target room list with target_person metadata
+            target_rooms = []
+            for room_id, people_list in room_to_people.items():
+                room_config = self._get_room_config(room_id)
+                if room_config:
+                    # Add metadata about which specific people are targeted in this room
+                    room_with_targets = room_config.copy()
+                    # If multiple people targeted in same room, use None (will trigger group detection)
+                    # If single person targeted, use their name
+                    room_with_targets["target_person"] = people_list[0] if len(people_list) == 1 else None
+                    room_with_targets["targeted_people"] = people_list
+                    target_rooms.append(room_with_targets)
+                    self._debug("📍 Room %s will announce to: %s (target_person=%s)",
+                               room_config.get("room_name"),
+                               people_list,
+                               room_with_targets["target_person"])
+
+            if target_rooms:
+                return target_rooms
+
+            # Fallback: if no specific rooms found but people are home, announce to all rooms
+            for person_name in target_people:
+                person_config = self._get_person_config(person_name)
+                if person_config:
+                    person_entity = person_config.get("person_entity")
+                    person_state = self.hass.states.get(person_entity)
+                    if person_state and person_state.state == "home":
+                        self._debug("🏠 At least one person is home but room unknown, announcing to all rooms")
+                        fallback_rooms = [r for r in rooms if r.get("media_player")]
+                        self._debug("📢 Will announce to %d room(s): %s", len(fallback_rooms), [r.get("room_name") for r in fallback_rooms])
+                        return fallback_rooms
+
+            self._debug("❌ No target people are home")
             return []
 
         # No specific target: determine which rooms to announce to
@@ -612,18 +650,21 @@ class Announcer:
         if not enhance_with_ai and translate_announcement:
             # Translate only
             prompt = prompt_translate.format(language=language, message=message)
-            _LOGGER.debug("Using translate-only prompt for language: %s", language)
+            self._debug("  📋 Using translate-only prompt for language: %s", language)
         elif enhance_with_ai and not translate_announcement:
             # Enhance only
             prompt = prompt_enhance.format(message=message)
-            _LOGGER.debug("Using enhance-only prompt")
+            self._debug("  📋 Using enhance-only prompt")
         else:
             # Both enhance and translate
             prompt = prompt_both.format(language=language, message=message)
-            _LOGGER.debug("Using enhance+translate prompt for language: %s", language)
+            self._debug("  📋 Using enhance+translate prompt for language: %s", language)
+
+        self._debug("  💬 Actual prompt being sent to LLM: '%s'", prompt)
 
         try:
             # Call conversation.process service
+            self._debug("  📞 Calling conversation.process service")
             response = await self.hass.services.async_call(
                 "conversation",
                 "process",
@@ -634,6 +675,7 @@ class Announcer:
                 blocking=True,
                 return_response=True,
             )
+            self._debug("  ✅ Received response from conversation.process")
 
             if response and "response" in response:
                 speech = response["response"].get("speech", {})
