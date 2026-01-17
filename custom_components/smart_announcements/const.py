@@ -58,9 +58,9 @@ DEFAULT_LANGUAGE = "english"
 DEFAULT_GROUP_ADDRESSEE = "Everyone"
 
 # Default AI prompt templates
-DEFAULT_PROMPT_TRANSLATE = 'Translate the following announcement to {language}. Message: "{message}"'
-DEFAULT_PROMPT_ENHANCE = 'Rephrase the following announcement to make it more engaging. DO NOT change who the message is addressed to. Message: "{message}"'
-DEFAULT_PROMPT_BOTH = 'Create an engaging {language} language translated version of this announcement. DO NOT change who the message is addressed to. Message: "{message}"'
+DEFAULT_PROMPT_TRANSLATE = 'Translate this announcement to {language}. Return only the translated announcement, no explanations or confirmations. Keep who it\'s addressed to. Message: "{message}"'
+DEFAULT_PROMPT_ENHANCE = 'Rephrase this announcement to be more engaging. Return only the new announcement, no explanations or confirmations. Keep who it\'s addressed to. Message: "{message}"'
+DEFAULT_PROMPT_BOTH = 'Translate this announcement to {language} and make it more engaging. Return only the result, no explanations or confirmations. Keep who it\'s addressed to. Message: "{message}"'
 
 # Language options
 LANGUAGE_OPTIONS = [
