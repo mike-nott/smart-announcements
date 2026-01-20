@@ -129,14 +129,14 @@ class PersonSwitch(SwitchEntity):
         self._attr_is_on = True
         self._update_enabled_state(True)
         self.async_write_ha_state()
-        _LOGGER.debug("Enabled announcements for person: %s", self._person_name)
+        _LOGGER.debug("Enabled announcements for person: %s", self._friendly_name)
 
     async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn off (disable/mute announcements)."""
         self._attr_is_on = False
         self._update_enabled_state(False)
         self.async_write_ha_state()
-        _LOGGER.debug("Disabled announcements for person: %s", self._person_name)
+        _LOGGER.debug("Disabled announcements for person: %s", self._friendly_name)
 
     def _update_enabled_state(self, enabled: bool) -> None:
         """Update the enabled state in hass.data."""
