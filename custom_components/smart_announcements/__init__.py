@@ -132,10 +132,11 @@ async def _async_handle_announce(
     presence_verification = call.data.get(ATTR_PRESENCE_VERIFICATION)
 
     _LOGGER.debug(
-        "Announce service called: message=%s, target_person=%s, target_area=%s",
+        "Announce service called: message=%s, target_person=%s, target_area=%s, context=%s",
         message,
         target_person,
         target_area,
+        call.context,
     )
 
     # Get the announcer instance
@@ -156,4 +157,5 @@ async def _async_handle_announce(
         pre_announce_sound=pre_announce_sound,
         room_tracking=room_tracking,
         presence_verification=presence_verification,
+        context=call.context,
     )

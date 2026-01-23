@@ -107,8 +107,12 @@ class Announcer:
         pre_announce_sound: bool | None = None,
         room_tracking: bool | None = None,
         presence_verification: bool | None = None,
+        context=None,
     ) -> None:
         """Send an announcement to the appropriate room(s)."""
+        # Store context for service calls
+        self.context = context
+
         # Reload config from entry to pick up any config changes
         self.config = self.entry.data
         self.room_tracker.config = self.entry.data
@@ -462,6 +466,21 @@ class Announcer:
         )
         self._debug("✅ TTS announcement sent successfully")
 
+        # Log to Activity dashboard
+        await self.hass.services.async_call(
+            "logbook",
+            "log",
+            {
+                "name": f"Smart Announcements: {room_name}",
+                "message": final_message,
+                "entity_id": f"switch.{DOMAIN}_{area_id}",
+                "domain": DOMAIN,
+            },
+            blocking=False,
+            context=self.context,
+        )
+        self._debug("✅ Activity dashboard entry created")
+
         # Fire success event
         self._fire_sent_event(room_name, final_message, target_person)
 
@@ -687,6 +706,7 @@ class Announcer:
                 },
                 blocking=True,
                 return_response=True,
+                context=self.context,
             )
             self._debug("  ✅ Received response from conversation.process")
 
@@ -732,6 +752,7 @@ class Announcer:
                 "play_media",
                 service_data,
                 blocking=True,
+                context=self.context,
             )
             self._debug("  ✅ media_player.play_media call succeeded")
 
@@ -783,6 +804,7 @@ class Announcer:
                     "speak",
                     service_data,
                     blocking=True,
+                    context=self.context,
                 )
                 self._debug("  ✅ tts.speak call succeeded")
             else:
@@ -795,6 +817,7 @@ class Announcer:
                     "speak",
                     service_data,
                     blocking=True,
+                    context=self.context,
                 )
                 self._debug("  ✅ tts.speak call succeeded (fallback)")
 
