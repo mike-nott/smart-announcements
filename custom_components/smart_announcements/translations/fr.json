@@ -118,7 +118,8 @@
           "pre_announce_enabled": "Activer le son de pré-annonce",
           "pre_announce_url": "URL du son de pré-annonce",
           "pre_announce_delay": "Délai après la pré-annonce (secondes)",
-          "debug_mode": "Mode débogage (journalisation détaillée)"
+          "log_to_activity": "Enregistrer dans le journal d'activité",
+          "debug_mode": "Mode débogage"
         }
       },
       "edit_people": {

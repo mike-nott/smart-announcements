@@ -118,7 +118,8 @@
           "pre_announce_enabled": "Abilita suono pre-annuncio",
           "pre_announce_url": "URL suono pre-annuncio",
           "pre_announce_delay": "Ritardo dopo pre-annuncio (secondi)",
-          "debug_mode": "Modalità debug (registrazione dettagliata)"
+          "log_to_activity": "Registra nel registro attività",
+          "debug_mode": "Modalità debug"
         }
       },
       "edit_people": {

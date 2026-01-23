@@ -118,7 +118,8 @@
           "pre_announce_enabled": "사전 알림 사운드 활성화",
           "pre_announce_url": "사전 알림 사운드 URL",
           "pre_announce_delay": "사전 알림 후 지연 (초)",
-          "debug_mode": "디버그 모드 (상세 로깅)"
+          "log_to_activity": "활동 피드에 기록",
+          "debug_mode": "디버그 모드"
         }
       },
       "edit_people": {

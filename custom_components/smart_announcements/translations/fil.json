@@ -118,7 +118,8 @@
           "pre_announce_enabled": "I-enable ang Pre-Announce Sound",
           "pre_announce_url": "URL ng Pre-Announce Sound",
           "pre_announce_delay": "Delay Pagkatapos ng Pre-Announce (segundo)",
-          "debug_mode": "Debug Mode (detalyadong logging)"
+          "log_to_activity": "I-log sa Activity Feed",
+          "debug_mode": "Debug Mode"
         }
       },
       "edit_people": {

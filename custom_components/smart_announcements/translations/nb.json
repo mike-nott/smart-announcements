@@ -118,7 +118,8 @@
           "pre_announce_enabled": "Aktiver forhåndskunngjøringslyd",
           "pre_announce_url": "URL for forhåndskunngjøringslyd",
           "pre_announce_delay": "Forsinkelse etter forhåndskunngjøring (sekunder)",
-          "debug_mode": "Feilsøkingsmodus (detaljert logging)"
+          "log_to_activity": "Logg til aktivitetsstrøm",
+          "debug_mode": "Feilsøkingsmodus"
         }
       },
       "edit_people": {

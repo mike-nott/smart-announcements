@@ -118,7 +118,8 @@
           "pre_announce_enabled": "Vooraankondigingsgeluid inschakelen",
           "pre_announce_url": "URL vooraankondigingsgeluid",
           "pre_announce_delay": "Vertraging na vooraankondiging (seconden)",
-          "debug_mode": "Foutopsporingsmodus (uitgebreide logging)"
+          "log_to_activity": "Loggen naar activiteitenoverzicht",
+          "debug_mode": "Foutopsporingsmodus"
         }
       },
       "edit_people": {

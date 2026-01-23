@@ -466,20 +466,21 @@ class Announcer:
         )
         self._debug("✅ TTS announcement sent successfully")
 
-        # Log to Activity dashboard
-        await self.hass.services.async_call(
-            "logbook",
-            "log",
-            {
-                "name": f"Smart Announcements: {room_name}",
-                "message": final_message,
-                "entity_id": f"switch.{DOMAIN}_{area_id}",
-                "domain": DOMAIN,
-            },
-            blocking=False,
-            context=self.context,
-        )
-        self._debug("✅ Activity dashboard entry created")
+        # Log to Activity dashboard (if enabled)
+        if self.config.get("log_to_activity", False):
+            await self.hass.services.async_call(
+                "logbook",
+                "log",
+                {
+                    "name": f"Smart Announcements: {room_name}",
+                    "message": final_message,
+                    "entity_id": f"switch.{DOMAIN}_{area_id}",
+                    "domain": DOMAIN,
+                },
+                blocking=False,
+                context=self.context,
+            )
+            self._debug("✅ Activity dashboard entry created")
 
         # Fire success event
         self._fire_sent_event(room_name, final_message, target_person)

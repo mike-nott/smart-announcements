@@ -118,7 +118,8 @@
           "pre_announce_enabled": "Povolit zvuk před oznámením",
           "pre_announce_url": "URL zvuku před oznámením",
           "pre_announce_delay": "Zpoždění po zvuku před oznámením (sekundy)",
-          "debug_mode": "Režim ladění (podrobné protokolování)"
+          "log_to_activity": "Zapisovat do přehledu aktivit",
+          "debug_mode": "Režim ladění"
         }
       },
       "edit_people": {

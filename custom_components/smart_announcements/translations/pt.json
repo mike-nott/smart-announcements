@@ -118,7 +118,8 @@
           "pre_announce_enabled": "Ativar som de pré-anúncio",
           "pre_announce_url": "URL do som de pré-anúncio",
           "pre_announce_delay": "Atraso após pré-anúncio (segundos)",
-          "debug_mode": "Modo de depuração (registo detalhado)"
+          "log_to_activity": "Registrar no feed de atividades",
+          "debug_mode": "Modo de depuração"
         }
       },
       "edit_people": {

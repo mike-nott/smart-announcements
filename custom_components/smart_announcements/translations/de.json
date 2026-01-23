@@ -118,7 +118,8 @@
           "pre_announce_enabled": "Vorankündigungston aktivieren",
           "pre_announce_url": "URL des Vorankündigungstons",
           "pre_announce_delay": "Verzögerung nach Vorankündigung (Sekunden)",
-          "debug_mode": "Debug-Modus (ausführliche Protokollierung)"
+          "log_to_activity": "Im Aktivitätsprotokoll erfassen",
+          "debug_mode": "Debug-Modus"
         }
       },
       "edit_people": {

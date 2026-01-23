@@ -118,7 +118,8 @@
           "pre_announce_enabled": "启用预公告声音",
           "pre_announce_url": "预公告声音 URL",
           "pre_announce_delay": "预公告后延迟（秒）",
-          "debug_mode": "调试模式（详细日志记录）"
+          "log_to_activity": "记录到活动日志",
+          "debug_mode": "调试模式"
         }
       },
       "edit_people": {

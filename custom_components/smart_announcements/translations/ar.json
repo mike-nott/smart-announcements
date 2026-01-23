@@ -118,7 +118,8 @@
           "pre_announce_enabled": "تفعيل صوت ما قبل الإعلان",
           "pre_announce_url": "URL صوت ما قبل الإعلان",
           "pre_announce_delay": "التأخير بعد صوت ما قبل الإعلان (ثواني)",
-          "debug_mode": "وضع التصحيح (تسجيل مفصّل)"
+          "log_to_activity": "تسجيل في سجل النشاط",
+          "debug_mode": "وضع التصحيح"
         }
       },
       "edit_people": {

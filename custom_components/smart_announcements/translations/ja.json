@@ -118,7 +118,8 @@
           "pre_announce_enabled": "プリアナウンスサウンドを有効にする",
           "pre_announce_url": "プリアナウンスサウンド URL",
           "pre_announce_delay": "プリアナウンス後の遅延（秒）",
-          "debug_mode": "デバッグモード（詳細ログ）"
+          "log_to_activity": "アクティビティフィードに記録",
+          "debug_mode": "デバッグモード"
         }
       },
       "edit_people": {

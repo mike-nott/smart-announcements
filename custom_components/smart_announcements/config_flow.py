@@ -33,6 +33,7 @@ from .const import (
     CONF_HOME_AWAY_TRACKING,
     CONF_ROOM_TRACKING,
     CONF_PRESENCE_VERIFICATION,
+    CONF_LOG_TO_ACTIVITY,
     CONF_DEBUG_MODE,
     CONF_DEFAULT_TTS_PLATFORM,
     CONF_DEFAULT_CONVERSATION_ENTITY,
@@ -49,6 +50,7 @@ from .const import (
     DEFAULT_HOME_AWAY_TRACKING,
     DEFAULT_ROOM_TRACKING,
     DEFAULT_PRESENCE_VERIFICATION,
+    DEFAULT_LOG_TO_ACTIVITY,
     DEFAULT_DEBUG_MODE,
     DEFAULT_TTS_PLATFORM,
     DEFAULT_PRE_ANNOUNCE_ENABLED,
@@ -769,6 +771,10 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
                 ): NumberSelector(
                     NumberSelectorConfig(min=0, max=10, step=0.5, mode=NumberSelectorMode.BOX)
                 ),
+                vol.Required(
+                    CONF_LOG_TO_ACTIVITY,
+                    default=data.get(CONF_LOG_TO_ACTIVITY, DEFAULT_LOG_TO_ACTIVITY),
+                ): BooleanSelector(),
                 vol.Required(
                     CONF_DEBUG_MODE,
                     default=data.get(CONF_DEBUG_MODE, DEFAULT_DEBUG_MODE),

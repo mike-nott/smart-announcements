@@ -118,7 +118,8 @@
           "pre_announce_enabled": "Ön Duyuru Sesini Etkinleştir",
           "pre_announce_url": "Ön Duyuru Sesi URL'si",
           "pre_announce_delay": "Ön Duyurudan Sonra Gecikme (saniye)",
-          "debug_mode": "Hata Ayıklama Modu (ayrıntılı günlük kaydı)"
+          "log_to_activity": "Etkinlik akışına kaydet",
+          "debug_mode": "Hata ayıklama modu"
         }
       },
       "edit_people": {

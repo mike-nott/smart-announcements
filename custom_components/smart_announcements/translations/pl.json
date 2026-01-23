@@ -118,7 +118,8 @@
           "pre_announce_enabled": "Włącz dźwięk przed ogłoszeniem",
           "pre_announce_url": "URL dźwięku przed ogłoszeniem",
           "pre_announce_delay": "Opóźnienie po dźwięku przed ogłoszeniem (sekundy)",
-          "debug_mode": "Tryb debugowania (szczegółowe logowanie)"
+          "log_to_activity": "Zapisuj w dzienniku aktywności",
+          "debug_mode": "Tryb debugowania"
         }
       },
       "edit_people": {

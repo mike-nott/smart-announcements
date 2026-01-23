@@ -118,7 +118,8 @@
           "pre_announce_enabled": "Aktivera förhandsmeddelande",
           "pre_announce_url": "URL för förhandsmeddelande",
           "pre_announce_delay": "Fördröjning efter förhandsmeddelande (sekunder)",
-          "debug_mode": "Felsökningsläge (detaljerad loggning)"
+          "log_to_activity": "Logga till aktivitetsflödet",
+          "debug_mode": "Felsökningsläge"
         }
       },
       "edit_people": {

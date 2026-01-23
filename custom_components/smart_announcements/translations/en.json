@@ -118,7 +118,8 @@
           "pre_announce_enabled": "Enable Pre-Announce Sound",
           "pre_announce_url": "Pre-Announce Sound URL",
           "pre_announce_delay": "Delay After Pre-Announce (seconds)",
-          "debug_mode": "Debug Mode (verbose logging)"
+          "log_to_activity": "Log to Activity Feed",
+          "debug_mode": "Debug Mode"
         }
       },
       "edit_people": {
