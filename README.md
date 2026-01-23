@@ -6,7 +6,7 @@ A Home Assistant custom integration for intelligent, context-aware voice announc
 
 - ✅ **Intelligent Room Routing**: Automatically finds people and announces to their current room
 - ✅ **AI Enhancement & Translation**: Optional AI-powered message rephrasing and translation via conversation agents
-- ✅ **Multi-Language Support**: Per-person language configuration for TTS
+- ✅ **Multi-Language Support**: Per-person language configuration for TTS and UI in 21 languages
 - ✅ **Room Tracking**: Supports Bermuda, ESPresense, or any device tracker/sensor
 - ✅ **Presence Verification**: Optional occupancy sensor verification for accuracy
 - ✅ **Per-Person Configuration**: Individual TTS platform, voice, language, and AI settings
@@ -90,6 +90,14 @@ This means you can configure different voices for individuals (e.g., John gets E
 ### Option B: Manual Installation
 1. Copy the `custom_components/smart_announcements` folder to your Home Assistant `custom_components` directory
 2. Restart Home Assistant
+
+## Multilingual Support
+
+Smart Announcements automatically detects your Home Assistant language and pre-selects the matching language in configuration dropdowns. The UI is available in 21 languages:
+
+Arabic, Chinese (Simplified), Czech, Danish, Dutch, English, Filipino, Finnish, French, German, Greek, Italian, Japanese, Korean, Norwegian, Polish, Portuguese, Russian, Spanish, Swedish, Turkish
+
+If your system language is not supported, the integration defaults to English.
 
 ## Configuration
 

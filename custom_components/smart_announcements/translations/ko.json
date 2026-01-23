@@ -1,0 +1,251 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Smart Announcements 설정",
+        "description": "Smart Announcements를 설정하는 중..."
+      },
+      "people_select": {
+        "title": "사람 선택",
+        "description": "알림을 받을 사람을 선택하세요.",
+        "data": {
+          "selected_people": "구성할 사람"
+        }
+      },
+      "person_config": {
+        "title": "{name} 구성 - 언어 및 TTS",
+        "description": "{name}의 방 추적 및 알림 설정을 구성합니다.",
+        "data": {
+          "room_tracking_entity": "방 추적 엔터티",
+          "language": "언어",
+          "tts_platform": "TTS 플랫폼",
+          "enhance_with_ai": "AI로 향상",
+          "translate_announcement": "알림 번역"
+        }
+      },
+      "person_voice": {
+        "title": "{name} 구성 - 음성 및 AI",
+        "description": "{name}의 대화 엔터티와 음성을 선택하세요.",
+        "data": {
+          "conversation_entity": "대화 엔터티 (AI용)",
+          "tts_voice": "TTS 음성"
+        }
+      },
+      "group_config": {
+        "title": "그룹 알림 설정 - 언어 및 TTS",
+        "description": "같은 방에 있는 여러 사람에게 알림 설정을 구성합니다.",
+        "data": {
+          "group_language": "언어",
+          "group_tts_platform": "TTS 플랫폼",
+          "group_enhance_with_ai": "AI로 향상",
+          "group_translate_announcement": "알림 번역"
+        }
+      },
+      "group_voice": {
+        "title": "그룹 알림 설정 - 음성 및 AI",
+        "description": "그룹 알림의 대화 엔터티와 음성을 선택하세요.",
+        "data": {
+          "group_conversation_entity": "대화 엔터티 (AI용)",
+          "group_tts_voice": "TTS 음성"
+        }
+      },
+      "room_tracking": {
+        "title": "방 추적 설정",
+        "description": "알림이 집에서 사람을 찾는 방법을 구성합니다.",
+        "data": {
+          "room_tracking": "방 추적 활성화",
+          "presence_verification": "재실 센서로 확인"
+        }
+      },
+      "rooms_select": {
+        "title": "방 선택",
+        "description": "알림을 받을 방을 선택하세요.",
+        "data": {
+          "selected_rooms": "구성할 방"
+        }
+      },
+      "room_config": {
+        "title": "{name} 구성",
+        "description": "{name}의 미디어 플레이어와 재실 센서를 설정합니다.",
+        "data": {
+          "media_player": "미디어 플레이어",
+          "presence_sensors": "재실 센서"
+        }
+      },
+      "pre_announce": {
+        "title": "사전 알림 사운드 설정",
+        "description": "알림 전에 재생되는 차임을 구성합니다.",
+        "data": {
+          "pre_announce_enabled": "사전 알림 사운드 활성화",
+          "pre_announce_url": "사전 알림 사운드 URL",
+          "pre_announce_delay": "사전 알림 후 지연 (초)"
+        }
+      }
+    },
+    "error": {
+      "no_tts": "TTS 플랫폼을 찾을 수 없습니다. 먼저 TTS 통합을 구성하세요.",
+      "no_persons": "Home Assistant에서 사람을 찾을 수 없습니다.",
+      "no_areas": "Home Assistant에서 영역을 찾을 수 없습니다.",
+      "no_media_players": "미디어 플레이어를 찾을 수 없습니다.",
+      "no_people_selected": "최소 한 명을 선택하세요.",
+      "no_rooms_selected": "최소 한 개의 방을 선택하세요.",
+      "invalid_url": "사전 알림 사운드의 URL 형식이 잘못되었습니다.",
+      "unknown": "알 수 없는 오류가 발생했습니다."
+    },
+    "abort": {
+      "already_configured": "Smart Announcements가 이미 구성되었습니다."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Smart Announcements 설정",
+        "description": "무엇을 구성하시겠습니까?",
+        "menu_options": {
+          "global_settings": "전역 설정",
+          "edit_people": "사람 편집",
+          "edit_rooms": "방 편집",
+          "group_settings": "그룹 설정",
+          "advanced_settings": "고급 설정"
+        }
+      },
+      "global_settings": {
+        "title": "전역 설정",
+        "data": {
+          "home_away_tracking": "집/외출 추적 활성화",
+          "room_tracking": "방 추적 활성화",
+          "presence_verification": "재실 센서로 확인",
+          "pre_announce_enabled": "사전 알림 사운드 활성화",
+          "pre_announce_url": "사전 알림 사운드 URL",
+          "pre_announce_delay": "사전 알림 후 지연 (초)",
+          "debug_mode": "디버그 모드 (상세 로깅)"
+        }
+      },
+      "edit_people": {
+        "title": "사람 편집",
+        "description": "편집할 사람을 선택하거나 새 사람을 추가하세요.",
+        "data": {
+          "selected_person": "사람"
+        }
+      },
+      "edit_person": {
+        "title": "{name} 편집",
+        "data": {
+          "room_tracking_entity": "방 추적 엔터티",
+          "language": "언어",
+          "tts_platform": "TTS 플랫폼",
+          "tts_voice": "TTS 음성",
+          "enhance_with_ai": "AI로 향상",
+          "translate_announcement": "알림 번역",
+          "conversation_entity": "대화 엔터티 (AI용)"
+        }
+      },
+      "delete_person_select": {
+        "title": "사람 삭제",
+        "data": {
+          "selected_person": "삭제할 사람"
+        }
+      },
+      "confirm_delete_person": {
+        "title": "{name}을(를) 삭제하시겠습니까?",
+        "description": "{name}을(를) 삭제하시겠습니까? 이 작업은 취소할 수 없습니다.",
+        "data": {
+          "confirm": "삭제 확인"
+        }
+      },
+      "add_person_select": {
+        "title": "사람 추가",
+        "data": {
+          "person_entity": "사람"
+        }
+      },
+      "add_person_config": {
+        "title": "{name} 구성 - 언어 및 TTS",
+        "description": "{name}의 방 추적 및 알림 설정을 구성합니다.",
+        "data": {
+          "room_tracking_entity": "방 추적 엔터티",
+          "language": "언어",
+          "tts_platform": "TTS 플랫폼",
+          "enhance_with_ai": "AI로 향상",
+          "translate_announcement": "알림 번역"
+        }
+      },
+      "add_person_voice": {
+        "title": "{name} 구성 - 음성 및 AI",
+        "description": "{name}의 대화 엔터티와 음성을 선택하세요.",
+        "data": {
+          "conversation_entity": "대화 엔터티 (AI용)",
+          "tts_voice": "TTS 음성"
+        }
+      },
+      "edit_rooms": {
+        "title": "방 편집",
+        "description": "설정을 편집할 방을 선택하세요.",
+        "data": {
+          "selected_room": "방"
+        }
+      },
+      "edit_room": {
+        "title": "{name} 편집",
+        "data": {
+          "media_player": "미디어 플레이어",
+          "presence_sensors": "재실 센서"
+        }
+      },
+      "delete_room_select": {
+        "title": "방 삭제",
+        "data": {
+          "selected_room": "삭제할 방"
+        }
+      },
+      "confirm_delete_room": {
+        "title": "{name}을(를) 삭제하시겠습니까?",
+        "description": "{name}을(를) 삭제하시겠습니까? 이 작업은 취소할 수 없습니다.",
+        "data": {
+          "confirm": "삭제 확인"
+        }
+      },
+      "add_room_select": {
+        "title": "방 추가",
+        "data": {
+          "selected_areas": "추가할 방"
+        }
+      },
+      "add_room_config": {
+        "title": "{name} 구성",
+        "description": "{name}의 미디어 플레이어와 재실 센서를 설정합니다.",
+        "data": {
+          "media_player": "미디어 플레이어",
+          "presence_sensors": "재실 센서"
+        }
+      },
+      "group_settings": {
+        "title": "그룹 설정",
+        "description": "그룹 알림 설정을 구성합니다 (방에 여러 사람이 있을 때).",
+        "data": {
+          "group_addressee": "그룹 이름/수신자",
+          "group_language": "언어",
+          "group_tts_platform": "TTS 플랫폼",
+          "group_tts_voice": "TTS 음성",
+          "group_enhance_with_ai": "AI로 향상",
+          "group_translate_announcement": "알림 번역",
+          "group_conversation_entity": "대화 엔터티 (AI용)"
+        }
+      },
+      "advanced_settings": {
+        "title": "고급 설정",
+        "description": "LLM용 AI 프롬프트를 사용자 지정합니다. 다른 모델은 프롬프트를 다르게 해석합니다.",
+        "data": {
+          "prompt_translate": "번역 전용 프롬프트 템플릿",
+          "prompt_enhance": "향상 전용 프롬프트 템플릿",
+          "prompt_both": "둘 다 (향상 + 번역) 프롬프트 템플릿"
+        }
+      }
+    },
+    "abort": {
+      "no_people": "편집할 사람이 구성되지 않았습니다.",
+      "no_rooms": "편집할 방이 구성되지 않았습니다.",
+      "no_available_people": "Home Assistant의 모든 사람이 이미 구성되었습니다."
+    }
+  }
+}

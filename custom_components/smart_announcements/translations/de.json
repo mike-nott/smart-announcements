@@ -1,0 +1,251 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Smart Announcements-Einrichtung",
+        "description": "Smart Announcements wird eingerichtet..."
+      },
+      "people_select": {
+        "title": "Personen auswählen",
+        "description": "Wählen Sie aus, welche Personen Ankündigungen erhalten sollen.",
+        "data": {
+          "selected_people": "Zu konfigurierende Personen"
+        }
+      },
+      "person_config": {
+        "title": "{name} konfigurieren - Sprache und TTS",
+        "description": "Konfigurieren Sie die Raumverfolgung und Ankündigungseinstellungen für {name}.",
+        "data": {
+          "room_tracking_entity": "Raumverfolgungs-Entität",
+          "language": "Sprache",
+          "tts_platform": "TTS-Plattform",
+          "enhance_with_ai": "Mit AI verbessern",
+          "translate_announcement": "Ankündigung übersetzen"
+        }
+      },
+      "person_voice": {
+        "title": "{name} konfigurieren - Stimme und AI",
+        "description": "Wählen Sie die Konversations-Entität und Stimme für {name}.",
+        "data": {
+          "conversation_entity": "Konversations-Entität (für AI)",
+          "tts_voice": "TTS-Stimme"
+        }
+      },
+      "group_config": {
+        "title": "Gruppenankündigungseinstellungen - Sprache und TTS",
+        "description": "Konfigurieren Sie Einstellungen für Ankündigungen an mehrere Personen im selben Raum.",
+        "data": {
+          "group_language": "Sprache",
+          "group_tts_platform": "TTS-Plattform",
+          "group_enhance_with_ai": "Mit AI verbessern",
+          "group_translate_announcement": "Ankündigung übersetzen"
+        }
+      },
+      "group_voice": {
+        "title": "Gruppenankündigungseinstellungen - Stimme und AI",
+        "description": "Wählen Sie die Konversations-Entität und Stimme für Gruppenankündigungen.",
+        "data": {
+          "group_conversation_entity": "Konversations-Entität (für AI)",
+          "group_tts_voice": "TTS-Stimme"
+        }
+      },
+      "room_tracking": {
+        "title": "Raumverfolgungseinstellungen",
+        "description": "Konfigurieren Sie, wie Ankündigungen Personen in Ihrem Zuhause finden.",
+        "data": {
+          "room_tracking": "Raumverfolgung aktivieren",
+          "presence_verification": "Mit Präsenzsensoren verifizieren"
+        }
+      },
+      "rooms_select": {
+        "title": "Räume auswählen",
+        "description": "Wählen Sie aus, welche Räume Ankündigungen erhalten sollen.",
+        "data": {
+          "selected_rooms": "Zu konfigurierende Räume"
+        }
+      },
+      "room_config": {
+        "title": "{name} konfigurieren",
+        "description": "Legen Sie den Mediaplayer und die Präsenzsensoren für {name} fest.",
+        "data": {
+          "media_player": "Mediaplayer",
+          "presence_sensors": "Präsenzsensoren"
+        }
+      },
+      "pre_announce": {
+        "title": "Vorankündigungston-Einstellungen",
+        "description": "Konfigurieren Sie den Signalton, der vor Ankündigungen abgespielt wird.",
+        "data": {
+          "pre_announce_enabled": "Vorankündigungston aktivieren",
+          "pre_announce_url": "URL des Vorankündigungstons",
+          "pre_announce_delay": "Verzögerung nach Vorankündigung (Sekunden)"
+        }
+      }
+    },
+    "error": {
+      "no_tts": "Keine TTS-Plattformen gefunden. Bitte konfigurieren Sie zuerst eine TTS-Integration.",
+      "no_persons": "Keine Personen in Home Assistant gefunden.",
+      "no_areas": "Keine Bereiche in Home Assistant gefunden.",
+      "no_media_players": "Keine Mediaplayer gefunden.",
+      "no_people_selected": "Bitte wählen Sie mindestens eine Person aus.",
+      "no_rooms_selected": "Bitte wählen Sie mindestens einen Raum aus.",
+      "invalid_url": "Ungültiges URL-Format für den Vorankündigungston.",
+      "unknown": "Ein unbekannter Fehler ist aufgetreten."
+    },
+    "abort": {
+      "already_configured": "Smart Announcements ist bereits konfiguriert."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Smart Announcements-Einstellungen",
+        "description": "Was möchten Sie konfigurieren?",
+        "menu_options": {
+          "global_settings": "Globale Einstellungen",
+          "edit_people": "Personen bearbeiten",
+          "edit_rooms": "Räume bearbeiten",
+          "group_settings": "Gruppeneinstellungen",
+          "advanced_settings": "Erweiterte Einstellungen"
+        }
+      },
+      "global_settings": {
+        "title": "Globale Einstellungen",
+        "data": {
+          "home_away_tracking": "Zuhause/Abwesend-Verfolgung aktivieren",
+          "room_tracking": "Raumverfolgung aktivieren",
+          "presence_verification": "Mit Präsenzsensoren verifizieren",
+          "pre_announce_enabled": "Vorankündigungston aktivieren",
+          "pre_announce_url": "URL des Vorankündigungstons",
+          "pre_announce_delay": "Verzögerung nach Vorankündigung (Sekunden)",
+          "debug_mode": "Debug-Modus (ausführliche Protokollierung)"
+        }
+      },
+      "edit_people": {
+        "title": "Personen bearbeiten",
+        "description": "Wählen Sie eine Person zum Bearbeiten oder fügen Sie eine neue Person hinzu.",
+        "data": {
+          "selected_person": "Person"
+        }
+      },
+      "edit_person": {
+        "title": "{name} bearbeiten",
+        "data": {
+          "room_tracking_entity": "Raumverfolgungs-Entität",
+          "language": "Sprache",
+          "tts_platform": "TTS-Plattform",
+          "tts_voice": "TTS-Stimme",
+          "enhance_with_ai": "Mit AI verbessern",
+          "translate_announcement": "Ankündigung übersetzen",
+          "conversation_entity": "Konversations-Entität (für AI)"
+        }
+      },
+      "delete_person_select": {
+        "title": "Person löschen",
+        "data": {
+          "selected_person": "Zu löschende Person"
+        }
+      },
+      "confirm_delete_person": {
+        "title": "{name} löschen?",
+        "description": "Sind Sie sicher, dass Sie {name} löschen möchten? Dies kann nicht rückgängig gemacht werden.",
+        "data": {
+          "confirm": "Löschung bestätigen"
+        }
+      },
+      "add_person_select": {
+        "title": "Person hinzufügen",
+        "data": {
+          "person_entity": "Person"
+        }
+      },
+      "add_person_config": {
+        "title": "{name} konfigurieren - Sprache und TTS",
+        "description": "Konfigurieren Sie die Raumverfolgung und Ankündigungseinstellungen für {name}.",
+        "data": {
+          "room_tracking_entity": "Raumverfolgungs-Entität",
+          "language": "Sprache",
+          "tts_platform": "TTS-Plattform",
+          "enhance_with_ai": "Mit AI verbessern",
+          "translate_announcement": "Ankündigung übersetzen"
+        }
+      },
+      "add_person_voice": {
+        "title": "{name} konfigurieren - Stimme und AI",
+        "description": "Wählen Sie die Konversations-Entität und Stimme für {name}.",
+        "data": {
+          "conversation_entity": "Konversations-Entität (für AI)",
+          "tts_voice": "TTS-Stimme"
+        }
+      },
+      "edit_rooms": {
+        "title": "Räume bearbeiten",
+        "description": "Wählen Sie einen Raum aus, um seine Einstellungen zu bearbeiten.",
+        "data": {
+          "selected_room": "Raum"
+        }
+      },
+      "edit_room": {
+        "title": "{name} bearbeiten",
+        "data": {
+          "media_player": "Mediaplayer",
+          "presence_sensors": "Präsenzsensoren"
+        }
+      },
+      "delete_room_select": {
+        "title": "Raum löschen",
+        "data": {
+          "selected_room": "Zu löschender Raum"
+        }
+      },
+      "confirm_delete_room": {
+        "title": "{name} löschen?",
+        "description": "Sind Sie sicher, dass Sie {name} löschen möchten? Dies kann nicht rückgängig gemacht werden.",
+        "data": {
+          "confirm": "Löschung bestätigen"
+        }
+      },
+      "add_room_select": {
+        "title": "Räume hinzufügen",
+        "data": {
+          "selected_areas": "Hinzuzufügende Räume"
+        }
+      },
+      "add_room_config": {
+        "title": "{name} konfigurieren",
+        "description": "Legen Sie den Mediaplayer und die Präsenzsensoren für {name} fest.",
+        "data": {
+          "media_player": "Mediaplayer",
+          "presence_sensors": "Präsenzsensoren"
+        }
+      },
+      "group_settings": {
+        "title": "Gruppeneinstellungen",
+        "description": "Konfigurieren Sie Einstellungen für Gruppenankündigungen (wenn mehrere Personen in einem Raum sind).",
+        "data": {
+          "group_addressee": "Gruppenname/Anrede",
+          "group_language": "Sprache",
+          "group_tts_platform": "TTS-Plattform",
+          "group_tts_voice": "TTS-Stimme",
+          "group_enhance_with_ai": "Mit AI verbessern",
+          "group_translate_announcement": "Ankündigung übersetzen",
+          "group_conversation_entity": "Konversations-Entität (für AI)"
+        }
+      },
+      "advanced_settings": {
+        "title": "Erweiterte Einstellungen",
+        "description": "Passen Sie AI-Prompts für Ihr LLM an. Verschiedene Modelle interpretieren Prompts unterschiedlich.",
+        "data": {
+          "prompt_translate": "Nur-Übersetzen-Prompt-Vorlage",
+          "prompt_enhance": "Nur-Verbessern-Prompt-Vorlage",
+          "prompt_both": "Beides (Verbessern + Übersetzen) Prompt-Vorlage"
+        }
+      }
+    },
+    "abort": {
+      "no_people": "Keine Personen zum Bearbeiten konfiguriert.",
+      "no_rooms": "Keine Räume zum Bearbeiten konfiguriert.",
+      "no_available_people": "Alle Personen in Home Assistant sind bereits konfiguriert."
+    }
+  }
+}

@@ -1,0 +1,251 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Настройка Smart Announcements",
+        "description": "Настройка Smart Announcements..."
+      },
+      "people_select": {
+        "title": "Выбор людей",
+        "description": "Выберите, кто должен получать объявления.",
+        "data": {
+          "selected_people": "Люди для настройки"
+        }
+      },
+      "person_config": {
+        "title": "Настройка {name} - Язык и TTS",
+        "description": "Настройте отслеживание комнат и параметры объявлений для {name}.",
+        "data": {
+          "room_tracking_entity": "Сущность отслеживания комнаты",
+          "language": "Язык",
+          "tts_platform": "Платформа TTS",
+          "enhance_with_ai": "Улучшить с помощью AI",
+          "translate_announcement": "Перевести объявление"
+        }
+      },
+      "person_voice": {
+        "title": "Настройка {name} - Голос и AI",
+        "description": "Выберите сущность разговора и голос для {name}.",
+        "data": {
+          "conversation_entity": "Сущность разговора (для AI)",
+          "tts_voice": "Голос TTS"
+        }
+      },
+      "group_config": {
+        "title": "Настройки групповых объявлений - Язык и TTS",
+        "description": "Настройте параметры объявлений для нескольких людей в одной комнате.",
+        "data": {
+          "group_language": "Язык",
+          "group_tts_platform": "Платформа TTS",
+          "group_enhance_with_ai": "Улучшить с помощью AI",
+          "group_translate_announcement": "Перевести объявление"
+        }
+      },
+      "group_voice": {
+        "title": "Настройки групповых объявлений - Голос и AI",
+        "description": "Выберите сущность разговора и голос для групповых объявлений.",
+        "data": {
+          "group_conversation_entity": "Сущность разговора (для AI)",
+          "group_tts_voice": "Голос TTS"
+        }
+      },
+      "room_tracking": {
+        "title": "Настройки отслеживания комнат",
+        "description": "Настройте, как объявления находят людей в вашем доме.",
+        "data": {
+          "room_tracking": "Включить отслеживание комнат",
+          "presence_verification": "Проверять датчиками присутствия"
+        }
+      },
+      "rooms_select": {
+        "title": "Выбор комнат",
+        "description": "Выберите, какие комнаты должны получать объявления.",
+        "data": {
+          "selected_rooms": "Комнаты для настройки"
+        }
+      },
+      "room_config": {
+        "title": "Настройка {name}",
+        "description": "Установите медиаплеер и датчики присутствия для {name}.",
+        "data": {
+          "media_player": "Медиаплеер",
+          "presence_sensors": "Датчики присутствия"
+        }
+      },
+      "pre_announce": {
+        "title": "Настройки звука предварительного объявления",
+        "description": "Настройте звук, воспроизводимый перед объявлениями.",
+        "data": {
+          "pre_announce_enabled": "Включить звук предварительного объявления",
+          "pre_announce_url": "URL звука предварительного объявления",
+          "pre_announce_delay": "Задержка после предварительного объявления (секунды)"
+        }
+      }
+    },
+    "error": {
+      "no_tts": "Платформы TTS не найдены. Сначала настройте интеграцию TTS.",
+      "no_persons": "Люди не найдены в Home Assistant.",
+      "no_areas": "Зоны не найдены в Home Assistant.",
+      "no_media_players": "Медиаплееры не найдены.",
+      "no_people_selected": "Выберите хотя бы одного человека.",
+      "no_rooms_selected": "Выберите хотя бы одну комнату.",
+      "invalid_url": "Неверный формат URL для звука предварительного объявления.",
+      "unknown": "Произошла неизвестная ошибка."
+    },
+    "abort": {
+      "already_configured": "Smart Announcements уже настроен."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Настройки Smart Announcements",
+        "description": "Что вы хотите настроить?",
+        "menu_options": {
+          "global_settings": "Глобальные настройки",
+          "edit_people": "Редактировать людей",
+          "edit_rooms": "Редактировать комнаты",
+          "group_settings": "Настройки группы",
+          "advanced_settings": "Расширенные настройки"
+        }
+      },
+      "global_settings": {
+        "title": "Глобальные настройки",
+        "data": {
+          "home_away_tracking": "Включить отслеживание дома/вне дома",
+          "room_tracking": "Включить отслеживание комнат",
+          "presence_verification": "Проверять датчиками присутствия",
+          "pre_announce_enabled": "Включить звук предварительного объявления",
+          "pre_announce_url": "URL звука предварительного объявления",
+          "pre_announce_delay": "Задержка после предварительного объявления (секунды)",
+          "debug_mode": "Режим отладки (подробное журналирование)"
+        }
+      },
+      "edit_people": {
+        "title": "Редактировать людей",
+        "description": "Выберите человека для редактирования или добавьте нового.",
+        "data": {
+          "selected_person": "Человек"
+        }
+      },
+      "edit_person": {
+        "title": "Редактировать {name}",
+        "data": {
+          "room_tracking_entity": "Сущность отслеживания комнаты",
+          "language": "Язык",
+          "tts_platform": "Платформа TTS",
+          "tts_voice": "Голос TTS",
+          "enhance_with_ai": "Улучшить с помощью AI",
+          "translate_announcement": "Перевести объявление",
+          "conversation_entity": "Сущность разговора (для AI)"
+        }
+      },
+      "delete_person_select": {
+        "title": "Удалить человека",
+        "data": {
+          "selected_person": "Человек для удаления"
+        }
+      },
+      "confirm_delete_person": {
+        "title": "Удалить {name}?",
+        "description": "Вы уверены, что хотите удалить {name}? Это действие нельзя отменить.",
+        "data": {
+          "confirm": "Подтвердить удаление"
+        }
+      },
+      "add_person_select": {
+        "title": "Добавить человека",
+        "data": {
+          "person_entity": "Человек"
+        }
+      },
+      "add_person_config": {
+        "title": "Настройка {name} - Язык и TTS",
+        "description": "Настройте отслеживание комнат и параметры объявлений для {name}.",
+        "data": {
+          "room_tracking_entity": "Сущность отслеживания комнаты",
+          "language": "Язык",
+          "tts_platform": "Платформа TTS",
+          "enhance_with_ai": "Улучшить с помощью AI",
+          "translate_announcement": "Перевести объявление"
+        }
+      },
+      "add_person_voice": {
+        "title": "Настройка {name} - Голос и AI",
+        "description": "Выберите сущность разговора и голос для {name}.",
+        "data": {
+          "conversation_entity": "Сущность разговора (для AI)",
+          "tts_voice": "Голос TTS"
+        }
+      },
+      "edit_rooms": {
+        "title": "Редактировать комнаты",
+        "description": "Выберите комнату для редактирования настроек.",
+        "data": {
+          "selected_room": "Комната"
+        }
+      },
+      "edit_room": {
+        "title": "Редактировать {name}",
+        "data": {
+          "media_player": "Медиаплеер",
+          "presence_sensors": "Датчики присутствия"
+        }
+      },
+      "delete_room_select": {
+        "title": "Удалить комнату",
+        "data": {
+          "selected_room": "Комната для удаления"
+        }
+      },
+      "confirm_delete_room": {
+        "title": "Удалить {name}?",
+        "description": "Вы уверены, что хотите удалить {name}? Это действие нельзя отменить.",
+        "data": {
+          "confirm": "Подтвердить удаление"
+        }
+      },
+      "add_room_select": {
+        "title": "Добавить комнаты",
+        "data": {
+          "selected_areas": "Комнаты для добавления"
+        }
+      },
+      "add_room_config": {
+        "title": "Настройка {name}",
+        "description": "Установите медиаплеер и датчики присутствия для {name}.",
+        "data": {
+          "media_player": "Медиаплеер",
+          "presence_sensors": "Датчики присутствия"
+        }
+      },
+      "group_settings": {
+        "title": "Настройки группы",
+        "description": "Настройте параметры для групповых объявлений (когда несколько человек в комнате).",
+        "data": {
+          "group_addressee": "Название группы/адресат",
+          "group_language": "Язык",
+          "group_tts_platform": "Платформа TTS",
+          "group_tts_voice": "Голос TTS",
+          "group_enhance_with_ai": "Улучшить с помощью AI",
+          "group_translate_announcement": "Перевести объявление",
+          "group_conversation_entity": "Сущность разговора (для AI)"
+        }
+      },
+      "advanced_settings": {
+        "title": "Расширенные настройки",
+        "description": "Настройте промпты AI для вашей LLM. Разные модели интерпретируют промпты по-разному.",
+        "data": {
+          "prompt_translate": "Шаблон промпта только для перевода",
+          "prompt_enhance": "Шаблон промпта только для улучшения",
+          "prompt_both": "Шаблон промпта для обоих (улучшение + перевод)"
+        }
+      }
+    },
+    "abort": {
+      "no_people": "Нет настроенных людей для редактирования.",
+      "no_rooms": "Нет настроенных комнат для редактирования.",
+      "no_available_people": "Все люди в Home Assistant уже настроены."
+    }
+  }
+}

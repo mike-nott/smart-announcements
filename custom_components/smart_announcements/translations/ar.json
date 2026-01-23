@@ -1,0 +1,251 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "إعداد الإعلانات الذكية",
+        "description": "جارٍ إعداد الإعلانات الذكية..."
+      },
+      "people_select": {
+        "title": "اختيار الأشخاص",
+        "description": "حدد الأشخاص الذين يجب أن يتلقوا الإعلانات.",
+        "data": {
+          "selected_people": "الأشخاص للتهيئة"
+        }
+      },
+      "person_config": {
+        "title": "تهيئة {name} - اللغة والتحويل النصي للصوت",
+        "description": "تهيئة تتبع الغرفة وإعدادات الإعلانات لـ {name}.",
+        "data": {
+          "room_tracking_entity": "كيان تتبع الغرفة",
+          "language": "اللغة",
+          "tts_platform": "منصة TTS",
+          "enhance_with_ai": "تحسين باستخدام AI",
+          "translate_announcement": "ترجمة الإعلان"
+        }
+      },
+      "person_voice": {
+        "title": "تهيئة {name} - الصوت والذكاء الاصطناعي",
+        "description": "اختر كيان المحادثة والصوت لـ {name}.",
+        "data": {
+          "conversation_entity": "كيان المحادثة (لـ AI)",
+          "tts_voice": "صوت TTS"
+        }
+      },
+      "group_config": {
+        "title": "إعدادات إعلانات المجموعة - اللغة والتحويل النصي للصوت",
+        "description": "تهيئة الإعدادات للإعلانات لعدة أشخاص في نفس الغرفة.",
+        "data": {
+          "group_language": "اللغة",
+          "group_tts_platform": "منصة TTS",
+          "group_enhance_with_ai": "تحسين باستخدام AI",
+          "group_translate_announcement": "ترجمة الإعلان"
+        }
+      },
+      "group_voice": {
+        "title": "إعدادات إعلانات المجموعة - الصوت والذكاء الاصطناعي",
+        "description": "اختر كيان المحادثة والصوت لإعلانات المجموعة.",
+        "data": {
+          "group_conversation_entity": "كيان المحادثة (لـ AI)",
+          "group_tts_voice": "صوت TTS"
+        }
+      },
+      "room_tracking": {
+        "title": "إعدادات تتبع الغرفة",
+        "description": "تهيئة كيفية العثور على الأشخاص في منزلك للإعلانات.",
+        "data": {
+          "room_tracking": "تفعيل تتبع الغرفة",
+          "presence_verification": "التحقق باستخدام مستشعرات الحضور"
+        }
+      },
+      "rooms_select": {
+        "title": "اختيار الغرف",
+        "description": "حدد الغرف التي يجب أن تتلقى الإعلانات.",
+        "data": {
+          "selected_rooms": "الغرف للتهيئة"
+        }
+      },
+      "room_config": {
+        "title": "تهيئة {name}",
+        "description": "تعيين مشغل الوسائط ومستشعرات الحضور لـ {name}.",
+        "data": {
+          "media_player": "مشغل الوسائط",
+          "presence_sensors": "مستشعرات الحضور"
+        }
+      },
+      "pre_announce": {
+        "title": "إعدادات صوت ما قبل الإعلان",
+        "description": "تهيئة الرنين الذي يُشغّل قبل الإعلانات.",
+        "data": {
+          "pre_announce_enabled": "تفعيل صوت ما قبل الإعلان",
+          "pre_announce_url": "URL صوت ما قبل الإعلان",
+          "pre_announce_delay": "التأخير بعد صوت ما قبل الإعلان (ثواني)"
+        }
+      }
+    },
+    "error": {
+      "no_tts": "لم يتم العثور على منصات TTS. يرجى تهيئة تكامل TTS أولاً.",
+      "no_persons": "لم يتم العثور على أشخاص في Home Assistant.",
+      "no_areas": "لم يتم العثور على مناطق في Home Assistant.",
+      "no_media_players": "لم يتم العثور على مشغلات وسائط.",
+      "no_people_selected": "يرجى اختيار شخص واحد على الأقل.",
+      "no_rooms_selected": "يرجى اختيار غرفة واحدة على الأقل.",
+      "invalid_url": "تنسيق URL غير صالح لصوت ما قبل الإعلان.",
+      "unknown": "حدث خطأ غير معروف."
+    },
+    "abort": {
+      "already_configured": "الإعلانات الذكية مُهيأة بالفعل."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "إعدادات الإعلانات الذكية",
+        "description": "ماذا تريد أن تُهيئ؟",
+        "menu_options": {
+          "global_settings": "الإعدادات العامة",
+          "edit_people": "تعديل الأشخاص",
+          "edit_rooms": "تعديل الغرف",
+          "group_settings": "إعدادات المجموعة",
+          "advanced_settings": "الإعدادات المتقدمة"
+        }
+      },
+      "global_settings": {
+        "title": "الإعدادات العامة",
+        "data": {
+          "home_away_tracking": "تفعيل تتبع المنزل/الخارج",
+          "room_tracking": "تفعيل تتبع الغرفة",
+          "presence_verification": "التحقق باستخدام مستشعرات الحضور",
+          "pre_announce_enabled": "تفعيل صوت ما قبل الإعلان",
+          "pre_announce_url": "URL صوت ما قبل الإعلان",
+          "pre_announce_delay": "التأخير بعد صوت ما قبل الإعلان (ثواني)",
+          "debug_mode": "وضع التصحيح (تسجيل مفصّل)"
+        }
+      },
+      "edit_people": {
+        "title": "تعديل الأشخاص",
+        "description": "حدد شخصًا لتعديله أو أضف شخصًا جديدًا.",
+        "data": {
+          "selected_person": "الشخص"
+        }
+      },
+      "edit_person": {
+        "title": "تعديل {name}",
+        "data": {
+          "room_tracking_entity": "كيان تتبع الغرفة",
+          "language": "اللغة",
+          "tts_platform": "منصة TTS",
+          "tts_voice": "صوت TTS",
+          "enhance_with_ai": "تحسين باستخدام AI",
+          "translate_announcement": "ترجمة الإعلان",
+          "conversation_entity": "كيان المحادثة (لـ AI)"
+        }
+      },
+      "delete_person_select": {
+        "title": "حذف شخص",
+        "data": {
+          "selected_person": "الشخص للحذف"
+        }
+      },
+      "confirm_delete_person": {
+        "title": "حذف {name}؟",
+        "description": "هل أنت متأكد أنك تريد حذف {name}؟ لا يمكن التراجع عن هذا.",
+        "data": {
+          "confirm": "تأكيد الحذف"
+        }
+      },
+      "add_person_select": {
+        "title": "إضافة شخص",
+        "data": {
+          "person_entity": "الشخص"
+        }
+      },
+      "add_person_config": {
+        "title": "تهيئة {name} - اللغة والتحويل النصي للصوت",
+        "description": "تهيئة تتبع الغرفة وإعدادات الإعلانات لـ {name}.",
+        "data": {
+          "room_tracking_entity": "كيان تتبع الغرفة",
+          "language": "اللغة",
+          "tts_platform": "منصة TTS",
+          "enhance_with_ai": "تحسين باستخدام AI",
+          "translate_announcement": "ترجمة الإعلان"
+        }
+      },
+      "add_person_voice": {
+        "title": "تهيئة {name} - الصوت والذكاء الاصطناعي",
+        "description": "اختر كيان المحادثة والصوت لـ {name}.",
+        "data": {
+          "conversation_entity": "كيان المحادثة (لـ AI)",
+          "tts_voice": "صوت TTS"
+        }
+      },
+      "edit_rooms": {
+        "title": "تعديل الغرف",
+        "description": "حدد غرفة لتعديل إعداداتها.",
+        "data": {
+          "selected_room": "الغرفة"
+        }
+      },
+      "edit_room": {
+        "title": "تعديل {name}",
+        "data": {
+          "media_player": "مشغل الوسائط",
+          "presence_sensors": "مستشعرات الحضور"
+        }
+      },
+      "delete_room_select": {
+        "title": "حذف غرفة",
+        "data": {
+          "selected_room": "الغرفة للحذف"
+        }
+      },
+      "confirm_delete_room": {
+        "title": "حذف {name}؟",
+        "description": "هل أنت متأكد أنك تريد حذف {name}؟ لا يمكن التراجع عن هذا.",
+        "data": {
+          "confirm": "تأكيد الحذف"
+        }
+      },
+      "add_room_select": {
+        "title": "إضافة غرف",
+        "data": {
+          "selected_areas": "الغرف للإضافة"
+        }
+      },
+      "add_room_config": {
+        "title": "تهيئة {name}",
+        "description": "تعيين مشغل الوسائط ومستشعرات الحضور لـ {name}.",
+        "data": {
+          "media_player": "مشغل الوسائط",
+          "presence_sensors": "مستشعرات الحضور"
+        }
+      },
+      "group_settings": {
+        "title": "إعدادات المجموعة",
+        "description": "تهيئة الإعدادات لإعلانات المجموعة (عندما يكون عدة أشخاص في غرفة).",
+        "data": {
+          "group_addressee": "اسم/مخاطب المجموعة",
+          "group_language": "اللغة",
+          "group_tts_platform": "منصة TTS",
+          "group_tts_voice": "صوت TTS",
+          "group_enhance_with_ai": "تحسين باستخدام AI",
+          "group_translate_announcement": "ترجمة الإعلان",
+          "group_conversation_entity": "كيان المحادثة (لـ AI)"
+        }
+      },
+      "advanced_settings": {
+        "title": "الإعدادات المتقدمة",
+        "description": "تخصيص تعليمات AI لنموذج اللغة الخاص بك. النماذج المختلفة تفسر التعليمات بشكل مختلف.",
+        "data": {
+          "prompt_translate": "قالب تعليمات الترجمة فقط",
+          "prompt_enhance": "قالب تعليمات التحسين فقط",
+          "prompt_both": "قالب تعليمات كليهما (تحسين + ترجمة)"
+        }
+      }
+    },
+    "abort": {
+      "no_people": "لا يوجد أشخاص مُهيأون للتعديل.",
+      "no_rooms": "لا يوجد غرف مُهيأة للتعديل.",
+      "no_available_people": "جميع الأشخاص في Home Assistant مُهيأون بالفعل."
+    }
+  }
+}

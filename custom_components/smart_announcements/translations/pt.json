@@ -1,0 +1,251 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configuração do Smart Announcements",
+        "description": "A configurar o Smart Announcements..."
+      },
+      "people_select": {
+        "title": "Selecionar pessoas",
+        "description": "Selecione quais pessoas devem receber anúncios.",
+        "data": {
+          "selected_people": "Pessoas a configurar"
+        }
+      },
+      "person_config": {
+        "title": "Configurar {name} - Idioma e TTS",
+        "description": "Configure o rastreamento de divisão e as definições de anúncios para {name}.",
+        "data": {
+          "room_tracking_entity": "Entidade de rastreamento de divisão",
+          "language": "Idioma",
+          "tts_platform": "Plataforma TTS",
+          "enhance_with_ai": "Melhorar com AI",
+          "translate_announcement": "Traduzir anúncio"
+        }
+      },
+      "person_voice": {
+        "title": "Configurar {name} - Voz e AI",
+        "description": "Selecione a entidade de conversa e a voz para {name}.",
+        "data": {
+          "conversation_entity": "Entidade de conversa (para AI)",
+          "tts_voice": "Voz TTS"
+        }
+      },
+      "group_config": {
+        "title": "Definições de anúncios de grupo - Idioma e TTS",
+        "description": "Configure as definições para anúncios a várias pessoas na mesma divisão.",
+        "data": {
+          "group_language": "Idioma",
+          "group_tts_platform": "Plataforma TTS",
+          "group_enhance_with_ai": "Melhorar com AI",
+          "group_translate_announcement": "Traduzir anúncio"
+        }
+      },
+      "group_voice": {
+        "title": "Definições de anúncios de grupo - Voz e AI",
+        "description": "Selecione a entidade de conversa e a voz para anúncios de grupo.",
+        "data": {
+          "group_conversation_entity": "Entidade de conversa (para AI)",
+          "group_tts_voice": "Voz TTS"
+        }
+      },
+      "room_tracking": {
+        "title": "Definições de rastreamento de divisão",
+        "description": "Configure como os anúncios encontram pessoas na sua casa.",
+        "data": {
+          "room_tracking": "Ativar rastreamento de divisão",
+          "presence_verification": "Verificar com sensores de presença"
+        }
+      },
+      "rooms_select": {
+        "title": "Selecionar divisões",
+        "description": "Selecione quais divisões devem receber anúncios.",
+        "data": {
+          "selected_rooms": "Divisões a configurar"
+        }
+      },
+      "room_config": {
+        "title": "Configurar {name}",
+        "description": "Defina o leitor multimédia e os sensores de presença para {name}.",
+        "data": {
+          "media_player": "Leitor multimédia",
+          "presence_sensors": "Sensores de presença"
+        }
+      },
+      "pre_announce": {
+        "title": "Definições de som de pré-anúncio",
+        "description": "Configure o som que toca antes dos anúncios.",
+        "data": {
+          "pre_announce_enabled": "Ativar som de pré-anúncio",
+          "pre_announce_url": "URL do som de pré-anúncio",
+          "pre_announce_delay": "Atraso após pré-anúncio (segundos)"
+        }
+      }
+    },
+    "error": {
+      "no_tts": "Nenhuma plataforma TTS encontrada. Configure primeiro uma integração TTS.",
+      "no_persons": "Nenhuma pessoa encontrada no Home Assistant.",
+      "no_areas": "Nenhuma área encontrada no Home Assistant.",
+      "no_media_players": "Nenhum leitor multimédia encontrado.",
+      "no_people_selected": "Selecione pelo menos uma pessoa.",
+      "no_rooms_selected": "Selecione pelo menos uma divisão.",
+      "invalid_url": "Formato de URL inválido para o som de pré-anúncio.",
+      "unknown": "Ocorreu um erro desconhecido."
+    },
+    "abort": {
+      "already_configured": "O Smart Announcements já está configurado."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Definições do Smart Announcements",
+        "description": "O que deseja configurar?",
+        "menu_options": {
+          "global_settings": "Definições globais",
+          "edit_people": "Editar pessoas",
+          "edit_rooms": "Editar divisões",
+          "group_settings": "Definições de grupo",
+          "advanced_settings": "Definições avançadas"
+        }
+      },
+      "global_settings": {
+        "title": "Definições globais",
+        "data": {
+          "home_away_tracking": "Ativar rastreamento em casa/fora",
+          "room_tracking": "Ativar rastreamento de divisão",
+          "presence_verification": "Verificar com sensores de presença",
+          "pre_announce_enabled": "Ativar som de pré-anúncio",
+          "pre_announce_url": "URL do som de pré-anúncio",
+          "pre_announce_delay": "Atraso após pré-anúncio (segundos)",
+          "debug_mode": "Modo de depuração (registo detalhado)"
+        }
+      },
+      "edit_people": {
+        "title": "Editar pessoas",
+        "description": "Selecione uma pessoa para editar ou adicione uma nova pessoa.",
+        "data": {
+          "selected_person": "Pessoa"
+        }
+      },
+      "edit_person": {
+        "title": "Editar {name}",
+        "data": {
+          "room_tracking_entity": "Entidade de rastreamento de divisão",
+          "language": "Idioma",
+          "tts_platform": "Plataforma TTS",
+          "tts_voice": "Voz TTS",
+          "enhance_with_ai": "Melhorar com AI",
+          "translate_announcement": "Traduzir anúncio",
+          "conversation_entity": "Entidade de conversa (para AI)"
+        }
+      },
+      "delete_person_select": {
+        "title": "Eliminar pessoa",
+        "data": {
+          "selected_person": "Pessoa a eliminar"
+        }
+      },
+      "confirm_delete_person": {
+        "title": "Eliminar {name}?",
+        "description": "Tem a certeza de que deseja eliminar {name}? Esta ação não pode ser anulada.",
+        "data": {
+          "confirm": "Confirmar eliminação"
+        }
+      },
+      "add_person_select": {
+        "title": "Adicionar pessoa",
+        "data": {
+          "person_entity": "Pessoa"
+        }
+      },
+      "add_person_config": {
+        "title": "Configurar {name} - Idioma e TTS",
+        "description": "Configure o rastreamento de divisão e as definições de anúncios para {name}.",
+        "data": {
+          "room_tracking_entity": "Entidade de rastreamento de divisão",
+          "language": "Idioma",
+          "tts_platform": "Plataforma TTS",
+          "enhance_with_ai": "Melhorar com AI",
+          "translate_announcement": "Traduzir anúncio"
+        }
+      },
+      "add_person_voice": {
+        "title": "Configurar {name} - Voz e AI",
+        "description": "Selecione a entidade de conversa e a voz para {name}.",
+        "data": {
+          "conversation_entity": "Entidade de conversa (para AI)",
+          "tts_voice": "Voz TTS"
+        }
+      },
+      "edit_rooms": {
+        "title": "Editar divisões",
+        "description": "Selecione uma divisão para editar as suas definições.",
+        "data": {
+          "selected_room": "Divisão"
+        }
+      },
+      "edit_room": {
+        "title": "Editar {name}",
+        "data": {
+          "media_player": "Leitor multimédia",
+          "presence_sensors": "Sensores de presença"
+        }
+      },
+      "delete_room_select": {
+        "title": "Eliminar divisão",
+        "data": {
+          "selected_room": "Divisão a eliminar"
+        }
+      },
+      "confirm_delete_room": {
+        "title": "Eliminar {name}?",
+        "description": "Tem a certeza de que deseja eliminar {name}? Esta ação não pode ser anulada.",
+        "data": {
+          "confirm": "Confirmar eliminação"
+        }
+      },
+      "add_room_select": {
+        "title": "Adicionar divisões",
+        "data": {
+          "selected_areas": "Divisões a adicionar"
+        }
+      },
+      "add_room_config": {
+        "title": "Configurar {name}",
+        "description": "Defina o leitor multimédia e os sensores de presença para {name}.",
+        "data": {
+          "media_player": "Leitor multimédia",
+          "presence_sensors": "Sensores de presença"
+        }
+      },
+      "group_settings": {
+        "title": "Definições de grupo",
+        "description": "Configure as definições para anúncios de grupo (quando várias pessoas estão numa divisão).",
+        "data": {
+          "group_addressee": "Nome do grupo/destinatário",
+          "group_language": "Idioma",
+          "group_tts_platform": "Plataforma TTS",
+          "group_tts_voice": "Voz TTS",
+          "group_enhance_with_ai": "Melhorar com AI",
+          "group_translate_announcement": "Traduzir anúncio",
+          "group_conversation_entity": "Entidade de conversa (para AI)"
+        }
+      },
+      "advanced_settings": {
+        "title": "Definições avançadas",
+        "description": "Personalize os prompts de AI para o seu LLM. Diferentes modelos interpretam os prompts de forma diferente.",
+        "data": {
+          "prompt_translate": "Modelo de prompt apenas para tradução",
+          "prompt_enhance": "Modelo de prompt apenas para melhoria",
+          "prompt_both": "Modelo de prompt para ambos (melhoria + tradução)"
+        }
+      }
+    },
+    "abort": {
+      "no_people": "Nenhuma pessoa configurada para editar.",
+      "no_rooms": "Nenhuma divisão configurada para editar.",
+      "no_available_people": "Todas as pessoas no Home Assistant já estão configuradas."
+    }
+  }
+}

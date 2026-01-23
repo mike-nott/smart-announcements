@@ -1,0 +1,251 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Nastavení chytrých oznámení",
+        "description": "Probíhá nastavení chytrých oznámení..."
+      },
+      "people_select": {
+        "title": "Výběr osob",
+        "description": "Vyberte osoby, které mají dostávat oznámení.",
+        "data": {
+          "selected_people": "Osoby ke konfiguraci"
+        }
+      },
+      "person_config": {
+        "title": "Konfigurace {name} - Jazyk a TTS",
+        "description": "Nakonfigurujte sledování místností a nastavení oznámení pro {name}.",
+        "data": {
+          "room_tracking_entity": "Entita sledování místnosti",
+          "language": "Jazyk",
+          "tts_platform": "Platforma TTS",
+          "enhance_with_ai": "Vylepšit pomocí AI",
+          "translate_announcement": "Přeložit oznámení"
+        }
+      },
+      "person_voice": {
+        "title": "Konfigurace {name} - Hlas a AI",
+        "description": "Vyberte konverzační entitu a hlas pro {name}.",
+        "data": {
+          "conversation_entity": "Konverzační entita (pro AI)",
+          "tts_voice": "Hlas TTS"
+        }
+      },
+      "group_config": {
+        "title": "Nastavení skupinových oznámení - Jazyk a TTS",
+        "description": "Nakonfigurujte nastavení pro oznámení více osobám ve stejné místnosti.",
+        "data": {
+          "group_language": "Jazyk",
+          "group_tts_platform": "Platforma TTS",
+          "group_enhance_with_ai": "Vylepšit pomocí AI",
+          "group_translate_announcement": "Přeložit oznámení"
+        }
+      },
+      "group_voice": {
+        "title": "Nastavení skupinových oznámení - Hlas a AI",
+        "description": "Vyberte konverzační entitu a hlas pro skupinová oznámení.",
+        "data": {
+          "group_conversation_entity": "Konverzační entita (pro AI)",
+          "group_tts_voice": "Hlas TTS"
+        }
+      },
+      "room_tracking": {
+        "title": "Nastavení sledování místností",
+        "description": "Nakonfigurujte, jak oznámení najdou osoby ve vašem domě.",
+        "data": {
+          "room_tracking": "Povolit sledování místností",
+          "presence_verification": "Ověřit pomocí senzorů přítomnosti"
+        }
+      },
+      "rooms_select": {
+        "title": "Výběr místností",
+        "description": "Vyberte místnosti, které mají dostávat oznámení.",
+        "data": {
+          "selected_rooms": "Místnosti ke konfiguraci"
+        }
+      },
+      "room_config": {
+        "title": "Konfigurace {name}",
+        "description": "Nastavte přehrávač médií a senzory přítomnosti pro {name}.",
+        "data": {
+          "media_player": "Přehrávač médií",
+          "presence_sensors": "Senzory přítomnosti"
+        }
+      },
+      "pre_announce": {
+        "title": "Nastavení zvuku před oznámením",
+        "description": "Nakonfigurujte zvonění, které se přehraje před oznámeními.",
+        "data": {
+          "pre_announce_enabled": "Povolit zvuk před oznámením",
+          "pre_announce_url": "URL zvuku před oznámením",
+          "pre_announce_delay": "Zpoždění po zvuku před oznámením (sekundy)"
+        }
+      }
+    },
+    "error": {
+      "no_tts": "Nebyly nalezeny žádné platformy TTS. Nejprve nakonfigurujte integraci TTS.",
+      "no_persons": "V Home Assistant nebyly nalezeny žádné osoby.",
+      "no_areas": "V Home Assistant nebyly nalezeny žádné oblasti.",
+      "no_media_players": "Nebyly nalezeny žádné přehrávače médií.",
+      "no_people_selected": "Vyberte prosím alespoň jednu osobu.",
+      "no_rooms_selected": "Vyberte prosím alespoň jednu místnost.",
+      "invalid_url": "Neplatný formát URL pro zvuk před oznámením.",
+      "unknown": "Došlo k neznámé chybě."
+    },
+    "abort": {
+      "already_configured": "Chytrá oznámení jsou již nakonfigurována."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Nastavení chytrých oznámení",
+        "description": "Co chcete nakonfigurovat?",
+        "menu_options": {
+          "global_settings": "Globální nastavení",
+          "edit_people": "Upravit osoby",
+          "edit_rooms": "Upravit místnosti",
+          "group_settings": "Nastavení skupiny",
+          "advanced_settings": "Pokročilá nastavení"
+        }
+      },
+      "global_settings": {
+        "title": "Globální nastavení",
+        "data": {
+          "home_away_tracking": "Povolit sledování doma/pryč",
+          "room_tracking": "Povolit sledování místností",
+          "presence_verification": "Ověřit pomocí senzorů přítomnosti",
+          "pre_announce_enabled": "Povolit zvuk před oznámením",
+          "pre_announce_url": "URL zvuku před oznámením",
+          "pre_announce_delay": "Zpoždění po zvuku před oznámením (sekundy)",
+          "debug_mode": "Režim ladění (podrobné protokolování)"
+        }
+      },
+      "edit_people": {
+        "title": "Upravit osoby",
+        "description": "Vyberte osobu k úpravě nebo přidejte novou osobu.",
+        "data": {
+          "selected_person": "Osoba"
+        }
+      },
+      "edit_person": {
+        "title": "Upravit {name}",
+        "data": {
+          "room_tracking_entity": "Entita sledování místnosti",
+          "language": "Jazyk",
+          "tts_platform": "Platforma TTS",
+          "tts_voice": "Hlas TTS",
+          "enhance_with_ai": "Vylepšit pomocí AI",
+          "translate_announcement": "Přeložit oznámení",
+          "conversation_entity": "Konverzační entita (pro AI)"
+        }
+      },
+      "delete_person_select": {
+        "title": "Smazat osobu",
+        "data": {
+          "selected_person": "Osoba ke smazání"
+        }
+      },
+      "confirm_delete_person": {
+        "title": "Smazat {name}?",
+        "description": "Opravdu chcete smazat {name}? Tuto akci nelze vrátit zpět.",
+        "data": {
+          "confirm": "Potvrdit smazání"
+        }
+      },
+      "add_person_select": {
+        "title": "Přidat osobu",
+        "data": {
+          "person_entity": "Osoba"
+        }
+      },
+      "add_person_config": {
+        "title": "Konfigurace {name} - Jazyk a TTS",
+        "description": "Nakonfigurujte sledování místností a nastavení oznámení pro {name}.",
+        "data": {
+          "room_tracking_entity": "Entita sledování místnosti",
+          "language": "Jazyk",
+          "tts_platform": "Platforma TTS",
+          "enhance_with_ai": "Vylepšit pomocí AI",
+          "translate_announcement": "Přeložit oznámení"
+        }
+      },
+      "add_person_voice": {
+        "title": "Konfigurace {name} - Hlas a AI",
+        "description": "Vyberte konverzační entitu a hlas pro {name}.",
+        "data": {
+          "conversation_entity": "Konverzační entita (pro AI)",
+          "tts_voice": "Hlas TTS"
+        }
+      },
+      "edit_rooms": {
+        "title": "Upravit místnosti",
+        "description": "Vyberte místnost pro úpravu nastavení.",
+        "data": {
+          "selected_room": "Místnost"
+        }
+      },
+      "edit_room": {
+        "title": "Upravit {name}",
+        "data": {
+          "media_player": "Přehrávač médií",
+          "presence_sensors": "Senzory přítomnosti"
+        }
+      },
+      "delete_room_select": {
+        "title": "Smazat místnost",
+        "data": {
+          "selected_room": "Místnost ke smazání"
+        }
+      },
+      "confirm_delete_room": {
+        "title": "Smazat {name}?",
+        "description": "Opravdu chcete smazat {name}? Tuto akci nelze vrátit zpět.",
+        "data": {
+          "confirm": "Potvrdit smazání"
+        }
+      },
+      "add_room_select": {
+        "title": "Přidat místnosti",
+        "data": {
+          "selected_areas": "Místnosti k přidání"
+        }
+      },
+      "add_room_config": {
+        "title": "Konfigurace {name}",
+        "description": "Nastavte přehrávač médií a senzory přítomnosti pro {name}.",
+        "data": {
+          "media_player": "Přehrávač médií",
+          "presence_sensors": "Senzory přítomnosti"
+        }
+      },
+      "group_settings": {
+        "title": "Nastavení skupiny",
+        "description": "Nakonfigurujte nastavení pro skupinová oznámení (když je více osob v místnosti).",
+        "data": {
+          "group_addressee": "Název skupiny/oslovení",
+          "group_language": "Jazyk",
+          "group_tts_platform": "Platforma TTS",
+          "group_tts_voice": "Hlas TTS",
+          "group_enhance_with_ai": "Vylepšit pomocí AI",
+          "group_translate_announcement": "Přeložit oznámení",
+          "group_conversation_entity": "Konverzační entita (pro AI)"
+        }
+      },
+      "advanced_settings": {
+        "title": "Pokročilá nastavení",
+        "description": "Přizpůsobte výzvy AI pro váš LLM. Různé modely interpretují výzvy odlišně.",
+        "data": {
+          "prompt_translate": "Šablona výzvy pouze pro překlad",
+          "prompt_enhance": "Šablona výzvy pouze pro vylepšení",
+          "prompt_both": "Šablona výzvy pro obojí (vylepšení + překlad)"
+        }
+      }
+    },
+    "abort": {
+      "no_people": "Nejsou nakonfigurovány žádné osoby k úpravě.",
+      "no_rooms": "Nejsou nakonfigurovány žádné místnosti k úpravě.",
+      "no_available_people": "Všechny osoby v Home Assistant jsou již nakonfigurovány."
+    }
+  }
+}

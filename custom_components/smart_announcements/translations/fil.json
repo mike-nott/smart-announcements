@@ -1,0 +1,251 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Pag-setup ng Smart Announcements",
+        "description": "Isinasaayos ang Smart Announcements..."
+      },
+      "people_select": {
+        "title": "Pumili ng mga Tao",
+        "description": "Piliin kung sino ang dapat makatanggap ng mga anunsyo.",
+        "data": {
+          "selected_people": "Mga Taong I-configure"
+        }
+      },
+      "person_config": {
+        "title": "I-configure si {name} - Wika at TTS",
+        "description": "I-configure ang pagsubaybay sa silid at mga setting ng anunsyo para kay {name}.",
+        "data": {
+          "room_tracking_entity": "Entity ng Pagsubaybay sa Silid",
+          "language": "Wika",
+          "tts_platform": "TTS Platform",
+          "enhance_with_ai": "Pagbutihin gamit ang AI",
+          "translate_announcement": "Isalin ang Anunsyo"
+        }
+      },
+      "person_voice": {
+        "title": "I-configure si {name} - Boses at AI",
+        "description": "Piliin ang conversation entity at boses para kay {name}.",
+        "data": {
+          "conversation_entity": "Conversation Entity (para sa AI)",
+          "tts_voice": "TTS Voice"
+        }
+      },
+      "group_config": {
+        "title": "Mga Setting ng Group Announcement - Wika at TTS",
+        "description": "I-configure ang mga setting para sa mga anunsyo sa maraming tao sa parehong silid.",
+        "data": {
+          "group_language": "Wika",
+          "group_tts_platform": "TTS Platform",
+          "group_enhance_with_ai": "Pagbutihin gamit ang AI",
+          "group_translate_announcement": "Isalin ang Anunsyo"
+        }
+      },
+      "group_voice": {
+        "title": "Mga Setting ng Group Announcement - Boses at AI",
+        "description": "Piliin ang conversation entity at boses para sa mga group announcement.",
+        "data": {
+          "group_conversation_entity": "Conversation Entity (para sa AI)",
+          "group_tts_voice": "TTS Voice"
+        }
+      },
+      "room_tracking": {
+        "title": "Mga Setting ng Pagsubaybay sa Silid",
+        "description": "I-configure kung paano hinahanap ng mga anunsyo ang mga tao sa iyong tahanan.",
+        "data": {
+          "room_tracking": "I-enable ang Pagsubaybay sa Silid",
+          "presence_verification": "I-verify gamit ang Presence Sensors"
+        }
+      },
+      "rooms_select": {
+        "title": "Pumili ng mga Silid",
+        "description": "Piliin kung aling mga silid ang dapat makatanggap ng mga anunsyo.",
+        "data": {
+          "selected_rooms": "Mga Silid na I-configure"
+        }
+      },
+      "room_config": {
+        "title": "I-configure ang {name}",
+        "description": "Itakda ang media player at presence sensors para sa {name}.",
+        "data": {
+          "media_player": "Media Player",
+          "presence_sensors": "Presence Sensors"
+        }
+      },
+      "pre_announce": {
+        "title": "Mga Setting ng Pre-Announce Sound",
+        "description": "I-configure ang tunog na tutugtog bago ang mga anunsyo.",
+        "data": {
+          "pre_announce_enabled": "I-enable ang Pre-Announce Sound",
+          "pre_announce_url": "URL ng Pre-Announce Sound",
+          "pre_announce_delay": "Delay Pagkatapos ng Pre-Announce (segundo)"
+        }
+      }
+    },
+    "error": {
+      "no_tts": "Walang nahanap na TTS platforms. Paki-configure muna ang TTS integration.",
+      "no_persons": "Walang nahanap na mga tao sa Home Assistant.",
+      "no_areas": "Walang nahanap na mga area sa Home Assistant.",
+      "no_media_players": "Walang nahanap na mga media player.",
+      "no_people_selected": "Mangyaring pumili ng kahit isang tao.",
+      "no_rooms_selected": "Mangyaring pumili ng kahit isang silid.",
+      "invalid_url": "Hindi wastong format ng URL para sa pre-announce sound.",
+      "unknown": "May naganap na hindi kilalang error."
+    },
+    "abort": {
+      "already_configured": "Naka-configure na ang Smart Announcements."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Mga Setting ng Smart Announcements",
+        "description": "Ano ang gusto mong i-configure?",
+        "menu_options": {
+          "global_settings": "Mga Global Setting",
+          "edit_people": "I-edit ang mga Tao",
+          "edit_rooms": "I-edit ang mga Silid",
+          "group_settings": "Mga Setting ng Group",
+          "advanced_settings": "Mga Advanced Setting"
+        }
+      },
+      "global_settings": {
+        "title": "Mga Global Setting",
+        "data": {
+          "home_away_tracking": "I-enable ang Home/Away Tracking",
+          "room_tracking": "I-enable ang Pagsubaybay sa Silid",
+          "presence_verification": "I-verify gamit ang Presence Sensors",
+          "pre_announce_enabled": "I-enable ang Pre-Announce Sound",
+          "pre_announce_url": "URL ng Pre-Announce Sound",
+          "pre_announce_delay": "Delay Pagkatapos ng Pre-Announce (segundo)",
+          "debug_mode": "Debug Mode (detalyadong logging)"
+        }
+      },
+      "edit_people": {
+        "title": "I-edit ang mga Tao",
+        "description": "Pumili ng tao para i-edit o magdagdag ng bagong tao.",
+        "data": {
+          "selected_person": "Tao"
+        }
+      },
+      "edit_person": {
+        "title": "I-edit si {name}",
+        "data": {
+          "room_tracking_entity": "Entity ng Pagsubaybay sa Silid",
+          "language": "Wika",
+          "tts_platform": "TTS Platform",
+          "tts_voice": "TTS Voice",
+          "enhance_with_ai": "Pagbutihin gamit ang AI",
+          "translate_announcement": "Isalin ang Anunsyo",
+          "conversation_entity": "Conversation Entity (para sa AI)"
+        }
+      },
+      "delete_person_select": {
+        "title": "Burahin ang Tao",
+        "data": {
+          "selected_person": "Taong Buburahin"
+        }
+      },
+      "confirm_delete_person": {
+        "title": "Burahin si {name}?",
+        "description": "Sigurado ka bang gusto mong burahin si {name}? Hindi na ito maibabalik.",
+        "data": {
+          "confirm": "Kumpirmahin ang pagbura"
+        }
+      },
+      "add_person_select": {
+        "title": "Magdagdag ng Tao",
+        "data": {
+          "person_entity": "Tao"
+        }
+      },
+      "add_person_config": {
+        "title": "I-configure si {name} - Wika at TTS",
+        "description": "I-configure ang pagsubaybay sa silid at mga setting ng anunsyo para kay {name}.",
+        "data": {
+          "room_tracking_entity": "Entity ng Pagsubaybay sa Silid",
+          "language": "Wika",
+          "tts_platform": "TTS Platform",
+          "enhance_with_ai": "Pagbutihin gamit ang AI",
+          "translate_announcement": "Isalin ang Anunsyo"
+        }
+      },
+      "add_person_voice": {
+        "title": "I-configure si {name} - Boses at AI",
+        "description": "Piliin ang conversation entity at boses para kay {name}.",
+        "data": {
+          "conversation_entity": "Conversation Entity (para sa AI)",
+          "tts_voice": "TTS Voice"
+        }
+      },
+      "edit_rooms": {
+        "title": "I-edit ang mga Silid",
+        "description": "Pumili ng silid para i-edit ang mga setting nito.",
+        "data": {
+          "selected_room": "Silid"
+        }
+      },
+      "edit_room": {
+        "title": "I-edit ang {name}",
+        "data": {
+          "media_player": "Media Player",
+          "presence_sensors": "Presence Sensors"
+        }
+      },
+      "delete_room_select": {
+        "title": "Burahin ang Silid",
+        "data": {
+          "selected_room": "Silid na Buburahin"
+        }
+      },
+      "confirm_delete_room": {
+        "title": "Burahin ang {name}?",
+        "description": "Sigurado ka bang gusto mong burahin ang {name}? Hindi na ito maibabalik.",
+        "data": {
+          "confirm": "Kumpirmahin ang pagbura"
+        }
+      },
+      "add_room_select": {
+        "title": "Magdagdag ng mga Silid",
+        "data": {
+          "selected_areas": "Mga Silid na Idadagdag"
+        }
+      },
+      "add_room_config": {
+        "title": "I-configure ang {name}",
+        "description": "Itakda ang media player at presence sensors para sa {name}.",
+        "data": {
+          "media_player": "Media Player",
+          "presence_sensors": "Presence Sensors"
+        }
+      },
+      "group_settings": {
+        "title": "Mga Setting ng Group",
+        "description": "I-configure ang mga setting para sa group announcements (kapag maraming tao sa isang silid).",
+        "data": {
+          "group_addressee": "Pangalan ng Group/Addressee",
+          "group_language": "Wika",
+          "group_tts_platform": "TTS Platform",
+          "group_tts_voice": "TTS Voice",
+          "group_enhance_with_ai": "Pagbutihin gamit ang AI",
+          "group_translate_announcement": "Isalin ang Anunsyo",
+          "group_conversation_entity": "Conversation Entity (para sa AI)"
+        }
+      },
+      "advanced_settings": {
+        "title": "Mga Advanced Setting",
+        "description": "I-customize ang AI prompts para sa iyong LLM. Iba't ibang modelo ang nag-iinterpret ng prompts nang iba-iba.",
+        "data": {
+          "prompt_translate": "Translate-Only Prompt Template",
+          "prompt_enhance": "Enhance-Only Prompt Template",
+          "prompt_both": "Both (Enhance + Translate) Prompt Template"
+        }
+      }
+    },
+    "abort": {
+      "no_people": "Walang mga tao na naka-configure para i-edit.",
+      "no_rooms": "Walang mga silid na naka-configure para i-edit.",
+      "no_available_people": "Lahat ng mga tao sa Home Assistant ay naka-configure na."
+    }
+  }
+}

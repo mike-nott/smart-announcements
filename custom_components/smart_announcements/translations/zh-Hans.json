@@ -1,0 +1,251 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Smart Announcements 设置",
+        "description": "正在设置 Smart Announcements..."
+      },
+      "people_select": {
+        "title": "选择人员",
+        "description": "选择应该接收公告的人员。",
+        "data": {
+          "selected_people": "要配置的人员"
+        }
+      },
+      "person_config": {
+        "title": "配置 {name} - 语言和 TTS",
+        "description": "为 {name} 配置房间跟踪和公告设置。",
+        "data": {
+          "room_tracking_entity": "房间跟踪实体",
+          "language": "语言",
+          "tts_platform": "TTS 平台",
+          "enhance_with_ai": "使用 AI 增强",
+          "translate_announcement": "翻译公告"
+        }
+      },
+      "person_voice": {
+        "title": "配置 {name} - 语音和 AI",
+        "description": "为 {name} 选择对话实体和语音。",
+        "data": {
+          "conversation_entity": "对话实体（用于 AI）",
+          "tts_voice": "TTS 语音"
+        }
+      },
+      "group_config": {
+        "title": "群组公告设置 - 语言和 TTS",
+        "description": "配置向同一房间内多人发送公告的设置。",
+        "data": {
+          "group_language": "语言",
+          "group_tts_platform": "TTS 平台",
+          "group_enhance_with_ai": "使用 AI 增强",
+          "group_translate_announcement": "翻译公告"
+        }
+      },
+      "group_voice": {
+        "title": "群组公告设置 - 语音和 AI",
+        "description": "为群组公告选择对话实体和语音。",
+        "data": {
+          "group_conversation_entity": "对话实体（用于 AI）",
+          "group_tts_voice": "TTS 语音"
+        }
+      },
+      "room_tracking": {
+        "title": "房间跟踪设置",
+        "description": "配置公告如何在您家中找到人员。",
+        "data": {
+          "room_tracking": "启用房间跟踪",
+          "presence_verification": "使用存在传感器验证"
+        }
+      },
+      "rooms_select": {
+        "title": "选择房间",
+        "description": "选择应该接收公告的房间。",
+        "data": {
+          "selected_rooms": "要配置的房间"
+        }
+      },
+      "room_config": {
+        "title": "配置 {name}",
+        "description": "为 {name} 设置媒体播放器和存在传感器。",
+        "data": {
+          "media_player": "媒体播放器",
+          "presence_sensors": "存在传感器"
+        }
+      },
+      "pre_announce": {
+        "title": "预公告声音设置",
+        "description": "配置公告前播放的提示音。",
+        "data": {
+          "pre_announce_enabled": "启用预公告声音",
+          "pre_announce_url": "预公告声音 URL",
+          "pre_announce_delay": "预公告后延迟（秒）"
+        }
+      }
+    },
+    "error": {
+      "no_tts": "未找到 TTS 平台。请先配置 TTS 集成。",
+      "no_persons": "在 Home Assistant 中未找到人员。",
+      "no_areas": "在 Home Assistant 中未找到区域。",
+      "no_media_players": "未找到媒体播放器。",
+      "no_people_selected": "请至少选择一个人。",
+      "no_rooms_selected": "请至少选择一个房间。",
+      "invalid_url": "预公告声音的 URL 格式无效。",
+      "unknown": "发生未知错误。"
+    },
+    "abort": {
+      "already_configured": "Smart Announcements 已配置。"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Smart Announcements 设置",
+        "description": "您想配置什么？",
+        "menu_options": {
+          "global_settings": "全局设置",
+          "edit_people": "编辑人员",
+          "edit_rooms": "编辑房间",
+          "group_settings": "群组设置",
+          "advanced_settings": "高级设置"
+        }
+      },
+      "global_settings": {
+        "title": "全局设置",
+        "data": {
+          "home_away_tracking": "启用在家/外出跟踪",
+          "room_tracking": "启用房间跟踪",
+          "presence_verification": "使用存在传感器验证",
+          "pre_announce_enabled": "启用预公告声音",
+          "pre_announce_url": "预公告声音 URL",
+          "pre_announce_delay": "预公告后延迟（秒）",
+          "debug_mode": "调试模式（详细日志记录）"
+        }
+      },
+      "edit_people": {
+        "title": "编辑人员",
+        "description": "选择要编辑的人员或添加新人员。",
+        "data": {
+          "selected_person": "人员"
+        }
+      },
+      "edit_person": {
+        "title": "编辑 {name}",
+        "data": {
+          "room_tracking_entity": "房间跟踪实体",
+          "language": "语言",
+          "tts_platform": "TTS 平台",
+          "tts_voice": "TTS 语音",
+          "enhance_with_ai": "使用 AI 增强",
+          "translate_announcement": "翻译公告",
+          "conversation_entity": "对话实体（用于 AI）"
+        }
+      },
+      "delete_person_select": {
+        "title": "删除人员",
+        "data": {
+          "selected_person": "要删除的人员"
+        }
+      },
+      "confirm_delete_person": {
+        "title": "删除 {name}？",
+        "description": "您确定要删除 {name} 吗？此操作无法撤消。",
+        "data": {
+          "confirm": "确认删除"
+        }
+      },
+      "add_person_select": {
+        "title": "添加人员",
+        "data": {
+          "person_entity": "人员"
+        }
+      },
+      "add_person_config": {
+        "title": "配置 {name} - 语言和 TTS",
+        "description": "为 {name} 配置房间跟踪和公告设置。",
+        "data": {
+          "room_tracking_entity": "房间跟踪实体",
+          "language": "语言",
+          "tts_platform": "TTS 平台",
+          "enhance_with_ai": "使用 AI 增强",
+          "translate_announcement": "翻译公告"
+        }
+      },
+      "add_person_voice": {
+        "title": "配置 {name} - 语音和 AI",
+        "description": "为 {name} 选择对话实体和语音。",
+        "data": {
+          "conversation_entity": "对话实体（用于 AI）",
+          "tts_voice": "TTS 语音"
+        }
+      },
+      "edit_rooms": {
+        "title": "编辑房间",
+        "description": "选择要编辑设置的房间。",
+        "data": {
+          "selected_room": "房间"
+        }
+      },
+      "edit_room": {
+        "title": "编辑 {name}",
+        "data": {
+          "media_player": "媒体播放器",
+          "presence_sensors": "存在传感器"
+        }
+      },
+      "delete_room_select": {
+        "title": "删除房间",
+        "data": {
+          "selected_room": "要删除的房间"
+        }
+      },
+      "confirm_delete_room": {
+        "title": "删除 {name}？",
+        "description": "您确定要删除 {name} 吗？此操作无法撤消。",
+        "data": {
+          "confirm": "确认删除"
+        }
+      },
+      "add_room_select": {
+        "title": "添加房间",
+        "data": {
+          "selected_areas": "要添加的房间"
+        }
+      },
+      "add_room_config": {
+        "title": "配置 {name}",
+        "description": "为 {name} 设置媒体播放器和存在传感器。",
+        "data": {
+          "media_player": "媒体播放器",
+          "presence_sensors": "存在传感器"
+        }
+      },
+      "group_settings": {
+        "title": "群组设置",
+        "description": "配置群组公告设置（当房间内有多人时）。",
+        "data": {
+          "group_addressee": "群组名称/收件人",
+          "group_language": "语言",
+          "group_tts_platform": "TTS 平台",
+          "group_tts_voice": "TTS 语音",
+          "group_enhance_with_ai": "使用 AI 增强",
+          "group_translate_announcement": "翻译公告",
+          "group_conversation_entity": "对话实体（用于 AI）"
+        }
+      },
+      "advanced_settings": {
+        "title": "高级设置",
+        "description": "为您的 LLM 自定义 AI 提示。不同的模型对提示的解释不同。",
+        "data": {
+          "prompt_translate": "仅翻译提示模板",
+          "prompt_enhance": "仅增强提示模板",
+          "prompt_both": "两者（增强 + 翻译）提示模板"
+        }
+      }
+    },
+    "abort": {
+      "no_people": "没有已配置的人员可编辑。",
+      "no_rooms": "没有已配置的房间可编辑。",
+      "no_available_people": "Home Assistant 中的所有人员都已配置。"
+    }
+  }
+}

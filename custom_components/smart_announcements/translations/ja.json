@@ -1,0 +1,251 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Smart Announcements セットアップ",
+        "description": "Smart Announcements を設定しています..."
+      },
+      "people_select": {
+        "title": "人物を選択",
+        "description": "アナウンスを受け取る人物を選択してください。",
+        "data": {
+          "selected_people": "設定する人物"
+        }
+      },
+      "person_config": {
+        "title": "{name} の設定 - 言語と TTS",
+        "description": "{name} の部屋追跡とアナウンス設定を構成します。",
+        "data": {
+          "room_tracking_entity": "部屋追跡エンティティ",
+          "language": "言語",
+          "tts_platform": "TTS プラットフォーム",
+          "enhance_with_ai": "AI で強化",
+          "translate_announcement": "アナウンスを翻訳"
+        }
+      },
+      "person_voice": {
+        "title": "{name} の設定 - 音声と AI",
+        "description": "{name} の会話エンティティと音声を選択してください。",
+        "data": {
+          "conversation_entity": "会話エンティティ（AI 用）",
+          "tts_voice": "TTS 音声"
+        }
+      },
+      "group_config": {
+        "title": "グループアナウンス設定 - 言語と TTS",
+        "description": "同じ部屋にいる複数の人物へのアナウンス設定を構成します。",
+        "data": {
+          "group_language": "言語",
+          "group_tts_platform": "TTS プラットフォーム",
+          "group_enhance_with_ai": "AI で強化",
+          "group_translate_announcement": "アナウンスを翻訳"
+        }
+      },
+      "group_voice": {
+        "title": "グループアナウンス設定 - 音声と AI",
+        "description": "グループアナウンスの会話エンティティと音声を選択してください。",
+        "data": {
+          "group_conversation_entity": "会話エンティティ（AI 用）",
+          "group_tts_voice": "TTS 音声"
+        }
+      },
+      "room_tracking": {
+        "title": "部屋追跡設定",
+        "description": "アナウンスが家の中で人物を見つける方法を構成します。",
+        "data": {
+          "room_tracking": "部屋追跡を有効にする",
+          "presence_verification": "在室センサーで確認"
+        }
+      },
+      "rooms_select": {
+        "title": "部屋を選択",
+        "description": "アナウンスを受け取る部屋を選択してください。",
+        "data": {
+          "selected_rooms": "設定する部屋"
+        }
+      },
+      "room_config": {
+        "title": "{name} の設定",
+        "description": "{name} のメディアプレーヤーと在室センサーを設定します。",
+        "data": {
+          "media_player": "メディアプレーヤー",
+          "presence_sensors": "在室センサー"
+        }
+      },
+      "pre_announce": {
+        "title": "プリアナウンスサウンド設定",
+        "description": "アナウンス前に再生されるチャイムを構成します。",
+        "data": {
+          "pre_announce_enabled": "プリアナウンスサウンドを有効にする",
+          "pre_announce_url": "プリアナウンスサウンド URL",
+          "pre_announce_delay": "プリアナウンス後の遅延（秒）"
+        }
+      }
+    },
+    "error": {
+      "no_tts": "TTS プラットフォームが見つかりません。先に TTS インテグレーションを設定してください。",
+      "no_persons": "Home Assistant に人物が見つかりません。",
+      "no_areas": "Home Assistant にエリアが見つかりません。",
+      "no_media_players": "メディアプレーヤーが見つかりません。",
+      "no_people_selected": "少なくとも 1 人を選択してください。",
+      "no_rooms_selected": "少なくとも 1 つの部屋を選択してください。",
+      "invalid_url": "プリアナウンスサウンドの URL 形式が無効です。",
+      "unknown": "不明なエラーが発生しました。"
+    },
+    "abort": {
+      "already_configured": "Smart Announcements は既に設定されています。"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Smart Announcements 設定",
+        "description": "何を設定しますか？",
+        "menu_options": {
+          "global_settings": "グローバル設定",
+          "edit_people": "人物を編集",
+          "edit_rooms": "部屋を編集",
+          "group_settings": "グループ設定",
+          "advanced_settings": "詳細設定"
+        }
+      },
+      "global_settings": {
+        "title": "グローバル設定",
+        "data": {
+          "home_away_tracking": "在宅/外出追跡を有効にする",
+          "room_tracking": "部屋追跡を有効にする",
+          "presence_verification": "在室センサーで確認",
+          "pre_announce_enabled": "プリアナウンスサウンドを有効にする",
+          "pre_announce_url": "プリアナウンスサウンド URL",
+          "pre_announce_delay": "プリアナウンス後の遅延（秒）",
+          "debug_mode": "デバッグモード（詳細ログ）"
+        }
+      },
+      "edit_people": {
+        "title": "人物を編集",
+        "description": "編集する人物を選択するか、新しい人物を追加してください。",
+        "data": {
+          "selected_person": "人物"
+        }
+      },
+      "edit_person": {
+        "title": "{name} を編集",
+        "data": {
+          "room_tracking_entity": "部屋追跡エンティティ",
+          "language": "言語",
+          "tts_platform": "TTS プラットフォーム",
+          "tts_voice": "TTS 音声",
+          "enhance_with_ai": "AI で強化",
+          "translate_announcement": "アナウンスを翻訳",
+          "conversation_entity": "会話エンティティ（AI 用）"
+        }
+      },
+      "delete_person_select": {
+        "title": "人物を削除",
+        "data": {
+          "selected_person": "削除する人物"
+        }
+      },
+      "confirm_delete_person": {
+        "title": "{name} を削除しますか？",
+        "description": "{name} を削除してもよろしいですか？この操作は元に戻せません。",
+        "data": {
+          "confirm": "削除を確認"
+        }
+      },
+      "add_person_select": {
+        "title": "人物を追加",
+        "data": {
+          "person_entity": "人物"
+        }
+      },
+      "add_person_config": {
+        "title": "{name} の設定 - 言語と TTS",
+        "description": "{name} の部屋追跡とアナウンス設定を構成します。",
+        "data": {
+          "room_tracking_entity": "部屋追跡エンティティ",
+          "language": "言語",
+          "tts_platform": "TTS プラットフォーム",
+          "enhance_with_ai": "AI で強化",
+          "translate_announcement": "アナウンスを翻訳"
+        }
+      },
+      "add_person_voice": {
+        "title": "{name} の設定 - 音声と AI",
+        "description": "{name} の会話エンティティと音声を選択してください。",
+        "data": {
+          "conversation_entity": "会話エンティティ（AI 用）",
+          "tts_voice": "TTS 音声"
+        }
+      },
+      "edit_rooms": {
+        "title": "部屋を編集",
+        "description": "設定を編集する部屋を選択してください。",
+        "data": {
+          "selected_room": "部屋"
+        }
+      },
+      "edit_room": {
+        "title": "{name} を編集",
+        "data": {
+          "media_player": "メディアプレーヤー",
+          "presence_sensors": "在室センサー"
+        }
+      },
+      "delete_room_select": {
+        "title": "部屋を削除",
+        "data": {
+          "selected_room": "削除する部屋"
+        }
+      },
+      "confirm_delete_room": {
+        "title": "{name} を削除しますか？",
+        "description": "{name} を削除してもよろしいですか？この操作は元に戻せません。",
+        "data": {
+          "confirm": "削除を確認"
+        }
+      },
+      "add_room_select": {
+        "title": "部屋を追加",
+        "data": {
+          "selected_areas": "追加する部屋"
+        }
+      },
+      "add_room_config": {
+        "title": "{name} の設定",
+        "description": "{name} のメディアプレーヤーと在室センサーを設定します。",
+        "data": {
+          "media_player": "メディアプレーヤー",
+          "presence_sensors": "在室センサー"
+        }
+      },
+      "group_settings": {
+        "title": "グループ設定",
+        "description": "グループアナウンスの設定を構成します（部屋に複数の人物がいる場合）。",
+        "data": {
+          "group_addressee": "グループ名/宛先",
+          "group_language": "言語",
+          "group_tts_platform": "TTS プラットフォーム",
+          "group_tts_voice": "TTS 音声",
+          "group_enhance_with_ai": "AI で強化",
+          "group_translate_announcement": "アナウンスを翻訳",
+          "group_conversation_entity": "会話エンティティ（AI 用）"
+        }
+      },
+      "advanced_settings": {
+        "title": "詳細設定",
+        "description": "LLM 用の AI プロンプトをカスタマイズします。モデルによってプロンプトの解釈が異なります。",
+        "data": {
+          "prompt_translate": "翻訳のみプロンプトテンプレート",
+          "prompt_enhance": "強化のみプロンプトテンプレート",
+          "prompt_both": "両方（強化 + 翻訳）プロンプトテンプレート"
+        }
+      }
+    },
+    "abort": {
+      "no_people": "編集する人物が設定されていません。",
+      "no_rooms": "編集する部屋が設定されていません。",
+      "no_available_people": "Home Assistant のすべての人物は既に設定されています。"
+    }
+  }
+}

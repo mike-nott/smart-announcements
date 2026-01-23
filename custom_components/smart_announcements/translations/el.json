@@ -1,0 +1,251 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Ρύθμιση Smart Announcements",
+        "description": "Ρύθμιση του Smart Announcements..."
+      },
+      "people_select": {
+        "title": "Επιλογή ατόμων",
+        "description": "Επιλέξτε ποια άτομα θα λαμβάνουν ανακοινώσεις.",
+        "data": {
+          "selected_people": "Άτομα προς διαμόρφωση"
+        }
+      },
+      "person_config": {
+        "title": "Διαμόρφωση {name} - Γλώσσα και TTS",
+        "description": "Διαμορφώστε την παρακολούθηση δωματίου και τις ρυθμίσεις ανακοινώσεων για {name}.",
+        "data": {
+          "room_tracking_entity": "Οντότητα παρακολούθησης δωματίου",
+          "language": "Γλώσσα",
+          "tts_platform": "Πλατφόρμα TTS",
+          "enhance_with_ai": "Βελτίωση με AI",
+          "translate_announcement": "Μετάφραση ανακοίνωσης"
+        }
+      },
+      "person_voice": {
+        "title": "Διαμόρφωση {name} - Φωνή και AI",
+        "description": "Επιλέξτε οντότητα συνομιλίας και φωνή για {name}.",
+        "data": {
+          "conversation_entity": "Οντότητα συνομιλίας (για AI)",
+          "tts_voice": "Φωνή TTS"
+        }
+      },
+      "group_config": {
+        "title": "Ρυθμίσεις ομαδικών ανακοινώσεων - Γλώσσα και TTS",
+        "description": "Διαμορφώστε ρυθμίσεις για ανακοινώσεις σε πολλά άτομα στο ίδιο δωμάτιο.",
+        "data": {
+          "group_language": "Γλώσσα",
+          "group_tts_platform": "Πλατφόρμα TTS",
+          "group_enhance_with_ai": "Βελτίωση με AI",
+          "group_translate_announcement": "Μετάφραση ανακοίνωσης"
+        }
+      },
+      "group_voice": {
+        "title": "Ρυθμίσεις ομαδικών ανακοινώσεων - Φωνή και AI",
+        "description": "Επιλέξτε οντότητα συνομιλίας και φωνή για ομαδικές ανακοινώσεις.",
+        "data": {
+          "group_conversation_entity": "Οντότητα συνομιλίας (για AI)",
+          "group_tts_voice": "Φωνή TTS"
+        }
+      },
+      "room_tracking": {
+        "title": "Ρυθμίσεις παρακολούθησης δωματίου",
+        "description": "Διαμορφώστε πώς οι ανακοινώσεις βρίσκουν άτομα στο σπίτι σας.",
+        "data": {
+          "room_tracking": "Ενεργοποίηση παρακολούθησης δωματίου",
+          "presence_verification": "Επαλήθευση με αισθητήρες παρουσίας"
+        }
+      },
+      "rooms_select": {
+        "title": "Επιλογή δωματίων",
+        "description": "Επιλέξτε ποια δωμάτια θα λαμβάνουν ανακοινώσεις.",
+        "data": {
+          "selected_rooms": "Δωμάτια προς διαμόρφωση"
+        }
+      },
+      "room_config": {
+        "title": "Διαμόρφωση {name}",
+        "description": "Ορίστε τη συσκευή αναπαραγωγής πολυμέσων και τους αισθητήρες παρουσίας για {name}.",
+        "data": {
+          "media_player": "Συσκευή αναπαραγωγής πολυμέσων",
+          "presence_sensors": "Αισθητήρες παρουσίας"
+        }
+      },
+      "pre_announce": {
+        "title": "Ρυθμίσεις ήχου προ-ανακοίνωσης",
+        "description": "Διαμορφώστε τον ήχο που αναπαράγεται πριν από τις ανακοινώσεις.",
+        "data": {
+          "pre_announce_enabled": "Ενεργοποίηση ήχου προ-ανακοίνωσης",
+          "pre_announce_url": "URL ήχου προ-ανακοίνωσης",
+          "pre_announce_delay": "Καθυστέρηση μετά την προ-ανακοίνωση (δευτερόλεπτα)"
+        }
+      }
+    },
+    "error": {
+      "no_tts": "Δεν βρέθηκαν πλατφόρμες TTS. Διαμορφώστε πρώτα μια ενσωμάτωση TTS.",
+      "no_persons": "Δεν βρέθηκαν άτομα στο Home Assistant.",
+      "no_areas": "Δεν βρέθηκαν περιοχές στο Home Assistant.",
+      "no_media_players": "Δεν βρέθηκαν συσκευές αναπαραγωγής πολυμέσων.",
+      "no_people_selected": "Επιλέξτε τουλάχιστον ένα άτομο.",
+      "no_rooms_selected": "Επιλέξτε τουλάχιστον ένα δωμάτιο.",
+      "invalid_url": "Μη έγκυρη μορφή URL για τον ήχο προ-ανακοίνωσης.",
+      "unknown": "Παρουσιάστηκε άγνωστο σφάλμα."
+    },
+    "abort": {
+      "already_configured": "Το Smart Announcements είναι ήδη διαμορφωμένο."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Ρυθμίσεις Smart Announcements",
+        "description": "Τι θέλετε να διαμορφώσετε;",
+        "menu_options": {
+          "global_settings": "Γενικές ρυθμίσεις",
+          "edit_people": "Επεξεργασία ατόμων",
+          "edit_rooms": "Επεξεργασία δωματίων",
+          "group_settings": "Ρυθμίσεις ομάδας",
+          "advanced_settings": "Σύνθετες ρυθμίσεις"
+        }
+      },
+      "global_settings": {
+        "title": "Γενικές ρυθμίσεις",
+        "data": {
+          "home_away_tracking": "Ενεργοποίηση παρακολούθησης σπίτι/εκτός",
+          "room_tracking": "Ενεργοποίηση παρακολούθησης δωματίου",
+          "presence_verification": "Επαλήθευση με αισθητήρες παρουσίας",
+          "pre_announce_enabled": "Ενεργοποίηση ήχου προ-ανακοίνωσης",
+          "pre_announce_url": "URL ήχου προ-ανακοίνωσης",
+          "pre_announce_delay": "Καθυστέρηση μετά την προ-ανακοίνωση (δευτερόλεπτα)",
+          "debug_mode": "Λειτουργία εντοπισμού σφαλμάτων (αναλυτική καταγραφή)"
+        }
+      },
+      "edit_people": {
+        "title": "Επεξεργασία ατόμων",
+        "description": "Επιλέξτε ένα άτομο για επεξεργασία ή προσθέστε νέο άτομο.",
+        "data": {
+          "selected_person": "Άτομο"
+        }
+      },
+      "edit_person": {
+        "title": "Επεξεργασία {name}",
+        "data": {
+          "room_tracking_entity": "Οντότητα παρακολούθησης δωματίου",
+          "language": "Γλώσσα",
+          "tts_platform": "Πλατφόρμα TTS",
+          "tts_voice": "Φωνή TTS",
+          "enhance_with_ai": "Βελτίωση με AI",
+          "translate_announcement": "Μετάφραση ανακοίνωσης",
+          "conversation_entity": "Οντότητα συνομιλίας (για AI)"
+        }
+      },
+      "delete_person_select": {
+        "title": "Διαγραφή ατόμου",
+        "data": {
+          "selected_person": "Άτομο προς διαγραφή"
+        }
+      },
+      "confirm_delete_person": {
+        "title": "Διαγραφή {name};",
+        "description": "Είστε βέβαιοι ότι θέλετε να διαγράψετε το {name}; Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.",
+        "data": {
+          "confirm": "Επιβεβαίωση διαγραφής"
+        }
+      },
+      "add_person_select": {
+        "title": "Προσθήκη ατόμου",
+        "data": {
+          "person_entity": "Άτομο"
+        }
+      },
+      "add_person_config": {
+        "title": "Διαμόρφωση {name} - Γλώσσα και TTS",
+        "description": "Διαμορφώστε την παρακολούθηση δωματίου και τις ρυθμίσεις ανακοινώσεων για {name}.",
+        "data": {
+          "room_tracking_entity": "Οντότητα παρακολούθησης δωματίου",
+          "language": "Γλώσσα",
+          "tts_platform": "Πλατφόρμα TTS",
+          "enhance_with_ai": "Βελτίωση με AI",
+          "translate_announcement": "Μετάφραση ανακοίνωσης"
+        }
+      },
+      "add_person_voice": {
+        "title": "Διαμόρφωση {name} - Φωνή και AI",
+        "description": "Επιλέξτε οντότητα συνομιλίας και φωνή για {name}.",
+        "data": {
+          "conversation_entity": "Οντότητα συνομιλίας (για AI)",
+          "tts_voice": "Φωνή TTS"
+        }
+      },
+      "edit_rooms": {
+        "title": "Επεξεργασία δωματίων",
+        "description": "Επιλέξτε ένα δωμάτιο για επεξεργασία των ρυθμίσεών του.",
+        "data": {
+          "selected_room": "Δωμάτιο"
+        }
+      },
+      "edit_room": {
+        "title": "Επεξεργασία {name}",
+        "data": {
+          "media_player": "Συσκευή αναπαραγωγής πολυμέσων",
+          "presence_sensors": "Αισθητήρες παρουσίας"
+        }
+      },
+      "delete_room_select": {
+        "title": "Διαγραφή δωματίου",
+        "data": {
+          "selected_room": "Δωμάτιο προς διαγραφή"
+        }
+      },
+      "confirm_delete_room": {
+        "title": "Διαγραφή {name};",
+        "description": "Είστε βέβαιοι ότι θέλετε να διαγράψετε το {name}; Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.",
+        "data": {
+          "confirm": "Επιβεβαίωση διαγραφής"
+        }
+      },
+      "add_room_select": {
+        "title": "Προσθήκη δωματίων",
+        "data": {
+          "selected_areas": "Δωμάτια προς προσθήκη"
+        }
+      },
+      "add_room_config": {
+        "title": "Διαμόρφωση {name}",
+        "description": "Ορίστε τη συσκευή αναπαραγωγής πολυμέσων και τους αισθητήρες παρουσίας για {name}.",
+        "data": {
+          "media_player": "Συσκευή αναπαραγωγής πολυμέσων",
+          "presence_sensors": "Αισθητήρες παρουσίας"
+        }
+      },
+      "group_settings": {
+        "title": "Ρυθμίσεις ομάδας",
+        "description": "Διαμορφώστε ρυθμίσεις για ομαδικές ανακοινώσεις (όταν πολλά άτομα βρίσκονται σε ένα δωμάτιο).",
+        "data": {
+          "group_addressee": "Όνομα ομάδας/αποδέκτης",
+          "group_language": "Γλώσσα",
+          "group_tts_platform": "Πλατφόρμα TTS",
+          "group_tts_voice": "Φωνή TTS",
+          "group_enhance_with_ai": "Βελτίωση με AI",
+          "group_translate_announcement": "Μετάφραση ανακοίνωσης",
+          "group_conversation_entity": "Οντότητα συνομιλίας (για AI)"
+        }
+      },
+      "advanced_settings": {
+        "title": "Σύνθετες ρυθμίσεις",
+        "description": "Προσαρμόστε τις προτροπές AI για το LLM σας. Διαφορετικά μοντέλα ερμηνεύουν τις προτροπές διαφορετικά.",
+        "data": {
+          "prompt_translate": "Πρότυπο προτροπής μόνο για μετάφραση",
+          "prompt_enhance": "Πρότυπο προτροπής μόνο για βελτίωση",
+          "prompt_both": "Πρότυπο προτροπής για αμφότερα (βελτίωση + μετάφραση)"
+        }
+      }
+    },
+    "abort": {
+      "no_people": "Δεν έχουν διαμορφωθεί άτομα για επεξεργασία.",
+      "no_rooms": "Δεν έχουν διαμορφωθεί δωμάτια για επεξεργασία.",
+      "no_available_people": "Όλα τα άτομα στο Home Assistant έχουν ήδη διαμορφωθεί."
+    }
+  }
+}

@@ -1,0 +1,251 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configuration de Smart Announcements",
+        "description": "Configuration de Smart Announcements en cours..."
+      },
+      "people_select": {
+        "title": "Sélectionner les personnes",
+        "description": "Sélectionnez les personnes qui doivent recevoir les annonces.",
+        "data": {
+          "selected_people": "Personnes à configurer"
+        }
+      },
+      "person_config": {
+        "title": "Configurer {name} - Langue et TTS",
+        "description": "Configurez le suivi des pièces et les paramètres d'annonces pour {name}.",
+        "data": {
+          "room_tracking_entity": "Entité de suivi de pièce",
+          "language": "Langue",
+          "tts_platform": "Plateforme TTS",
+          "enhance_with_ai": "Améliorer avec l'AI",
+          "translate_announcement": "Traduire l'annonce"
+        }
+      },
+      "person_voice": {
+        "title": "Configurer {name} - Voix et AI",
+        "description": "Sélectionnez l'entité de conversation et la voix pour {name}.",
+        "data": {
+          "conversation_entity": "Entité de conversation (pour l'AI)",
+          "tts_voice": "Voix TTS"
+        }
+      },
+      "group_config": {
+        "title": "Paramètres d'annonces de groupe - Langue et TTS",
+        "description": "Configurez les paramètres pour les annonces destinées à plusieurs personnes dans la même pièce.",
+        "data": {
+          "group_language": "Langue",
+          "group_tts_platform": "Plateforme TTS",
+          "group_enhance_with_ai": "Améliorer avec l'AI",
+          "group_translate_announcement": "Traduire l'annonce"
+        }
+      },
+      "group_voice": {
+        "title": "Paramètres d'annonces de groupe - Voix et AI",
+        "description": "Sélectionnez l'entité de conversation et la voix pour les annonces de groupe.",
+        "data": {
+          "group_conversation_entity": "Entité de conversation (pour l'AI)",
+          "group_tts_voice": "Voix TTS"
+        }
+      },
+      "room_tracking": {
+        "title": "Paramètres de suivi des pièces",
+        "description": "Configurez comment les annonces trouvent les personnes dans votre maison.",
+        "data": {
+          "room_tracking": "Activer le suivi des pièces",
+          "presence_verification": "Vérifier avec les capteurs de présence"
+        }
+      },
+      "rooms_select": {
+        "title": "Sélectionner les pièces",
+        "description": "Sélectionnez les pièces qui doivent recevoir les annonces.",
+        "data": {
+          "selected_rooms": "Pièces à configurer"
+        }
+      },
+      "room_config": {
+        "title": "Configurer {name}",
+        "description": "Définissez le lecteur multimédia et les capteurs de présence pour {name}.",
+        "data": {
+          "media_player": "Lecteur multimédia",
+          "presence_sensors": "Capteurs de présence"
+        }
+      },
+      "pre_announce": {
+        "title": "Paramètres du son de pré-annonce",
+        "description": "Configurez le carillon qui se joue avant les annonces.",
+        "data": {
+          "pre_announce_enabled": "Activer le son de pré-annonce",
+          "pre_announce_url": "URL du son de pré-annonce",
+          "pre_announce_delay": "Délai après la pré-annonce (secondes)"
+        }
+      }
+    },
+    "error": {
+      "no_tts": "Aucune plateforme TTS trouvée. Veuillez d'abord configurer une intégration TTS.",
+      "no_persons": "Aucune personne trouvée dans Home Assistant.",
+      "no_areas": "Aucune zone trouvée dans Home Assistant.",
+      "no_media_players": "Aucun lecteur multimédia trouvé.",
+      "no_people_selected": "Veuillez sélectionner au moins une personne.",
+      "no_rooms_selected": "Veuillez sélectionner au moins une pièce.",
+      "invalid_url": "Format d'URL invalide pour le son de pré-annonce.",
+      "unknown": "Une erreur inconnue s'est produite."
+    },
+    "abort": {
+      "already_configured": "Smart Announcements est déjà configuré."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Paramètres de Smart Announcements",
+        "description": "Que souhaitez-vous configurer ?",
+        "menu_options": {
+          "global_settings": "Paramètres globaux",
+          "edit_people": "Modifier les personnes",
+          "edit_rooms": "Modifier les pièces",
+          "group_settings": "Paramètres de groupe",
+          "advanced_settings": "Paramètres avancés"
+        }
+      },
+      "global_settings": {
+        "title": "Paramètres globaux",
+        "data": {
+          "home_away_tracking": "Activer le suivi présent/absent",
+          "room_tracking": "Activer le suivi des pièces",
+          "presence_verification": "Vérifier avec les capteurs de présence",
+          "pre_announce_enabled": "Activer le son de pré-annonce",
+          "pre_announce_url": "URL du son de pré-annonce",
+          "pre_announce_delay": "Délai après la pré-annonce (secondes)",
+          "debug_mode": "Mode débogage (journalisation détaillée)"
+        }
+      },
+      "edit_people": {
+        "title": "Modifier les personnes",
+        "description": "Sélectionnez une personne à modifier ou ajoutez une nouvelle personne.",
+        "data": {
+          "selected_person": "Personne"
+        }
+      },
+      "edit_person": {
+        "title": "Modifier {name}",
+        "data": {
+          "room_tracking_entity": "Entité de suivi de pièce",
+          "language": "Langue",
+          "tts_platform": "Plateforme TTS",
+          "tts_voice": "Voix TTS",
+          "enhance_with_ai": "Améliorer avec l'AI",
+          "translate_announcement": "Traduire l'annonce",
+          "conversation_entity": "Entité de conversation (pour l'AI)"
+        }
+      },
+      "delete_person_select": {
+        "title": "Supprimer une personne",
+        "data": {
+          "selected_person": "Personne à supprimer"
+        }
+      },
+      "confirm_delete_person": {
+        "title": "Supprimer {name} ?",
+        "description": "Êtes-vous sûr de vouloir supprimer {name} ? Cette action est irréversible.",
+        "data": {
+          "confirm": "Confirmer la suppression"
+        }
+      },
+      "add_person_select": {
+        "title": "Ajouter une personne",
+        "data": {
+          "person_entity": "Personne"
+        }
+      },
+      "add_person_config": {
+        "title": "Configurer {name} - Langue et TTS",
+        "description": "Configurez le suivi des pièces et les paramètres d'annonces pour {name}.",
+        "data": {
+          "room_tracking_entity": "Entité de suivi de pièce",
+          "language": "Langue",
+          "tts_platform": "Plateforme TTS",
+          "enhance_with_ai": "Améliorer avec l'AI",
+          "translate_announcement": "Traduire l'annonce"
+        }
+      },
+      "add_person_voice": {
+        "title": "Configurer {name} - Voix et AI",
+        "description": "Sélectionnez l'entité de conversation et la voix pour {name}.",
+        "data": {
+          "conversation_entity": "Entité de conversation (pour l'AI)",
+          "tts_voice": "Voix TTS"
+        }
+      },
+      "edit_rooms": {
+        "title": "Modifier les pièces",
+        "description": "Sélectionnez une pièce pour modifier ses paramètres.",
+        "data": {
+          "selected_room": "Pièce"
+        }
+      },
+      "edit_room": {
+        "title": "Modifier {name}",
+        "data": {
+          "media_player": "Lecteur multimédia",
+          "presence_sensors": "Capteurs de présence"
+        }
+      },
+      "delete_room_select": {
+        "title": "Supprimer une pièce",
+        "data": {
+          "selected_room": "Pièce à supprimer"
+        }
+      },
+      "confirm_delete_room": {
+        "title": "Supprimer {name} ?",
+        "description": "Êtes-vous sûr de vouloir supprimer {name} ? Cette action est irréversible.",
+        "data": {
+          "confirm": "Confirmer la suppression"
+        }
+      },
+      "add_room_select": {
+        "title": "Ajouter des pièces",
+        "data": {
+          "selected_areas": "Pièces à ajouter"
+        }
+      },
+      "add_room_config": {
+        "title": "Configurer {name}",
+        "description": "Définissez le lecteur multimédia et les capteurs de présence pour {name}.",
+        "data": {
+          "media_player": "Lecteur multimédia",
+          "presence_sensors": "Capteurs de présence"
+        }
+      },
+      "group_settings": {
+        "title": "Paramètres de groupe",
+        "description": "Configurez les paramètres pour les annonces de groupe (lorsque plusieurs personnes sont dans une pièce).",
+        "data": {
+          "group_addressee": "Nom du groupe/destinataire",
+          "group_language": "Langue",
+          "group_tts_platform": "Plateforme TTS",
+          "group_tts_voice": "Voix TTS",
+          "group_enhance_with_ai": "Améliorer avec l'AI",
+          "group_translate_announcement": "Traduire l'annonce",
+          "group_conversation_entity": "Entité de conversation (pour l'AI)"
+        }
+      },
+      "advanced_settings": {
+        "title": "Paramètres avancés",
+        "description": "Personnalisez les invites AI pour votre LLM. Différents modèles interprètent les invites différemment.",
+        "data": {
+          "prompt_translate": "Modèle d'invite traduction uniquement",
+          "prompt_enhance": "Modèle d'invite amélioration uniquement",
+          "prompt_both": "Modèle d'invite les deux (amélioration + traduction)"
+        }
+      }
+    },
+    "abort": {
+      "no_people": "Aucune personne configurée à modifier.",
+      "no_rooms": "Aucune pièce configurée à modifier.",
+      "no_available_people": "Toutes les personnes dans Home Assistant sont déjà configurées."
+    }
+  }
+}

@@ -73,6 +73,22 @@ def get_language_options() -> list[dict]:
     ]
 
 
+def get_default_language(hass: HomeAssistant) -> str:
+    """Get default language based on HA system language.
+
+    Maps Home Assistant's ISO 639-1 language code to our full language names.
+    Falls back to 'english' if language code is not supported.
+    """
+    # Reverse LANGUAGE_CODE_MAP to map codes back to names
+    CODE_TO_LANGUAGE = {v: k for k, v in LANGUAGE_CODE_MAP.items()}
+
+    # Get HA system language (e.g., "de", "fr", "es")
+    ha_language = hass.config.language
+
+    # Map to our language names, fallback to "english"
+    return CODE_TO_LANGUAGE.get(ha_language, "english")
+
+
 def get_tts_entities(hass: HomeAssistant) -> list[str]:
     """Get list of available TTS entities."""
     entity_reg = er.async_get(hass)
@@ -250,7 +266,7 @@ class SmartAnnouncementsConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 vol.Optional("room_tracking_entity"): EntitySelector(
                     EntitySelectorConfig(domain=["device_tracker", "sensor"])
                 ),
-                vol.Optional("language", default="english"): SelectSelector(
+                vol.Optional("language", default=get_default_language(self.hass)): SelectSelector(
                     SelectSelectorConfig(
                         options=get_language_options(),
                         mode=SelectSelectorMode.DROPDOWN,
@@ -375,7 +391,7 @@ class SmartAnnouncementsConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         # Build schema for step 1: Language, TTS Platform, AI Enhancement, and Translation toggles
         data_schema = vol.Schema(
             {
-                vol.Optional("group_language", default="english"): SelectSelector(
+                vol.Optional("group_language", default=get_default_language(self.hass)): SelectSelector(
                     SelectSelectorConfig(
                         options=get_language_options(),
                         mode=SelectSelectorMode.DROPDOWN,
@@ -870,7 +886,7 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
                 EntitySelectorConfig(domain=["device_tracker", "sensor"])
             )
 
-        schema_dict[vol.Optional("language", default=person.get("language", "english"))] = SelectSelector(
+        schema_dict[vol.Optional("language", default=person.get("language") or get_default_language(self.hass))] = SelectSelector(
             SelectSelectorConfig(
                 options=get_language_options(),
                 mode=SelectSelectorMode.DROPDOWN,
@@ -1018,7 +1034,7 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
                 vol.Optional("room_tracking_entity"): EntitySelector(
                     EntitySelectorConfig(domain=["device_tracker", "sensor"])
                 ),
-                vol.Optional("language", default="english"): SelectSelector(
+                vol.Optional("language", default=get_default_language(self.hass)): SelectSelector(
                     SelectSelectorConfig(
                         options=get_language_options(),
                         mode=SelectSelectorMode.DROPDOWN,
@@ -1448,7 +1464,7 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
             vol.Required(CONF_GROUP_ADDRESSEE, default=group.get(CONF_GROUP_ADDRESSEE, DEFAULT_GROUP_ADDRESSEE)): TextSelector(
                 TextSelectorConfig(type=TextSelectorType.TEXT)
             ),
-            vol.Optional("group_language", default=group.get("group_language", "english")): SelectSelector(
+            vol.Optional("group_language", default=group.get("group_language") or get_default_language(self.hass)): SelectSelector(
                 SelectSelectorConfig(
                     options=get_language_options(),
                     mode=SelectSelectorMode.DROPDOWN,

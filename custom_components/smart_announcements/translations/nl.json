@@ -1,0 +1,251 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Smart Announcements instellen",
+        "description": "Smart Announcements wordt ingesteld..."
+      },
+      "people_select": {
+        "title": "Personen selecteren",
+        "description": "Selecteer welke personen aankondigingen moeten ontvangen.",
+        "data": {
+          "selected_people": "Te configureren personen"
+        }
+      },
+      "person_config": {
+        "title": "{name} configureren - Taal en TTS",
+        "description": "Configureer kamertracking en aankondigingsinstellingen voor {name}.",
+        "data": {
+          "room_tracking_entity": "Kamertracking-entiteit",
+          "language": "Taal",
+          "tts_platform": "TTS-platform",
+          "enhance_with_ai": "Verbeteren met AI",
+          "translate_announcement": "Aankondiging vertalen"
+        }
+      },
+      "person_voice": {
+        "title": "{name} configureren - Stem en AI",
+        "description": "Selecteer conversatie-entiteit en stem voor {name}.",
+        "data": {
+          "conversation_entity": "Conversatie-entiteit (voor AI)",
+          "tts_voice": "TTS-stem"
+        }
+      },
+      "group_config": {
+        "title": "Groepsaankondigingsinstellingen - Taal en TTS",
+        "description": "Configureer instellingen voor aankondigingen aan meerdere personen in dezelfde kamer.",
+        "data": {
+          "group_language": "Taal",
+          "group_tts_platform": "TTS-platform",
+          "group_enhance_with_ai": "Verbeteren met AI",
+          "group_translate_announcement": "Aankondiging vertalen"
+        }
+      },
+      "group_voice": {
+        "title": "Groepsaankondigingsinstellingen - Stem en AI",
+        "description": "Selecteer conversatie-entiteit en stem voor groepsaankondigingen.",
+        "data": {
+          "group_conversation_entity": "Conversatie-entiteit (voor AI)",
+          "group_tts_voice": "TTS-stem"
+        }
+      },
+      "room_tracking": {
+        "title": "Kamertracking-instellingen",
+        "description": "Configureer hoe aankondigingen personen in uw huis vinden.",
+        "data": {
+          "room_tracking": "Kamertracking inschakelen",
+          "presence_verification": "Verifiëren met aanwezigheidssensoren"
+        }
+      },
+      "rooms_select": {
+        "title": "Kamers selecteren",
+        "description": "Selecteer welke kamers aankondigingen moeten ontvangen.",
+        "data": {
+          "selected_rooms": "Te configureren kamers"
+        }
+      },
+      "room_config": {
+        "title": "{name} configureren",
+        "description": "Stel de mediaspeler en aanwezigheidssensoren in voor {name}.",
+        "data": {
+          "media_player": "Mediaspeler",
+          "presence_sensors": "Aanwezigheidssensoren"
+        }
+      },
+      "pre_announce": {
+        "title": "Vooraankondigingsgeluid-instellingen",
+        "description": "Configureer het geluid dat wordt afgespeeld voor aankondigingen.",
+        "data": {
+          "pre_announce_enabled": "Vooraankondigingsgeluid inschakelen",
+          "pre_announce_url": "URL vooraankondigingsgeluid",
+          "pre_announce_delay": "Vertraging na vooraankondiging (seconden)"
+        }
+      }
+    },
+    "error": {
+      "no_tts": "Geen TTS-platforms gevonden. Configureer eerst een TTS-integratie.",
+      "no_persons": "Geen personen gevonden in Home Assistant.",
+      "no_areas": "Geen gebieden gevonden in Home Assistant.",
+      "no_media_players": "Geen mediaspelers gevonden.",
+      "no_people_selected": "Selecteer minimaal één persoon.",
+      "no_rooms_selected": "Selecteer minimaal één kamer.",
+      "invalid_url": "Ongeldig URL-formaat voor vooraankondigingsgeluid.",
+      "unknown": "Er is een onbekende fout opgetreden."
+    },
+    "abort": {
+      "already_configured": "Smart Announcements is al geconfigureerd."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Smart Announcements-instellingen",
+        "description": "Wat wilt u configureren?",
+        "menu_options": {
+          "global_settings": "Algemene instellingen",
+          "edit_people": "Personen bewerken",
+          "edit_rooms": "Kamers bewerken",
+          "group_settings": "Groepsinstellingen",
+          "advanced_settings": "Geavanceerde instellingen"
+        }
+      },
+      "global_settings": {
+        "title": "Algemene instellingen",
+        "data": {
+          "home_away_tracking": "Thuis/afwezig-tracking inschakelen",
+          "room_tracking": "Kamertracking inschakelen",
+          "presence_verification": "Verifiëren met aanwezigheidssensoren",
+          "pre_announce_enabled": "Vooraankondigingsgeluid inschakelen",
+          "pre_announce_url": "URL vooraankondigingsgeluid",
+          "pre_announce_delay": "Vertraging na vooraankondiging (seconden)",
+          "debug_mode": "Foutopsporingsmodus (uitgebreide logging)"
+        }
+      },
+      "edit_people": {
+        "title": "Personen bewerken",
+        "description": "Selecteer een persoon om te bewerken of voeg een nieuwe persoon toe.",
+        "data": {
+          "selected_person": "Persoon"
+        }
+      },
+      "edit_person": {
+        "title": "{name} bewerken",
+        "data": {
+          "room_tracking_entity": "Kamertracking-entiteit",
+          "language": "Taal",
+          "tts_platform": "TTS-platform",
+          "tts_voice": "TTS-stem",
+          "enhance_with_ai": "Verbeteren met AI",
+          "translate_announcement": "Aankondiging vertalen",
+          "conversation_entity": "Conversatie-entiteit (voor AI)"
+        }
+      },
+      "delete_person_select": {
+        "title": "Persoon verwijderen",
+        "data": {
+          "selected_person": "Te verwijderen persoon"
+        }
+      },
+      "confirm_delete_person": {
+        "title": "{name} verwijderen?",
+        "description": "Weet u zeker dat u {name} wilt verwijderen? Dit kan niet ongedaan worden gemaakt.",
+        "data": {
+          "confirm": "Verwijdering bevestigen"
+        }
+      },
+      "add_person_select": {
+        "title": "Persoon toevoegen",
+        "data": {
+          "person_entity": "Persoon"
+        }
+      },
+      "add_person_config": {
+        "title": "{name} configureren - Taal en TTS",
+        "description": "Configureer kamertracking en aankondigingsinstellingen voor {name}.",
+        "data": {
+          "room_tracking_entity": "Kamertracking-entiteit",
+          "language": "Taal",
+          "tts_platform": "TTS-platform",
+          "enhance_with_ai": "Verbeteren met AI",
+          "translate_announcement": "Aankondiging vertalen"
+        }
+      },
+      "add_person_voice": {
+        "title": "{name} configureren - Stem en AI",
+        "description": "Selecteer conversatie-entiteit en stem voor {name}.",
+        "data": {
+          "conversation_entity": "Conversatie-entiteit (voor AI)",
+          "tts_voice": "TTS-stem"
+        }
+      },
+      "edit_rooms": {
+        "title": "Kamers bewerken",
+        "description": "Selecteer een kamer om de instellingen te bewerken.",
+        "data": {
+          "selected_room": "Kamer"
+        }
+      },
+      "edit_room": {
+        "title": "{name} bewerken",
+        "data": {
+          "media_player": "Mediaspeler",
+          "presence_sensors": "Aanwezigheidssensoren"
+        }
+      },
+      "delete_room_select": {
+        "title": "Kamer verwijderen",
+        "data": {
+          "selected_room": "Te verwijderen kamer"
+        }
+      },
+      "confirm_delete_room": {
+        "title": "{name} verwijderen?",
+        "description": "Weet u zeker dat u {name} wilt verwijderen? Dit kan niet ongedaan worden gemaakt.",
+        "data": {
+          "confirm": "Verwijdering bevestigen"
+        }
+      },
+      "add_room_select": {
+        "title": "Kamers toevoegen",
+        "data": {
+          "selected_areas": "Toe te voegen kamers"
+        }
+      },
+      "add_room_config": {
+        "title": "{name} configureren",
+        "description": "Stel de mediaspeler en aanwezigheidssensoren in voor {name}.",
+        "data": {
+          "media_player": "Mediaspeler",
+          "presence_sensors": "Aanwezigheidssensoren"
+        }
+      },
+      "group_settings": {
+        "title": "Groepsinstellingen",
+        "description": "Configureer instellingen voor groepsaankondigingen (wanneer meerdere personen in een kamer zijn).",
+        "data": {
+          "group_addressee": "Groepsnaam/geadresseerde",
+          "group_language": "Taal",
+          "group_tts_platform": "TTS-platform",
+          "group_tts_voice": "TTS-stem",
+          "group_enhance_with_ai": "Verbeteren met AI",
+          "group_translate_announcement": "Aankondiging vertalen",
+          "group_conversation_entity": "Conversatie-entiteit (voor AI)"
+        }
+      },
+      "advanced_settings": {
+        "title": "Geavanceerde instellingen",
+        "description": "Pas AI-prompts aan voor uw LLM. Verschillende modellen interpreteren prompts anders.",
+        "data": {
+          "prompt_translate": "Alleen-vertalen promptsjabloon",
+          "prompt_enhance": "Alleen-verbeteren promptsjabloon",
+          "prompt_both": "Beide (verbeteren + vertalen) promptsjabloon"
+        }
+      }
+    },
+    "abort": {
+      "no_people": "Geen personen geconfigureerd om te bewerken.",
+      "no_rooms": "Geen kamers geconfigureerd om te bewerken.",
+      "no_available_people": "Alle personen in Home Assistant zijn al geconfigureerd."
+    }
+  }
+}

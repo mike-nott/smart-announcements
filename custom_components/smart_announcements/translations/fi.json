@@ -1,0 +1,251 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Smart Announcements -asennus",
+        "description": "Smart Announcements asennetaan..."
+      },
+      "people_select": {
+        "title": "Valitse henkilöt",
+        "description": "Valitse, ketkä henkilöt saavat ilmoituksia.",
+        "data": {
+          "selected_people": "Määritettävät henkilöt"
+        }
+      },
+      "person_config": {
+        "title": "Määritä {name} - Kieli ja TTS",
+        "description": "Määritä huoneen seuranta ja ilmoitusasetukset henkilölle {name}.",
+        "data": {
+          "room_tracking_entity": "Huoneen seurantaentiteetti",
+          "language": "Kieli",
+          "tts_platform": "TTS-alusta",
+          "enhance_with_ai": "Paranna AI:lla",
+          "translate_announcement": "Käännä ilmoitus"
+        }
+      },
+      "person_voice": {
+        "title": "Määritä {name} - Ääni ja AI",
+        "description": "Valitse keskusteluentiteetti ja ääni henkilölle {name}.",
+        "data": {
+          "conversation_entity": "Keskusteluentiteetti (AI:lle)",
+          "tts_voice": "TTS-ääni"
+        }
+      },
+      "group_config": {
+        "title": "Ryhmäilmoitusten asetukset - Kieli ja TTS",
+        "description": "Määritä asetukset ilmoituksille useille henkilöille samassa huoneessa.",
+        "data": {
+          "group_language": "Kieli",
+          "group_tts_platform": "TTS-alusta",
+          "group_enhance_with_ai": "Paranna AI:lla",
+          "group_translate_announcement": "Käännä ilmoitus"
+        }
+      },
+      "group_voice": {
+        "title": "Ryhmäilmoitusten asetukset - Ääni ja AI",
+        "description": "Valitse keskusteluentiteetti ja ääni ryhmäilmoituksille.",
+        "data": {
+          "group_conversation_entity": "Keskusteluentiteetti (AI:lle)",
+          "group_tts_voice": "TTS-ääni"
+        }
+      },
+      "room_tracking": {
+        "title": "Huoneen seurannan asetukset",
+        "description": "Määritä, miten ilmoitukset löytävät henkilöt kodissasi.",
+        "data": {
+          "room_tracking": "Ota huoneen seuranta käyttöön",
+          "presence_verification": "Vahvista läsnäoloantureilla"
+        }
+      },
+      "rooms_select": {
+        "title": "Valitse huoneet",
+        "description": "Valitse, mitkä huoneet saavat ilmoituksia.",
+        "data": {
+          "selected_rooms": "Määritettävät huoneet"
+        }
+      },
+      "room_config": {
+        "title": "Määritä {name}",
+        "description": "Aseta mediasoitin ja läsnäoloanturit huoneelle {name}.",
+        "data": {
+          "media_player": "Mediasoitin",
+          "presence_sensors": "Läsnäoloanturit"
+        }
+      },
+      "pre_announce": {
+        "title": "Esiäänen asetukset",
+        "description": "Määritä ääni, joka toistetaan ennen ilmoituksia.",
+        "data": {
+          "pre_announce_enabled": "Ota esiääni käyttöön",
+          "pre_announce_url": "Esiäänen URL",
+          "pre_announce_delay": "Viive esiäänen jälkeen (sekuntia)"
+        }
+      }
+    },
+    "error": {
+      "no_tts": "TTS-alustoja ei löytynyt. Määritä ensin TTS-integraatio.",
+      "no_persons": "Henkilöitä ei löytynyt Home Assistantista.",
+      "no_areas": "Alueita ei löytynyt Home Assistantista.",
+      "no_media_players": "Mediasoittimia ei löytynyt.",
+      "no_people_selected": "Valitse vähintään yksi henkilö.",
+      "no_rooms_selected": "Valitse vähintään yksi huone.",
+      "invalid_url": "Virheellinen URL-muoto esiäänelle.",
+      "unknown": "Tuntematon virhe tapahtui."
+    },
+    "abort": {
+      "already_configured": "Smart Announcements on jo määritetty."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Smart Announcements -asetukset",
+        "description": "Mitä haluat määrittää?",
+        "menu_options": {
+          "global_settings": "Yleiset asetukset",
+          "edit_people": "Muokkaa henkilöitä",
+          "edit_rooms": "Muokkaa huoneita",
+          "group_settings": "Ryhmäasetukset",
+          "advanced_settings": "Lisäasetukset"
+        }
+      },
+      "global_settings": {
+        "title": "Yleiset asetukset",
+        "data": {
+          "home_away_tracking": "Ota kotona/poissa-seuranta käyttöön",
+          "room_tracking": "Ota huoneen seuranta käyttöön",
+          "presence_verification": "Vahvista läsnäoloantureilla",
+          "pre_announce_enabled": "Ota esiääni käyttöön",
+          "pre_announce_url": "Esiäänen URL",
+          "pre_announce_delay": "Viive esiäänen jälkeen (sekuntia)",
+          "debug_mode": "Virheenkorjaustila (yksityiskohtainen kirjaus)"
+        }
+      },
+      "edit_people": {
+        "title": "Muokkaa henkilöitä",
+        "description": "Valitse henkilö muokattavaksi tai lisää uusi henkilö.",
+        "data": {
+          "selected_person": "Henkilö"
+        }
+      },
+      "edit_person": {
+        "title": "Muokkaa {name}",
+        "data": {
+          "room_tracking_entity": "Huoneen seurantaentiteetti",
+          "language": "Kieli",
+          "tts_platform": "TTS-alusta",
+          "tts_voice": "TTS-ääni",
+          "enhance_with_ai": "Paranna AI:lla",
+          "translate_announcement": "Käännä ilmoitus",
+          "conversation_entity": "Keskusteluentiteetti (AI:lle)"
+        }
+      },
+      "delete_person_select": {
+        "title": "Poista henkilö",
+        "data": {
+          "selected_person": "Poistettava henkilö"
+        }
+      },
+      "confirm_delete_person": {
+        "title": "Poista {name}?",
+        "description": "Haluatko varmasti poistaa henkilön {name}? Tätä ei voi kumota.",
+        "data": {
+          "confirm": "Vahvista poisto"
+        }
+      },
+      "add_person_select": {
+        "title": "Lisää henkilö",
+        "data": {
+          "person_entity": "Henkilö"
+        }
+      },
+      "add_person_config": {
+        "title": "Määritä {name} - Kieli ja TTS",
+        "description": "Määritä huoneen seuranta ja ilmoitusasetukset henkilölle {name}.",
+        "data": {
+          "room_tracking_entity": "Huoneen seurantaentiteetti",
+          "language": "Kieli",
+          "tts_platform": "TTS-alusta",
+          "enhance_with_ai": "Paranna AI:lla",
+          "translate_announcement": "Käännä ilmoitus"
+        }
+      },
+      "add_person_voice": {
+        "title": "Määritä {name} - Ääni ja AI",
+        "description": "Valitse keskusteluentiteetti ja ääni henkilölle {name}.",
+        "data": {
+          "conversation_entity": "Keskusteluentiteetti (AI:lle)",
+          "tts_voice": "TTS-ääni"
+        }
+      },
+      "edit_rooms": {
+        "title": "Muokkaa huoneita",
+        "description": "Valitse huone muokataksesi sen asetuksia.",
+        "data": {
+          "selected_room": "Huone"
+        }
+      },
+      "edit_room": {
+        "title": "Muokkaa {name}",
+        "data": {
+          "media_player": "Mediasoitin",
+          "presence_sensors": "Läsnäoloanturit"
+        }
+      },
+      "delete_room_select": {
+        "title": "Poista huone",
+        "data": {
+          "selected_room": "Poistettava huone"
+        }
+      },
+      "confirm_delete_room": {
+        "title": "Poista {name}?",
+        "description": "Haluatko varmasti poistaa huoneen {name}? Tätä ei voi kumota.",
+        "data": {
+          "confirm": "Vahvista poisto"
+        }
+      },
+      "add_room_select": {
+        "title": "Lisää huoneita",
+        "data": {
+          "selected_areas": "Lisättävät huoneet"
+        }
+      },
+      "add_room_config": {
+        "title": "Määritä {name}",
+        "description": "Aseta mediasoitin ja läsnäoloanturit huoneelle {name}.",
+        "data": {
+          "media_player": "Mediasoitin",
+          "presence_sensors": "Läsnäoloanturit"
+        }
+      },
+      "group_settings": {
+        "title": "Ryhmäasetukset",
+        "description": "Määritä asetukset ryhmäilmoituksille (kun huoneessa on useita henkilöitä).",
+        "data": {
+          "group_addressee": "Ryhmän nimi/vastaanottaja",
+          "group_language": "Kieli",
+          "group_tts_platform": "TTS-alusta",
+          "group_tts_voice": "TTS-ääni",
+          "group_enhance_with_ai": "Paranna AI:lla",
+          "group_translate_announcement": "Käännä ilmoitus",
+          "group_conversation_entity": "Keskusteluentiteetti (AI:lle)"
+        }
+      },
+      "advanced_settings": {
+        "title": "Lisäasetukset",
+        "description": "Mukauta AI-kehotteita LLM:llesi. Eri mallit tulkitsevat kehotteita eri tavoin.",
+        "data": {
+          "prompt_translate": "Vain käännös -kehotemalli",
+          "prompt_enhance": "Vain parannus -kehotemalli",
+          "prompt_both": "Molemmat (parannus + käännös) -kehotemalli"
+        }
+      }
+    },
+    "abort": {
+      "no_people": "Ei henkilöitä määritettynä muokattavaksi.",
+      "no_rooms": "Ei huoneita määritettynä muokattavaksi.",
+      "no_available_people": "Kaikki Home Assistantin henkilöt on jo määritetty."
+    }
+  }
+}

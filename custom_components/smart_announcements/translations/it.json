@@ -1,0 +1,251 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configurazione di Smart Announcements",
+        "description": "Configurazione di Smart Announcements in corso..."
+      },
+      "people_select": {
+        "title": "Seleziona persone",
+        "description": "Seleziona quali persone devono ricevere gli annunci.",
+        "data": {
+          "selected_people": "Persone da configurare"
+        }
+      },
+      "person_config": {
+        "title": "Configura {name} - Lingua e TTS",
+        "description": "Configura il tracciamento della stanza e le impostazioni degli annunci per {name}.",
+        "data": {
+          "room_tracking_entity": "Entità di tracciamento stanza",
+          "language": "Lingua",
+          "tts_platform": "Piattaforma TTS",
+          "enhance_with_ai": "Migliora con AI",
+          "translate_announcement": "Traduci annuncio"
+        }
+      },
+      "person_voice": {
+        "title": "Configura {name} - Voce e AI",
+        "description": "Seleziona l'entità di conversazione e la voce per {name}.",
+        "data": {
+          "conversation_entity": "Entità di conversazione (per AI)",
+          "tts_voice": "Voce TTS"
+        }
+      },
+      "group_config": {
+        "title": "Impostazioni annunci di gruppo - Lingua e TTS",
+        "description": "Configura le impostazioni per gli annunci a più persone nella stessa stanza.",
+        "data": {
+          "group_language": "Lingua",
+          "group_tts_platform": "Piattaforma TTS",
+          "group_enhance_with_ai": "Migliora con AI",
+          "group_translate_announcement": "Traduci annuncio"
+        }
+      },
+      "group_voice": {
+        "title": "Impostazioni annunci di gruppo - Voce e AI",
+        "description": "Seleziona l'entità di conversazione e la voce per gli annunci di gruppo.",
+        "data": {
+          "group_conversation_entity": "Entità di conversazione (per AI)",
+          "group_tts_voice": "Voce TTS"
+        }
+      },
+      "room_tracking": {
+        "title": "Impostazioni tracciamento stanza",
+        "description": "Configura come gli annunci trovano le persone nella tua casa.",
+        "data": {
+          "room_tracking": "Abilita tracciamento stanza",
+          "presence_verification": "Verifica con sensori di presenza"
+        }
+      },
+      "rooms_select": {
+        "title": "Seleziona stanze",
+        "description": "Seleziona quali stanze devono ricevere gli annunci.",
+        "data": {
+          "selected_rooms": "Stanze da configurare"
+        }
+      },
+      "room_config": {
+        "title": "Configura {name}",
+        "description": "Imposta il lettore multimediale e i sensori di presenza per {name}.",
+        "data": {
+          "media_player": "Lettore multimediale",
+          "presence_sensors": "Sensori di presenza"
+        }
+      },
+      "pre_announce": {
+        "title": "Impostazioni suono pre-annuncio",
+        "description": "Configura il suono che viene riprodotto prima degli annunci.",
+        "data": {
+          "pre_announce_enabled": "Abilita suono pre-annuncio",
+          "pre_announce_url": "URL suono pre-annuncio",
+          "pre_announce_delay": "Ritardo dopo pre-annuncio (secondi)"
+        }
+      }
+    },
+    "error": {
+      "no_tts": "Nessuna piattaforma TTS trovata. Configura prima un'integrazione TTS.",
+      "no_persons": "Nessuna persona trovata in Home Assistant.",
+      "no_areas": "Nessuna area trovata in Home Assistant.",
+      "no_media_players": "Nessun lettore multimediale trovato.",
+      "no_people_selected": "Seleziona almeno una persona.",
+      "no_rooms_selected": "Seleziona almeno una stanza.",
+      "invalid_url": "Formato URL non valido per il suono pre-annuncio.",
+      "unknown": "Si è verificato un errore sconosciuto."
+    },
+    "abort": {
+      "already_configured": "Smart Announcements è già configurato."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Impostazioni Smart Announcements",
+        "description": "Cosa vuoi configurare?",
+        "menu_options": {
+          "global_settings": "Impostazioni globali",
+          "edit_people": "Modifica persone",
+          "edit_rooms": "Modifica stanze",
+          "group_settings": "Impostazioni di gruppo",
+          "advanced_settings": "Impostazioni avanzate"
+        }
+      },
+      "global_settings": {
+        "title": "Impostazioni globali",
+        "data": {
+          "home_away_tracking": "Abilita tracciamento casa/fuori",
+          "room_tracking": "Abilita tracciamento stanza",
+          "presence_verification": "Verifica con sensori di presenza",
+          "pre_announce_enabled": "Abilita suono pre-annuncio",
+          "pre_announce_url": "URL suono pre-annuncio",
+          "pre_announce_delay": "Ritardo dopo pre-annuncio (secondi)",
+          "debug_mode": "Modalità debug (registrazione dettagliata)"
+        }
+      },
+      "edit_people": {
+        "title": "Modifica persone",
+        "description": "Seleziona una persona da modificare o aggiungi una nuova persona.",
+        "data": {
+          "selected_person": "Persona"
+        }
+      },
+      "edit_person": {
+        "title": "Modifica {name}",
+        "data": {
+          "room_tracking_entity": "Entità di tracciamento stanza",
+          "language": "Lingua",
+          "tts_platform": "Piattaforma TTS",
+          "tts_voice": "Voce TTS",
+          "enhance_with_ai": "Migliora con AI",
+          "translate_announcement": "Traduci annuncio",
+          "conversation_entity": "Entità di conversazione (per AI)"
+        }
+      },
+      "delete_person_select": {
+        "title": "Elimina persona",
+        "data": {
+          "selected_person": "Persona da eliminare"
+        }
+      },
+      "confirm_delete_person": {
+        "title": "Eliminare {name}?",
+        "description": "Sei sicuro di voler eliminare {name}? Questa azione non può essere annullata.",
+        "data": {
+          "confirm": "Conferma eliminazione"
+        }
+      },
+      "add_person_select": {
+        "title": "Aggiungi persona",
+        "data": {
+          "person_entity": "Persona"
+        }
+      },
+      "add_person_config": {
+        "title": "Configura {name} - Lingua e TTS",
+        "description": "Configura il tracciamento della stanza e le impostazioni degli annunci per {name}.",
+        "data": {
+          "room_tracking_entity": "Entità di tracciamento stanza",
+          "language": "Lingua",
+          "tts_platform": "Piattaforma TTS",
+          "enhance_with_ai": "Migliora con AI",
+          "translate_announcement": "Traduci annuncio"
+        }
+      },
+      "add_person_voice": {
+        "title": "Configura {name} - Voce e AI",
+        "description": "Seleziona l'entità di conversazione e la voce per {name}.",
+        "data": {
+          "conversation_entity": "Entità di conversazione (per AI)",
+          "tts_voice": "Voce TTS"
+        }
+      },
+      "edit_rooms": {
+        "title": "Modifica stanze",
+        "description": "Seleziona una stanza per modificarne le impostazioni.",
+        "data": {
+          "selected_room": "Stanza"
+        }
+      },
+      "edit_room": {
+        "title": "Modifica {name}",
+        "data": {
+          "media_player": "Lettore multimediale",
+          "presence_sensors": "Sensori di presenza"
+        }
+      },
+      "delete_room_select": {
+        "title": "Elimina stanza",
+        "data": {
+          "selected_room": "Stanza da eliminare"
+        }
+      },
+      "confirm_delete_room": {
+        "title": "Eliminare {name}?",
+        "description": "Sei sicuro di voler eliminare {name}? Questa azione non può essere annullata.",
+        "data": {
+          "confirm": "Conferma eliminazione"
+        }
+      },
+      "add_room_select": {
+        "title": "Aggiungi stanze",
+        "data": {
+          "selected_areas": "Stanze da aggiungere"
+        }
+      },
+      "add_room_config": {
+        "title": "Configura {name}",
+        "description": "Imposta il lettore multimediale e i sensori di presenza per {name}.",
+        "data": {
+          "media_player": "Lettore multimediale",
+          "presence_sensors": "Sensori di presenza"
+        }
+      },
+      "group_settings": {
+        "title": "Impostazioni di gruppo",
+        "description": "Configura le impostazioni per gli annunci di gruppo (quando più persone sono in una stanza).",
+        "data": {
+          "group_addressee": "Nome gruppo/destinatario",
+          "group_language": "Lingua",
+          "group_tts_platform": "Piattaforma TTS",
+          "group_tts_voice": "Voce TTS",
+          "group_enhance_with_ai": "Migliora con AI",
+          "group_translate_announcement": "Traduci annuncio",
+          "group_conversation_entity": "Entità di conversazione (per AI)"
+        }
+      },
+      "advanced_settings": {
+        "title": "Impostazioni avanzate",
+        "description": "Personalizza i prompt AI per il tuo LLM. Modelli diversi interpretano i prompt in modo diverso.",
+        "data": {
+          "prompt_translate": "Modello prompt solo traduzione",
+          "prompt_enhance": "Modello prompt solo miglioramento",
+          "prompt_both": "Modello prompt entrambi (miglioramento + traduzione)"
+        }
+      }
+    },
+    "abort": {
+      "no_people": "Nessuna persona configurata da modificare.",
+      "no_rooms": "Nessuna stanza configurata da modificare.",
+      "no_available_people": "Tutte le persone in Home Assistant sono già configurate."
+    }
+  }
+}

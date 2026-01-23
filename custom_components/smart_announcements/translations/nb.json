@@ -1,0 +1,251 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Smart Announcements-oppsett",
+        "description": "Setter opp Smart Announcements..."
+      },
+      "people_select": {
+        "title": "Velg personer",
+        "description": "Velg hvilke personer som skal motta kunngjøringer.",
+        "data": {
+          "selected_people": "Personer å konfigurere"
+        }
+      },
+      "person_config": {
+        "title": "Konfigurer {name} - Språk og TTS",
+        "description": "Konfigurer romsporing og kunngjøringsinnstillinger for {name}.",
+        "data": {
+          "room_tracking_entity": "Romsporingsentitet",
+          "language": "Språk",
+          "tts_platform": "TTS-plattform",
+          "enhance_with_ai": "Forbedre med AI",
+          "translate_announcement": "Oversett kunngjøring"
+        }
+      },
+      "person_voice": {
+        "title": "Konfigurer {name} - Stemme og AI",
+        "description": "Velg samtalentitet og stemme for {name}.",
+        "data": {
+          "conversation_entity": "Samtalentitet (for AI)",
+          "tts_voice": "TTS-stemme"
+        }
+      },
+      "group_config": {
+        "title": "Innstillinger for gruppekunngjøringer - Språk og TTS",
+        "description": "Konfigurer innstillinger for kunngjøringer til flere personer i samme rom.",
+        "data": {
+          "group_language": "Språk",
+          "group_tts_platform": "TTS-plattform",
+          "group_enhance_with_ai": "Forbedre med AI",
+          "group_translate_announcement": "Oversett kunngjøring"
+        }
+      },
+      "group_voice": {
+        "title": "Innstillinger for gruppekunngjøringer - Stemme og AI",
+        "description": "Velg samtalentitet og stemme for gruppekunngjøringer.",
+        "data": {
+          "group_conversation_entity": "Samtalentitet (for AI)",
+          "group_tts_voice": "TTS-stemme"
+        }
+      },
+      "room_tracking": {
+        "title": "Innstillinger for romsporing",
+        "description": "Konfigurer hvordan kunngjøringer finner personer i hjemmet ditt.",
+        "data": {
+          "room_tracking": "Aktiver romsporing",
+          "presence_verification": "Verifiser med tilstedeværelsessensorer"
+        }
+      },
+      "rooms_select": {
+        "title": "Velg rom",
+        "description": "Velg hvilke rom som skal motta kunngjøringer.",
+        "data": {
+          "selected_rooms": "Rom å konfigurere"
+        }
+      },
+      "room_config": {
+        "title": "Konfigurer {name}",
+        "description": "Angi mediespiller og tilstedeværelsessensorer for {name}.",
+        "data": {
+          "media_player": "Mediespiller",
+          "presence_sensors": "Tilstedeværelsessensorer"
+        }
+      },
+      "pre_announce": {
+        "title": "Innstillinger for forhåndskunngjøringslyd",
+        "description": "Konfigurer lyden som spilles før kunngjøringer.",
+        "data": {
+          "pre_announce_enabled": "Aktiver forhåndskunngjøringslyd",
+          "pre_announce_url": "URL for forhåndskunngjøringslyd",
+          "pre_announce_delay": "Forsinkelse etter forhåndskunngjøring (sekunder)"
+        }
+      }
+    },
+    "error": {
+      "no_tts": "Ingen TTS-plattformer funnet. Konfigurer en TTS-integrasjon først.",
+      "no_persons": "Ingen personer funnet i Home Assistant.",
+      "no_areas": "Ingen områder funnet i Home Assistant.",
+      "no_media_players": "Ingen mediespillere funnet.",
+      "no_people_selected": "Velg minst én person.",
+      "no_rooms_selected": "Velg minst ett rom.",
+      "invalid_url": "Ugyldig URL-format for forhåndskunngjøringslyd.",
+      "unknown": "En ukjent feil oppstod."
+    },
+    "abort": {
+      "already_configured": "Smart Announcements er allerede konfigurert."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Smart Announcements-innstillinger",
+        "description": "Hva vil du konfigurere?",
+        "menu_options": {
+          "global_settings": "Globale innstillinger",
+          "edit_people": "Rediger personer",
+          "edit_rooms": "Rediger rom",
+          "group_settings": "Gruppeinnstillinger",
+          "advanced_settings": "Avanserte innstillinger"
+        }
+      },
+      "global_settings": {
+        "title": "Globale innstillinger",
+        "data": {
+          "home_away_tracking": "Aktiver hjemme/borte-sporing",
+          "room_tracking": "Aktiver romsporing",
+          "presence_verification": "Verifiser med tilstedeværelsessensorer",
+          "pre_announce_enabled": "Aktiver forhåndskunngjøringslyd",
+          "pre_announce_url": "URL for forhåndskunngjøringslyd",
+          "pre_announce_delay": "Forsinkelse etter forhåndskunngjøring (sekunder)",
+          "debug_mode": "Feilsøkingsmodus (detaljert logging)"
+        }
+      },
+      "edit_people": {
+        "title": "Rediger personer",
+        "description": "Velg en person å redigere eller legg til en ny person.",
+        "data": {
+          "selected_person": "Person"
+        }
+      },
+      "edit_person": {
+        "title": "Rediger {name}",
+        "data": {
+          "room_tracking_entity": "Romsporingsentitet",
+          "language": "Språk",
+          "tts_platform": "TTS-plattform",
+          "tts_voice": "TTS-stemme",
+          "enhance_with_ai": "Forbedre med AI",
+          "translate_announcement": "Oversett kunngjøring",
+          "conversation_entity": "Samtalentitet (for AI)"
+        }
+      },
+      "delete_person_select": {
+        "title": "Slett person",
+        "data": {
+          "selected_person": "Person å slette"
+        }
+      },
+      "confirm_delete_person": {
+        "title": "Slette {name}?",
+        "description": "Er du sikker på at du vil slette {name}? Dette kan ikke angres.",
+        "data": {
+          "confirm": "Bekreft sletting"
+        }
+      },
+      "add_person_select": {
+        "title": "Legg til person",
+        "data": {
+          "person_entity": "Person"
+        }
+      },
+      "add_person_config": {
+        "title": "Konfigurer {name} - Språk og TTS",
+        "description": "Konfigurer romsporing og kunngjøringsinnstillinger for {name}.",
+        "data": {
+          "room_tracking_entity": "Romsporingsentitet",
+          "language": "Språk",
+          "tts_platform": "TTS-plattform",
+          "enhance_with_ai": "Forbedre med AI",
+          "translate_announcement": "Oversett kunngjøring"
+        }
+      },
+      "add_person_voice": {
+        "title": "Konfigurer {name} - Stemme og AI",
+        "description": "Velg samtalentitet og stemme for {name}.",
+        "data": {
+          "conversation_entity": "Samtalentitet (for AI)",
+          "tts_voice": "TTS-stemme"
+        }
+      },
+      "edit_rooms": {
+        "title": "Rediger rom",
+        "description": "Velg et rom for å redigere innstillingene.",
+        "data": {
+          "selected_room": "Rom"
+        }
+      },
+      "edit_room": {
+        "title": "Rediger {name}",
+        "data": {
+          "media_player": "Mediespiller",
+          "presence_sensors": "Tilstedeværelsessensorer"
+        }
+      },
+      "delete_room_select": {
+        "title": "Slett rom",
+        "data": {
+          "selected_room": "Rom å slette"
+        }
+      },
+      "confirm_delete_room": {
+        "title": "Slette {name}?",
+        "description": "Er du sikker på at du vil slette {name}? Dette kan ikke angres.",
+        "data": {
+          "confirm": "Bekreft sletting"
+        }
+      },
+      "add_room_select": {
+        "title": "Legg til rom",
+        "data": {
+          "selected_areas": "Rom å legge til"
+        }
+      },
+      "add_room_config": {
+        "title": "Konfigurer {name}",
+        "description": "Angi mediespiller og tilstedeværelsessensorer for {name}.",
+        "data": {
+          "media_player": "Mediespiller",
+          "presence_sensors": "Tilstedeværelsessensorer"
+        }
+      },
+      "group_settings": {
+        "title": "Gruppeinnstillinger",
+        "description": "Konfigurer innstillinger for gruppekunngjøringer (når flere personer er i et rom).",
+        "data": {
+          "group_addressee": "Gruppenavn/mottaker",
+          "group_language": "Språk",
+          "group_tts_platform": "TTS-plattform",
+          "group_tts_voice": "TTS-stemme",
+          "group_enhance_with_ai": "Forbedre med AI",
+          "group_translate_announcement": "Oversett kunngjøring",
+          "group_conversation_entity": "Samtalentitet (for AI)"
+        }
+      },
+      "advanced_settings": {
+        "title": "Avanserte innstillinger",
+        "description": "Tilpass AI-ledetekster for din LLM. Forskjellige modeller tolker ledetekster ulikt.",
+        "data": {
+          "prompt_translate": "Mal for kun oversettelse",
+          "prompt_enhance": "Mal for kun forbedring",
+          "prompt_both": "Mal for begge (forbedring + oversettelse)"
+        }
+      }
+    },
+    "abort": {
+      "no_people": "Ingen personer konfigurert å redigere.",
+      "no_rooms": "Ingen rom konfigurert å redigere.",
+      "no_available_people": "Alle personer i Home Assistant er allerede konfigurert."
+    }
+  }
+}

@@ -1,0 +1,251 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Smart Announcements Kurulumu",
+        "description": "Smart Announcements kuruluyor..."
+      },
+      "people_select": {
+        "title": "Kişileri Seç",
+        "description": "Duyuruları alacak kişileri seçin.",
+        "data": {
+          "selected_people": "Yapılandırılacak Kişiler"
+        }
+      },
+      "person_config": {
+        "title": "{name} Yapılandır - Dil ve TTS",
+        "description": "{name} için oda takibi ve duyuru ayarlarını yapılandırın.",
+        "data": {
+          "room_tracking_entity": "Oda Takip Varlığı",
+          "language": "Dil",
+          "tts_platform": "TTS Platformu",
+          "enhance_with_ai": "AI ile Geliştir",
+          "translate_announcement": "Duyuruyu Çevir"
+        }
+      },
+      "person_voice": {
+        "title": "{name} Yapılandır - Ses ve AI",
+        "description": "{name} için konuşma varlığını ve sesi seçin.",
+        "data": {
+          "conversation_entity": "Konuşma Varlığı (AI için)",
+          "tts_voice": "TTS Sesi"
+        }
+      },
+      "group_config": {
+        "title": "Grup Duyuru Ayarları - Dil ve TTS",
+        "description": "Aynı odadaki birden fazla kişiye duyuru ayarlarını yapılandırın.",
+        "data": {
+          "group_language": "Dil",
+          "group_tts_platform": "TTS Platformu",
+          "group_enhance_with_ai": "AI ile Geliştir",
+          "group_translate_announcement": "Duyuruyu Çevir"
+        }
+      },
+      "group_voice": {
+        "title": "Grup Duyuru Ayarları - Ses ve AI",
+        "description": "Grup duyuruları için konuşma varlığını ve sesi seçin.",
+        "data": {
+          "group_conversation_entity": "Konuşma Varlığı (AI için)",
+          "group_tts_voice": "TTS Sesi"
+        }
+      },
+      "room_tracking": {
+        "title": "Oda Takip Ayarları",
+        "description": "Duyuruların evinizdeki kişileri nasıl bulacağını yapılandırın.",
+        "data": {
+          "room_tracking": "Oda Takibini Etkinleştir",
+          "presence_verification": "Varlık Sensörleriyle Doğrula"
+        }
+      },
+      "rooms_select": {
+        "title": "Odaları Seç",
+        "description": "Duyuruları alacak odaları seçin.",
+        "data": {
+          "selected_rooms": "Yapılandırılacak Odalar"
+        }
+      },
+      "room_config": {
+        "title": "{name} Yapılandır",
+        "description": "{name} için medya oynatıcıyı ve varlık sensörlerini ayarlayın.",
+        "data": {
+          "media_player": "Medya Oynatıcı",
+          "presence_sensors": "Varlık Sensörleri"
+        }
+      },
+      "pre_announce": {
+        "title": "Ön Duyuru Sesi Ayarları",
+        "description": "Duyurulardan önce çalınan sesi yapılandırın.",
+        "data": {
+          "pre_announce_enabled": "Ön Duyuru Sesini Etkinleştir",
+          "pre_announce_url": "Ön Duyuru Sesi URL'si",
+          "pre_announce_delay": "Ön Duyurudan Sonra Gecikme (saniye)"
+        }
+      }
+    },
+    "error": {
+      "no_tts": "TTS platformu bulunamadı. Lütfen önce bir TTS entegrasyonu yapılandırın.",
+      "no_persons": "Home Assistant'ta kişi bulunamadı.",
+      "no_areas": "Home Assistant'ta alan bulunamadı.",
+      "no_media_players": "Medya oynatıcı bulunamadı.",
+      "no_people_selected": "Lütfen en az bir kişi seçin.",
+      "no_rooms_selected": "Lütfen en az bir oda seçin.",
+      "invalid_url": "Ön duyuru sesi için geçersiz URL formatı.",
+      "unknown": "Bilinmeyen bir hata oluştu."
+    },
+    "abort": {
+      "already_configured": "Smart Announcements zaten yapılandırılmış."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Smart Announcements Ayarları",
+        "description": "Ne yapılandırmak istiyorsunuz?",
+        "menu_options": {
+          "global_settings": "Genel Ayarlar",
+          "edit_people": "Kişileri Düzenle",
+          "edit_rooms": "Odaları Düzenle",
+          "group_settings": "Grup Ayarları",
+          "advanced_settings": "Gelişmiş Ayarlar"
+        }
+      },
+      "global_settings": {
+        "title": "Genel Ayarlar",
+        "data": {
+          "home_away_tracking": "Evde/Dışarıda Takibini Etkinleştir",
+          "room_tracking": "Oda Takibini Etkinleştir",
+          "presence_verification": "Varlık Sensörleriyle Doğrula",
+          "pre_announce_enabled": "Ön Duyuru Sesini Etkinleştir",
+          "pre_announce_url": "Ön Duyuru Sesi URL'si",
+          "pre_announce_delay": "Ön Duyurudan Sonra Gecikme (saniye)",
+          "debug_mode": "Hata Ayıklama Modu (ayrıntılı günlük kaydı)"
+        }
+      },
+      "edit_people": {
+        "title": "Kişileri Düzenle",
+        "description": "Düzenlemek için bir kişi seçin veya yeni bir kişi ekleyin.",
+        "data": {
+          "selected_person": "Kişi"
+        }
+      },
+      "edit_person": {
+        "title": "{name} Düzenle",
+        "data": {
+          "room_tracking_entity": "Oda Takip Varlığı",
+          "language": "Dil",
+          "tts_platform": "TTS Platformu",
+          "tts_voice": "TTS Sesi",
+          "enhance_with_ai": "AI ile Geliştir",
+          "translate_announcement": "Duyuruyu Çevir",
+          "conversation_entity": "Konuşma Varlığı (AI için)"
+        }
+      },
+      "delete_person_select": {
+        "title": "Kişiyi Sil",
+        "data": {
+          "selected_person": "Silinecek Kişi"
+        }
+      },
+      "confirm_delete_person": {
+        "title": "{name} silinsin mi?",
+        "description": "{name} silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.",
+        "data": {
+          "confirm": "Silmeyi onayla"
+        }
+      },
+      "add_person_select": {
+        "title": "Kişi Ekle",
+        "data": {
+          "person_entity": "Kişi"
+        }
+      },
+      "add_person_config": {
+        "title": "{name} Yapılandır - Dil ve TTS",
+        "description": "{name} için oda takibi ve duyuru ayarlarını yapılandırın.",
+        "data": {
+          "room_tracking_entity": "Oda Takip Varlığı",
+          "language": "Dil",
+          "tts_platform": "TTS Platformu",
+          "enhance_with_ai": "AI ile Geliştir",
+          "translate_announcement": "Duyuruyu Çevir"
+        }
+      },
+      "add_person_voice": {
+        "title": "{name} Yapılandır - Ses ve AI",
+        "description": "{name} için konuşma varlığını ve sesi seçin.",
+        "data": {
+          "conversation_entity": "Konuşma Varlığı (AI için)",
+          "tts_voice": "TTS Sesi"
+        }
+      },
+      "edit_rooms": {
+        "title": "Odaları Düzenle",
+        "description": "Ayarlarını düzenlemek için bir oda seçin.",
+        "data": {
+          "selected_room": "Oda"
+        }
+      },
+      "edit_room": {
+        "title": "{name} Düzenle",
+        "data": {
+          "media_player": "Medya Oynatıcı",
+          "presence_sensors": "Varlık Sensörleri"
+        }
+      },
+      "delete_room_select": {
+        "title": "Odayı Sil",
+        "data": {
+          "selected_room": "Silinecek Oda"
+        }
+      },
+      "confirm_delete_room": {
+        "title": "{name} silinsin mi?",
+        "description": "{name} silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.",
+        "data": {
+          "confirm": "Silmeyi onayla"
+        }
+      },
+      "add_room_select": {
+        "title": "Oda Ekle",
+        "data": {
+          "selected_areas": "Eklenecek Odalar"
+        }
+      },
+      "add_room_config": {
+        "title": "{name} Yapılandır",
+        "description": "{name} için medya oynatıcıyı ve varlık sensörlerini ayarlayın.",
+        "data": {
+          "media_player": "Medya Oynatıcı",
+          "presence_sensors": "Varlık Sensörleri"
+        }
+      },
+      "group_settings": {
+        "title": "Grup Ayarları",
+        "description": "Grup duyuruları için ayarları yapılandırın (bir odada birden fazla kişi olduğunda).",
+        "data": {
+          "group_addressee": "Grup Adı/Alıcı",
+          "group_language": "Dil",
+          "group_tts_platform": "TTS Platformu",
+          "group_tts_voice": "TTS Sesi",
+          "group_enhance_with_ai": "AI ile Geliştir",
+          "group_translate_announcement": "Duyuruyu Çevir",
+          "group_conversation_entity": "Konuşma Varlığı (AI için)"
+        }
+      },
+      "advanced_settings": {
+        "title": "Gelişmiş Ayarlar",
+        "description": "LLM'niz için AI istemlerini özelleştirin. Farklı modeller istemleri farklı yorumlar.",
+        "data": {
+          "prompt_translate": "Yalnızca Çeviri İstem Şablonu",
+          "prompt_enhance": "Yalnızca Geliştirme İstem Şablonu",
+          "prompt_both": "Her İkisi (Geliştirme + Çeviri) İstem Şablonu"
+        }
+      }
+    },
+    "abort": {
+      "no_people": "Düzenlenecek yapılandırılmış kişi yok.",
+      "no_rooms": "Düzenlenecek yapılandırılmış oda yok.",
+      "no_available_people": "Home Assistant'taki tüm kişiler zaten yapılandırılmış."
+    }
+  }
+}

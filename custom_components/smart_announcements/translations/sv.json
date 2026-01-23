@@ -1,0 +1,251 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Smart Announcements-konfiguration",
+        "description": "Konfigurerar Smart Announcements..."
+      },
+      "people_select": {
+        "title": "Välj personer",
+        "description": "Välj vilka personer som ska ta emot meddelanden.",
+        "data": {
+          "selected_people": "Personer att konfigurera"
+        }
+      },
+      "person_config": {
+        "title": "Konfigurera {name} - Språk och TTS",
+        "description": "Konfigurera rumsspårning och meddelandeinställningar för {name}.",
+        "data": {
+          "room_tracking_entity": "Rumsspårningsentitet",
+          "language": "Språk",
+          "tts_platform": "TTS-plattform",
+          "enhance_with_ai": "Förbättra med AI",
+          "translate_announcement": "Översätt meddelande"
+        }
+      },
+      "person_voice": {
+        "title": "Konfigurera {name} - Röst och AI",
+        "description": "Välj konversationsentitet och röst för {name}.",
+        "data": {
+          "conversation_entity": "Konversationsentitet (för AI)",
+          "tts_voice": "TTS-röst"
+        }
+      },
+      "group_config": {
+        "title": "Gruppmeddelandeinställningar - Språk och TTS",
+        "description": "Konfigurera inställningar för meddelanden till flera personer i samma rum.",
+        "data": {
+          "group_language": "Språk",
+          "group_tts_platform": "TTS-plattform",
+          "group_enhance_with_ai": "Förbättra med AI",
+          "group_translate_announcement": "Översätt meddelande"
+        }
+      },
+      "group_voice": {
+        "title": "Gruppmeddelandeinställningar - Röst och AI",
+        "description": "Välj konversationsentitet och röst för gruppmeddelanden.",
+        "data": {
+          "group_conversation_entity": "Konversationsentitet (för AI)",
+          "group_tts_voice": "TTS-röst"
+        }
+      },
+      "room_tracking": {
+        "title": "Rumsspårningsinställningar",
+        "description": "Konfigurera hur meddelanden hittar personer i ditt hem.",
+        "data": {
+          "room_tracking": "Aktivera rumsspårning",
+          "presence_verification": "Verifiera med närvarosensorer"
+        }
+      },
+      "rooms_select": {
+        "title": "Välj rum",
+        "description": "Välj vilka rum som ska ta emot meddelanden.",
+        "data": {
+          "selected_rooms": "Rum att konfigurera"
+        }
+      },
+      "room_config": {
+        "title": "Konfigurera {name}",
+        "description": "Ställ in mediaspelaren och närvarosensorerna för {name}.",
+        "data": {
+          "media_player": "Mediaspelare",
+          "presence_sensors": "Närvarosensorer"
+        }
+      },
+      "pre_announce": {
+        "title": "Inställningar för förhandsmeddelande",
+        "description": "Konfigurera ljudet som spelas före meddelanden.",
+        "data": {
+          "pre_announce_enabled": "Aktivera förhandsmeddelande",
+          "pre_announce_url": "URL för förhandsmeddelande",
+          "pre_announce_delay": "Fördröjning efter förhandsmeddelande (sekunder)"
+        }
+      }
+    },
+    "error": {
+      "no_tts": "Inga TTS-plattformar hittades. Konfigurera en TTS-integration först.",
+      "no_persons": "Inga personer hittades i Home Assistant.",
+      "no_areas": "Inga områden hittades i Home Assistant.",
+      "no_media_players": "Inga mediaspelare hittades.",
+      "no_people_selected": "Välj minst en person.",
+      "no_rooms_selected": "Välj minst ett rum.",
+      "invalid_url": "Ogiltigt URL-format för förhandsmeddelande.",
+      "unknown": "Ett okänt fel uppstod."
+    },
+    "abort": {
+      "already_configured": "Smart Announcements är redan konfigurerat."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Smart Announcements-inställningar",
+        "description": "Vad vill du konfigurera?",
+        "menu_options": {
+          "global_settings": "Globala inställningar",
+          "edit_people": "Redigera personer",
+          "edit_rooms": "Redigera rum",
+          "group_settings": "Gruppinställningar",
+          "advanced_settings": "Avancerade inställningar"
+        }
+      },
+      "global_settings": {
+        "title": "Globala inställningar",
+        "data": {
+          "home_away_tracking": "Aktivera hemma/borta-spårning",
+          "room_tracking": "Aktivera rumsspårning",
+          "presence_verification": "Verifiera med närvarosensorer",
+          "pre_announce_enabled": "Aktivera förhandsmeddelande",
+          "pre_announce_url": "URL för förhandsmeddelande",
+          "pre_announce_delay": "Fördröjning efter förhandsmeddelande (sekunder)",
+          "debug_mode": "Felsökningsläge (detaljerad loggning)"
+        }
+      },
+      "edit_people": {
+        "title": "Redigera personer",
+        "description": "Välj en person att redigera eller lägg till en ny person.",
+        "data": {
+          "selected_person": "Person"
+        }
+      },
+      "edit_person": {
+        "title": "Redigera {name}",
+        "data": {
+          "room_tracking_entity": "Rumsspårningsentitet",
+          "language": "Språk",
+          "tts_platform": "TTS-plattform",
+          "tts_voice": "TTS-röst",
+          "enhance_with_ai": "Förbättra med AI",
+          "translate_announcement": "Översätt meddelande",
+          "conversation_entity": "Konversationsentitet (för AI)"
+        }
+      },
+      "delete_person_select": {
+        "title": "Ta bort person",
+        "data": {
+          "selected_person": "Person att ta bort"
+        }
+      },
+      "confirm_delete_person": {
+        "title": "Ta bort {name}?",
+        "description": "Är du säker på att du vill ta bort {name}? Detta kan inte ångras.",
+        "data": {
+          "confirm": "Bekräfta borttagning"
+        }
+      },
+      "add_person_select": {
+        "title": "Lägg till person",
+        "data": {
+          "person_entity": "Person"
+        }
+      },
+      "add_person_config": {
+        "title": "Konfigurera {name} - Språk och TTS",
+        "description": "Konfigurera rumsspårning och meddelandeinställningar för {name}.",
+        "data": {
+          "room_tracking_entity": "Rumsspårningsentitet",
+          "language": "Språk",
+          "tts_platform": "TTS-plattform",
+          "enhance_with_ai": "Förbättra med AI",
+          "translate_announcement": "Översätt meddelande"
+        }
+      },
+      "add_person_voice": {
+        "title": "Konfigurera {name} - Röst och AI",
+        "description": "Välj konversationsentitet och röst för {name}.",
+        "data": {
+          "conversation_entity": "Konversationsentitet (för AI)",
+          "tts_voice": "TTS-röst"
+        }
+      },
+      "edit_rooms": {
+        "title": "Redigera rum",
+        "description": "Välj ett rum för att redigera dess inställningar.",
+        "data": {
+          "selected_room": "Rum"
+        }
+      },
+      "edit_room": {
+        "title": "Redigera {name}",
+        "data": {
+          "media_player": "Mediaspelare",
+          "presence_sensors": "Närvarosensorer"
+        }
+      },
+      "delete_room_select": {
+        "title": "Ta bort rum",
+        "data": {
+          "selected_room": "Rum att ta bort"
+        }
+      },
+      "confirm_delete_room": {
+        "title": "Ta bort {name}?",
+        "description": "Är du säker på att du vill ta bort {name}? Detta kan inte ångras.",
+        "data": {
+          "confirm": "Bekräfta borttagning"
+        }
+      },
+      "add_room_select": {
+        "title": "Lägg till rum",
+        "data": {
+          "selected_areas": "Rum att lägga till"
+        }
+      },
+      "add_room_config": {
+        "title": "Konfigurera {name}",
+        "description": "Ställ in mediaspelaren och närvarosensorerna för {name}.",
+        "data": {
+          "media_player": "Mediaspelare",
+          "presence_sensors": "Närvarosensorer"
+        }
+      },
+      "group_settings": {
+        "title": "Gruppinställningar",
+        "description": "Konfigurera inställningar för gruppmeddelanden (när flera personer är i ett rum).",
+        "data": {
+          "group_addressee": "Gruppnamn/mottagare",
+          "group_language": "Språk",
+          "group_tts_platform": "TTS-plattform",
+          "group_tts_voice": "TTS-röst",
+          "group_enhance_with_ai": "Förbättra med AI",
+          "group_translate_announcement": "Översätt meddelande",
+          "group_conversation_entity": "Konversationsentitet (för AI)"
+        }
+      },
+      "advanced_settings": {
+        "title": "Avancerade inställningar",
+        "description": "Anpassa AI-prompter för din LLM. Olika modeller tolkar prompter olika.",
+        "data": {
+          "prompt_translate": "Endast-översättning promptmall",
+          "prompt_enhance": "Endast-förbättring promptmall",
+          "prompt_both": "Båda (förbättring + översättning) promptmall"
+        }
+      }
+    },
+    "abort": {
+      "no_people": "Inga personer konfigurerade att redigera.",
+      "no_rooms": "Inga rum konfigurerade att redigera.",
+      "no_available_people": "Alla personer i Home Assistant är redan konfigurerade."
+    }
+  }
+}
