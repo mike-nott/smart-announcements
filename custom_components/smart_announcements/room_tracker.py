@@ -14,6 +14,7 @@ from .const import (
     CONF_PEOPLE,
     CONF_ROOMS,
     CONF_PRESENCE_VERIFICATION,
+    CONF_DEBUG_MODE,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -27,6 +28,12 @@ class RoomTracker:
         self.hass = hass
         self.entry = entry
         self.config = entry.data
+
+    def _debug(self, msg: str, *args: Any) -> None:
+        """Log debug message if debug mode is enabled."""
+        # Always use live entry data for debug mode to pick up config changes
+        if self.entry.data.get(CONF_DEBUG_MODE, False):
+            _LOGGER.info("[DEBUG] " + msg, *args)
 
     def _get_person_config(self, person_entity: str) -> dict[str, Any] | None:
         """Get configuration for a person by entity ID."""
@@ -45,29 +52,29 @@ class RoomTracker:
         # Get person config to find their room tracking entity
         person_config = self._get_person_config(person_entity)
         if not person_config:
-            _LOGGER.debug("No config found for person %s", person_entity)
+            self._debug("No config found for person %s", person_entity)
             return None
 
         room_tracking_entity = person_config.get("room_tracking_entity")
         if not room_tracking_entity:
-            _LOGGER.debug("No room tracking entity configured for %s", person_entity)
+            self._debug("No room tracking entity configured for %s", person_entity)
             return None
 
         # Check if person is home first (if home/away tracking is enabled)
         from .const import CONF_HOME_AWAY_TRACKING, DEFAULT_HOME_AWAY_TRACKING
         if self.config.get(CONF_HOME_AWAY_TRACKING, DEFAULT_HOME_AWAY_TRACKING):
-            _LOGGER.debug("Home/away tracking enabled - checking person state for %s", person_entity)
+            self._debug("Home/away tracking enabled - checking person state for %s", person_entity)
             person_state = self.hass.states.get(person_entity)
             if not person_state:
-                _LOGGER.debug("Person entity %s not found", person_entity)
+                self._debug("Person entity %s not found", person_entity)
                 return None
 
             if person_state.state != "home":
-                _LOGGER.debug("Person %s is not home (state: %s)", person_entity, person_state.state)
+                self._debug("Person %s is not home (state: %s)", person_entity, person_state.state)
                 return None
-            _LOGGER.debug("Person %s is home - proceeding to check room tracking", person_entity)
+            self._debug("Person %s is home - proceeding to check room tracking", person_entity)
         else:
-            _LOGGER.debug("Home/away tracking disabled - skipping person state check for %s", person_entity)
+            self._debug("Home/away tracking disabled - skipping person state check for %s", person_entity)
 
         # Get the room from the tracking entity
         area_id = await self._get_area_from_entity(room_tracking_entity)
@@ -78,7 +85,7 @@ class RoomTracker:
                 if await self._verify_presence(area_id):
                     return area_id
                 else:
-                    _LOGGER.debug(
+                    self._debug(
                         "Presence verification failed for %s in area %s",
                         person_entity,
                         area_id,
@@ -86,7 +93,7 @@ class RoomTracker:
                     return None
             return area_id
 
-        _LOGGER.debug("Could not determine room for %s from entity %s", person_entity, room_tracking_entity)
+        self._debug("Could not determine room for %s from entity %s", person_entity, room_tracking_entity)
         return None
 
     async def _get_area_from_entity(self, entity_id: str) -> str | None:
@@ -97,7 +104,7 @@ class RoomTracker:
         """
         entity_state = self.hass.states.get(entity_id)
         if not entity_state:
-            _LOGGER.debug("Room tracking entity %s not found", entity_id)
+            self._debug("Room tracking entity %s not found", entity_id)
             return None
 
         area_reg = ar.async_get(self.hass)
@@ -109,7 +116,7 @@ class RoomTracker:
         if state_value not in ["home", "not_home", "unknown", "unavailable", "none"]:
             # State might be an area name
             if state_value in areas:
-                _LOGGER.debug(
+                self._debug(
                     "Entity %s reports area %s via state",
                     entity_id,
                     state_value,
@@ -121,7 +128,7 @@ class RoomTracker:
         if area_attr:
             area_lower = area_attr.lower()
             if area_lower in areas:
-                _LOGGER.debug(
+                self._debug(
                     "Entity %s reports area %s via attribute",
                     entity_id,
                     area_lower,
@@ -133,14 +140,14 @@ class RoomTracker:
         if room_attr:
             room_lower = room_attr.lower()
             if room_lower in areas:
-                _LOGGER.debug(
+                self._debug(
                     "Entity %s reports area %s via room attribute",
                     entity_id,
                     room_lower,
                 )
                 return areas[room_lower]
 
-        _LOGGER.debug(
+        self._debug(
             "Entity %s state '%s' does not match any area",
             entity_id,
             entity_state.state,
@@ -162,26 +169,26 @@ class RoomTracker:
                 break
 
         if not room_config:
-            _LOGGER.debug("No room config found for area %s", area_id)
+            self._debug("No room config found for area %s", area_id)
             return True  # No config = can't verify, assume present
 
         presence_sensors = room_config.get("presence_sensors", [])
         if not presence_sensors:
-            _LOGGER.debug("No presence sensors configured for area %s", area_id)
+            self._debug("No presence sensors configured for area %s", area_id)
             return True  # No sensors = can't verify, assume present
 
         # Check if any sensor is on
         for sensor_id in presence_sensors:
             sensor_state = self.hass.states.get(sensor_id)
             if sensor_state and sensor_state.state == "on":
-                _LOGGER.debug(
+                self._debug(
                     "Presence verified in %s by sensor %s",
                     area_id,
                     sensor_id,
                 )
                 return True
 
-        _LOGGER.debug(
+        self._debug(
             "No presence sensors active in %s (checked: %s)",
             area_id,
             presence_sensors,
@@ -210,7 +217,7 @@ class RoomTracker:
                 sensor_state = self.hass.states.get(sensor_id)
                 if sensor_state and sensor_state.state == "on":
                     occupied.add(area_id)
-                    _LOGGER.debug("Room %s has presence (sensor: %s)", area_id, sensor_id)
+                    self._debug("Room %s has presence (sensor: %s)", area_id, sensor_id)
                     break
 
         return list(occupied)
@@ -229,7 +236,7 @@ class RoomTracker:
                 room_id = await self.async_get_person_room(person_entity)
                 if room_id:
                     occupied.add(room_id)
-                    _LOGGER.debug("Room %s has tracked person: %s", room_id, person_entity)
+                    self._debug("Room %s has tracked person: %s", room_id, person_entity)
 
         return list(occupied)
 
