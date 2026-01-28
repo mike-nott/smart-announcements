@@ -272,16 +272,22 @@ class Announcer:
             if target_rooms:
                 return target_rooms
 
-            # Fallback: if no specific rooms found but people are home, announce to all rooms
+            # Fallback: if no specific rooms found but people are home, use occupied rooms
             for person_name in target_people:
                 person_config = self._get_person_config(person_name)
                 if person_config:
                     person_entity = person_config.get("person_entity")
                     person_state = self.hass.states.get(person_entity)
                     if person_state and person_state.state == "home":
-                        self._debug("🏠 At least one person is home but room unknown, announcing to all rooms")
-                        fallback_rooms = [r for r in rooms if r.get("media_player")]
-                        self._debug("📢 Will announce to %d room(s): %s", len(fallback_rooms), [r.get("room_name") for r in fallback_rooms])
+                        self._debug("🏠 At least one person is home but room unknown, using occupied rooms")
+                        # Use same logic as no-target-person: get occupied rooms
+                        occupied_rooms = await self.room_tracker.async_get_occupied_rooms(
+                            use_tracking=room_tracking,
+                            use_presence=presence_verification,
+                        )
+                        self._debug("📊 Occupied room area_ids: %s", occupied_rooms)
+                        fallback_rooms = [r for r in rooms if r.get("area_id") in occupied_rooms]
+                        self._debug("📢 Will announce to %d occupied room(s): %s", len(fallback_rooms), [r.get("room_name") for r in fallback_rooms])
                         return fallback_rooms
 
             self._debug("❌ No target people are home")
