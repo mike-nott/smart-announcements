@@ -9,6 +9,7 @@ from homeassistant.components.switch import SwitchEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.restore_state import RestoreEntity
 
 from .const import (
     DOMAIN,
@@ -66,7 +67,7 @@ async def async_setup_entry(
         _LOGGER.warning("No switches created - check configuration")
 
 
-class PersonSwitch(SwitchEntity):
+class PersonSwitch(SwitchEntity, RestoreEntity):
     """Switch to enable/disable announcements for a specific person."""
 
     def __init__(
@@ -93,8 +94,11 @@ class PersonSwitch(SwitchEntity):
 
     async def async_added_to_hass(self) -> None:
         """Run when entity is added to hass."""
-        # Initialize enabled state in hass.data
-        self._update_enabled_state(True)
+        await super().async_added_to_hass()
+        last_state = await self.async_get_last_state()
+        if last_state is not None:
+            self._attr_is_on = last_state.state == "on"
+        self._update_enabled_state(self._attr_is_on)
 
     @property
     def device_info(self) -> dict[str, Any]:
@@ -146,7 +150,7 @@ class PersonSwitch(SwitchEntity):
             enabled_states.setdefault("people", {})[person_entity] = enabled
 
 
-class RoomSwitch(SwitchEntity):
+class RoomSwitch(SwitchEntity, RestoreEntity):
     """Switch to enable/disable announcements for a specific room."""
 
     def __init__(
@@ -171,8 +175,11 @@ class RoomSwitch(SwitchEntity):
 
     async def async_added_to_hass(self) -> None:
         """Run when entity is added to hass."""
-        # Initialize enabled state in hass.data
-        self._update_enabled_state(True)
+        await super().async_added_to_hass()
+        last_state = await self.async_get_last_state()
+        if last_state is not None:
+            self._attr_is_on = last_state.state == "on"
+        self._update_enabled_state(self._attr_is_on)
 
     @property
     def device_info(self) -> dict[str, Any]:
