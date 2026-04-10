@@ -369,6 +369,21 @@ class Announcer:
         # STEP 1: Detect people in room and determine if group
         self._debug("============ GROUP DETECTION ============")
         people_in_room = await self.room_tracker.async_get_people_in_room(area_id)
+
+        # Check if all occupants have their person switch disabled
+        if people_in_room:
+            all_disabled = True
+            for person_entity in people_in_room:
+                if self._is_person_enabled(person_entity):
+                    all_disabled = False
+                    break
+            if all_disabled:
+                _LOGGER.info(
+                    "All occupants in %s have announcements disabled, skipping", room_name
+                )
+                self._debug("❌ All occupants disabled - SKIPPING")
+                self._fire_blocked_event(room_name, "all_occupants_disabled")
+                return
         is_group_room = len(people_in_room) > 1
 
         self._debug("👥 People in room %s: %s", area_id, people_in_room)
