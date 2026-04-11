@@ -110,8 +110,6 @@ class Announcer:
         context=None,
     ) -> None:
         """Send an announcement to the appropriate room(s)."""
-        # Store context for service calls
-        self.context = context
 
         # Reload config from entry to pick up any config changes
         self.config = self.entry.data
@@ -162,6 +160,7 @@ class Announcer:
                 enhance_with_ai=enhance_with_ai,
                 translate_announcement=translate_announcement,
                 pre_announce_sound=pre_announce_sound,
+                context=context,
             )
 
         self._debug("✅ ========== ANNOUNCEMENT COMPLETE ==========")
@@ -327,6 +326,7 @@ class Announcer:
         enhance_with_ai: bool | None,
         translate_announcement: bool | None,
         pre_announce_sound: bool | None,
+        context=None,
     ) -> None:
         """Announce to a specific room."""
         area_id = room_info.get("area_id", "")
@@ -451,6 +451,7 @@ class Announcer:
                 settings.get("language"),
                 should_enhance,
                 should_translate,
+                context=context,
             )
             if final_message != personalized_message:
                 self._debug("✨ Message processed: '%s' -> '%s'", personalized_message, final_message)
@@ -471,7 +472,7 @@ class Announcer:
         # Play pre-announce sound if enabled
         if should_pre_announce:
             self._debug("🔔 Playing pre-announce sound...")
-            await self._play_pre_announce(media_player)
+            await self._play_pre_announce(media_player, context=context)
             self._debug("✅ Pre-announce complete")
         else:
             self._debug("⏭️ Skipping pre-announce sound (disabled)")
@@ -484,6 +485,7 @@ class Announcer:
             message=final_message,
             tts_platform=settings.get("tts_platform"),
             tts_voice=settings.get("tts_voice"),
+            context=context,
         )
         self._debug("✅ TTS announcement sent successfully")
 
@@ -499,7 +501,7 @@ class Announcer:
                     "domain": DOMAIN,
                 },
                 blocking=False,
-                context=self.context,
+                context=context,
             )
             self._debug("✅ Activity dashboard entry created")
 
@@ -667,6 +669,7 @@ class Announcer:
         language: str,
         enhance_with_ai: bool,
         translate_announcement: bool,
+        context=None,
     ) -> str:
         """Enhance and/or translate message using conversation entity."""
         self._debug("🔍 _enhance_message called:")
@@ -728,7 +731,7 @@ class Announcer:
                 },
                 blocking=True,
                 return_response=True,
-                context=self.context,
+                context=context,
             )
             self._debug("  ✅ Received response from conversation.process")
 
@@ -744,7 +747,7 @@ class Announcer:
 
         return message
 
-    async def _play_pre_announce(self, media_player: str) -> None:
+    async def _play_pre_announce(self, media_player: str, context=None) -> None:
         """Play pre-announce sound."""
         media_url = self.config.get(CONF_PRE_ANNOUNCE_URL)
         delay = self.config.get(CONF_PRE_ANNOUNCE_DELAY, 2)
@@ -774,7 +777,7 @@ class Announcer:
                 "play_media",
                 service_data,
                 blocking=True,
-                context=self.context,
+                context=context,
             )
             self._debug("  ✅ media_player.play_media call succeeded")
 
@@ -794,6 +797,7 @@ class Announcer:
         message: str,
         tts_platform: str | None,
         tts_voice: str | None,
+        context=None,
     ) -> None:
         """Call TTS service to announce message."""
         service_data = {
@@ -826,7 +830,7 @@ class Announcer:
                     "speak",
                     service_data,
                     blocking=True,
-                    context=self.context,
+                    context=context,
                 )
                 self._debug("  ✅ tts.speak call succeeded")
             else:
@@ -839,7 +843,7 @@ class Announcer:
                     "speak",
                     service_data,
                     blocking=True,
-                    context=self.context,
+                    context=context,
                 )
                 self._debug("  ✅ tts.speak call succeeded (fallback)")
 
