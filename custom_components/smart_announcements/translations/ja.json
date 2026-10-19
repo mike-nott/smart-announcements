@@ -118,6 +118,7 @@
           "pre_announce_enabled": "プリアナウンスサウンドを有効にする",
           "pre_announce_url": "プリアナウンスサウンド URL",
           "pre_announce_delay": "プリアナウンス後の遅延（秒）",
+          "backup_conversation_entity": "バックアップ会話エンティティ（AI 用）",
           "log_to_activity": "アクティビティフィードに記録",
           "debug_mode": "デバッグモード"
         }

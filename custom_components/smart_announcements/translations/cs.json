@@ -118,6 +118,7 @@
           "pre_announce_enabled": "Povolit zvuk před oznámením",
           "pre_announce_url": "URL zvuku před oznámením",
           "pre_announce_delay": "Zpoždění po zvuku před oznámením (sekundy)",
+          "backup_conversation_entity": "Záložní konverzační entita (pro AI)",
           "log_to_activity": "Zapisovat do přehledu aktivit",
           "debug_mode": "Režim ladění"
         }

@@ -118,6 +118,7 @@
           "pre_announce_enabled": "Vooraankondigingsgeluid inschakelen",
           "pre_announce_url": "URL vooraankondigingsgeluid",
           "pre_announce_delay": "Vertraging na vooraankondiging (seconden)",
+          "backup_conversation_entity": "Back-up conversatie-entiteit (voor AI)",
           "log_to_activity": "Loggen naar activiteitenoverzicht",
           "debug_mode": "Foutopsporingsmodus"
         }

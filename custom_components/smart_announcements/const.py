@@ -10,6 +10,7 @@ CONF_LOG_TO_ACTIVITY = "log_to_activity"
 CONF_DEBUG_MODE = "debug_mode"
 CONF_DEFAULT_TTS_PLATFORM = "default_tts_platform"
 CONF_DEFAULT_CONVERSATION_ENTITY = "default_conversation_entity"
+CONF_BACKUP_CONVERSATION_ENTITY = "backup_conversation_entity"
 CONF_PRE_ANNOUNCE_ENABLED = "pre_announce_enabled"
 CONF_PRE_ANNOUNCE_URL = "pre_announce_url"
 CONF_PRE_ANNOUNCE_DELAY = "pre_announce_delay"
@@ -59,6 +60,7 @@ DEFAULT_PRE_ANNOUNCE_URL = "/local/sounds/chime.mp3"
 DEFAULT_PRE_ANNOUNCE_DELAY = 2
 DEFAULT_LANGUAGE = "english"
 DEFAULT_GROUP_ADDRESSEE = "Everyone"
+CONVERSATION_TIMEOUT = 30  # seconds before an agent counts as down
 
 # Default AI prompt templates
 DEFAULT_PROMPT_TRANSLATE = 'Translate this announcement to {language}. Return only the translated announcement, no explanations or confirmations. Keep who it\'s addressed to. Message: "{message}"'

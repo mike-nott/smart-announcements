@@ -118,6 +118,7 @@
           "pre_announce_enabled": "Abilita suono pre-annuncio",
           "pre_announce_url": "URL suono pre-annuncio",
           "pre_announce_delay": "Ritardo dopo pre-annuncio (secondi)",
+          "backup_conversation_entity": "Entità di conversazione di riserva (per AI)",
           "log_to_activity": "Registra nel registro attività",
           "debug_mode": "Modalità debug"
         }

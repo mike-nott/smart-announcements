@@ -118,6 +118,7 @@
           "pre_announce_enabled": "Aktivera förhandsmeddelande",
           "pre_announce_url": "URL för förhandsmeddelande",
           "pre_announce_delay": "Fördröjning efter förhandsmeddelande (sekunder)",
+          "backup_conversation_entity": "Reservkonversationsentitet (för AI)",
           "log_to_activity": "Logga till aktivitetsflödet",
           "debug_mode": "Felsökningsläge"
         }

@@ -9,6 +9,7 @@ from typing import Any
 from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.exceptions import HomeAssistantError
+from homeassistant.helpers import entity_registry as er
 
 from .const import (
     DOMAIN,
@@ -22,6 +23,8 @@ from .const import (
     CONF_PRE_ANNOUNCE_DELAY,
     CONF_LANGUAGE,
     CONF_TRANSLATE_ANNOUNCEMENT,
+    CONF_BACKUP_CONVERSATION_ENTITY,
+    CONVERSATION_TIMEOUT,
     EVENT_ANNOUNCEMENT_SENT,
     EVENT_ANNOUNCEMENT_BLOCKED,
 )
@@ -79,6 +82,18 @@ class Announcer:
         for room in rooms:
             if room.get("area_id") == area_id:
                 return room
+        return None
+
+    def _get_room_switch(self, area_id: str, room_name: str) -> str | None:
+        """Find the entity ID of a room's switch (ID scheme is in switch.py)."""
+        entity_reg = er.async_get(self.hass)
+        for unique_id in (
+            f"{DOMAIN}_room_{area_id}",
+            f"{DOMAIN}_{room_name.lower().replace(' ', '_')}",
+        ):
+            entity_id = entity_reg.async_get_entity_id("switch", DOMAIN, unique_id)
+            if entity_id:
+                return entity_id
         return None
 
     def _is_person_enabled(self, person_entity: str) -> bool:
@@ -491,17 +506,17 @@ class Announcer:
 
         # Log to Activity dashboard (if enabled)
         if self.config.get("log_to_activity", False):
+            log_data = {
+                "name": f"Smart Announcements: {room_name}",
+                "message": final_message,
+                "domain": DOMAIN,
+            }
+            # Attach to the room's switch so the entry shows in its history
+            room_switch = self._get_room_switch(area_id, room_name)
+            if room_switch:
+                log_data["entity_id"] = room_switch
             await self.hass.services.async_call(
-                "logbook",
-                "log",
-                {
-                    "name": f"Smart Announcements: {room_name}",
-                    "message": final_message,
-                    "entity_id": f"switch.{DOMAIN}_{area_id}",
-                    "domain": DOMAIN,
-                },
-                blocking=False,
-                context=context,
+                "logbook", "log", log_data, blocking=False, context=context
             )
             self._debug("✅ Activity dashboard entry created")
 
@@ -719,33 +734,49 @@ class Announcer:
 
         self._debug("  💬 Actual prompt being sent to LLM: '%s'", prompt)
 
+        result = await self._process_with_agent(conversation_entity, prompt, context)
+
+        if result is None:
+            backup_entity = self.config.get(CONF_BACKUP_CONVERSATION_ENTITY)
+            if backup_entity and backup_entity != conversation_entity:
+                self._debug("  🔁 Primary agent failed, trying backup: %s", backup_entity)
+                result = await self._process_with_agent(backup_entity, prompt, context)
+
+        if result is None:
+            _LOGGER.warning("AI processing failed, using original message")
+            return message
+
+        _LOGGER.debug("AI processed message: %s -> %s", message, result)
+        return result
+
+    async def _process_with_agent(self, agent_id: str, prompt: str, context=None) -> str | None:
+        """Send a prompt to a conversation agent. Returns None if the agent fails."""
+        self._debug("  📞 Calling conversation.process with %s", agent_id)
         try:
-            # Call conversation.process service
-            self._debug("  📞 Calling conversation.process service")
-            response = await self.hass.services.async_call(
-                "conversation",
-                "process",
-                {
-                    "agent_id": conversation_entity,
-                    "text": prompt,
-                },
-                blocking=True,
-                return_response=True,
-                context=context,
-            )
-            self._debug("  ✅ Received response from conversation.process")
-
-            if response and "response" in response:
-                speech = response["response"].get("speech", {})
-                plain = speech.get("plain", {})
-                enhanced = plain.get("speech", message)
-                _LOGGER.debug("AI processed message: %s -> %s", message, enhanced)
-                return enhanced
-
+            async with asyncio.timeout(CONVERSATION_TIMEOUT):
+                response = await self.hass.services.async_call(
+                    "conversation",
+                    "process",
+                    {"agent_id": agent_id, "text": prompt},
+                    blocking=True,
+                    return_response=True,
+                    context=context,
+                )
+        except TimeoutError:
+            _LOGGER.warning("Conversation agent %s timed out", agent_id)
+            return None
         except Exception as err:
-            _LOGGER.warning("AI processing failed, using original message: %s", err)
+            _LOGGER.warning("Conversation agent %s failed: %s", agent_id, err)
+            return None
 
-        return message
+        result = (response or {}).get("response", {})
+        speech = result.get("speech", {}).get("plain", {}).get("speech")
+        # Agents report a down server as an error response, not an exception
+        if result.get("response_type") == "error":
+            _LOGGER.warning("Conversation agent %s returned an error: %s", agent_id, speech)
+            return None
+        self._debug("  ✅ Received response from %s", agent_id)
+        return speech or None
 
     async def _play_pre_announce(self, media_player: str, context=None) -> None:
         """Play pre-announce sound."""

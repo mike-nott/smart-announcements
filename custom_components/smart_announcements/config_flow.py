@@ -37,6 +37,7 @@ from .const import (
     CONF_DEBUG_MODE,
     CONF_DEFAULT_TTS_PLATFORM,
     CONF_DEFAULT_CONVERSATION_ENTITY,
+    CONF_BACKUP_CONVERSATION_ENTITY,
     CONF_PRE_ANNOUNCE_ENABLED,
     CONF_PRE_ANNOUNCE_URL,
     CONF_PRE_ANNOUNCE_DELAY,
@@ -740,6 +741,9 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
         if user_input is not None:
             # Update config entry data
             new_data = {**data, **user_input}
+            # A cleared optional field is left out of user_input, so drop the old value
+            if CONF_BACKUP_CONVERSATION_ENTITY not in user_input:
+                new_data.pop(CONF_BACKUP_CONVERSATION_ENTITY, None)
             self.hass.config_entries.async_update_entry(self.entry, data=new_data)
             return self.async_create_entry(title="", data={})
 
@@ -771,6 +775,10 @@ class SmartAnnouncementsOptionsFlow(config_entries.OptionsFlow):
                 ): NumberSelector(
                     NumberSelectorConfig(min=0, max=10, step=0.5, mode=NumberSelectorMode.BOX)
                 ),
+                vol.Optional(
+                    CONF_BACKUP_CONVERSATION_ENTITY,
+                    description={"suggested_value": data.get(CONF_BACKUP_CONVERSATION_ENTITY)},
+                ): EntitySelector(EntitySelectorConfig(domain="conversation")),
                 vol.Required(
                     CONF_LOG_TO_ACTIVITY,
                     default=data.get(CONF_LOG_TO_ACTIVITY, DEFAULT_LOG_TO_ACTIVITY),

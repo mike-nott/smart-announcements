@@ -6,6 +6,7 @@ A Home Assistant custom integration for intelligent, context-aware voice announc
 
 - ✅ **Intelligent Room Routing**: Automatically finds people and announces to their current room
 - ✅ **AI Enhancement & Translation**: Optional AI-powered message rephrasing and translation via conversation agents
+- ✅ **Backup Conversation Agent**: If a person's AI agent fails or times out, a backup agent takes over, so error messages are never announced
 - ✅ **Multi-Language Support**: Per-person language configuration for TTS and UI in 21 languages
 - ✅ **Room Tracking**: Supports Bermuda, ESPresense, or any device tracker/sensor
 - ✅ **Presence Verification**: Optional occupancy sensor verification for accuracy
@@ -169,6 +170,8 @@ After setup, you can edit settings via **Configure** button:
 - Room tracking toggle
 - Presence verification toggle
 - Pre-announce sound settings
+- Backup conversation entity (used when a person's or group's AI agent fails)
+- Log to Activity Feed (off by default: records each announcement in Home Assistant's Activity log, against the room's switch)
 - Debug mode toggle
 
 **Edit People:**
@@ -359,6 +362,12 @@ Each template supports variables:
 
 The default prompts work well for most cases, but you can adjust them if your LLM adds unwanted meta-commentary or doesn't follow instructions correctly.
 
+### Backup Conversation Agent
+
+If the conversation agent for a person or group fails (for example, its server is down), Smart Announcements retries with the backup conversation entity set in **Global Settings**. An agent counts as failed if it returns an error, returns nothing, or takes longer than 30 seconds to respond.
+
+If the backup also fails, or no backup is set, the original message is announced without enhancement or translation. Error messages from the agent are never spoken.
+
 ## Debug Mode
 
 Enable debug mode for comprehensive logging with emoji markers:
@@ -480,6 +489,7 @@ automation:
 - Check that the conversation entity is configured for the person
 - Test the conversation entity directly in Developer Tools
 - Ensure the conversation agent is running and responding
+- Check the logs for "Conversation agent … failed" or "timed out" warnings, and set a backup conversation entity in Global Settings to cover outages
 
 **Check settings:**
 - Person config: Is "Enhance with AI" or "Translate Announcement" enabled?

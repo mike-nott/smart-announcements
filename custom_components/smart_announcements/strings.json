@@ -118,6 +118,7 @@
           "pre_announce_enabled": "Enable Pre-Announce Sound",
           "pre_announce_url": "Pre-Announce Sound URL",
           "pre_announce_delay": "Delay After Pre-Announce (seconds)",
+          "backup_conversation_entity": "Backup Conversation Entity (for AI)",
           "log_to_activity": "Log to Activity Feed",
           "debug_mode": "Debug Mode"
         }

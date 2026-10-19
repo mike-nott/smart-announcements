@@ -118,6 +118,7 @@
           "pre_announce_enabled": "Włącz dźwięk przed ogłoszeniem",
           "pre_announce_url": "URL dźwięku przed ogłoszeniem",
           "pre_announce_delay": "Opóźnienie po dźwięku przed ogłoszeniem (sekundy)",
+          "backup_conversation_entity": "Zapasowa encja rozmowy (dla AI)",
           "log_to_activity": "Zapisuj w dzienniku aktywności",
           "debug_mode": "Tryb debugowania"
         }

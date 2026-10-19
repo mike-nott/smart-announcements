@@ -86,6 +86,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         # Forward entry setup to platforms (switch for mute entities)
         await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
+        # Reload when settings change so switches match configured people/rooms
+        entry.async_on_unload(entry.add_update_listener(async_reload_entry))
+
         _LOGGER.info("Smart Announcements setup complete")
         return True
 
@@ -114,8 +117,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
 async def async_reload_entry(hass: HomeAssistant, entry: ConfigEntry) -> None:
     """Reload config entry."""
-    await async_unload_entry(hass, entry)
-    await async_setup_entry(hass, entry)
+    await hass.config_entries.async_reload(entry.entry_id)
 
 
 async def _async_handle_announce(

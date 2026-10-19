@@ -118,6 +118,7 @@
           "pre_announce_enabled": "تفعيل صوت ما قبل الإعلان",
           "pre_announce_url": "URL صوت ما قبل الإعلان",
           "pre_announce_delay": "التأخير بعد صوت ما قبل الإعلان (ثواني)",
+          "backup_conversation_entity": "كيان المحادثة الاحتياطي (لـ AI)",
           "log_to_activity": "تسجيل في سجل النشاط",
           "debug_mode": "وضع التصحيح"
         }

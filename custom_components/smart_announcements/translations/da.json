@@ -118,6 +118,7 @@
           "pre_announce_enabled": "Aktiver forhåndsmeddelelseslyd",
           "pre_announce_url": "URL til forhåndsmeddelelseslyd",
           "pre_announce_delay": "Forsinkelse efter forhåndsmeddelelse (sekunder)",
+          "backup_conversation_entity": "Reserve-samtalentitet (til AI)",
           "log_to_activity": "Log til aktivitetsoversigt",
           "debug_mode": "Fejlsøgningstilstand"
         }

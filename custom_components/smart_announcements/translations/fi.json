@@ -118,6 +118,7 @@
           "pre_announce_enabled": "Ota esiääni käyttöön",
           "pre_announce_url": "Esiäänen URL",
           "pre_announce_delay": "Viive esiäänen jälkeen (sekuntia)",
+          "backup_conversation_entity": "Varakeskusteluentiteetti (AI:lle)",
           "log_to_activity": "Kirjaa tapahtumaseurantaan",
           "debug_mode": "Virheenkorjaustila"
         }

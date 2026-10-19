@@ -118,6 +118,7 @@
           "pre_announce_enabled": "Vorankündigungston aktivieren",
           "pre_announce_url": "URL des Vorankündigungstons",
           "pre_announce_delay": "Verzögerung nach Vorankündigung (Sekunden)",
+          "backup_conversation_entity": "Backup-Konversations-Entität (für AI)",
           "log_to_activity": "Im Aktivitätsprotokoll erfassen",
           "debug_mode": "Debug-Modus"
         }
